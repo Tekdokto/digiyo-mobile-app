@@ -8,32 +8,33 @@ import UserProfileScreen from '../screens/UserProfileScreen';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MyProfileScreen from '../screens/MyProfileScreen';
 import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
+import FullVideoScreen from '../screens/FullVideoScreen';
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-const HomeStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name='HomeScreen' component={HomeScreen} />
-    <Stack.Screen name='SecondScreen' component={SecondScreen} />
-    <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
-  </Stack.Navigator>
-);
+export default function AppNavigation() { 
+return (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='HomeScreen' component={HomeTabs} />
+      <Stack.Screen name='PostFull' component={FullVideoScreen} />
+      <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
+)};
 
-const UserProfileStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
-  </Stack.Navigator>
-);
 
-const AppNavigation = () => {
+function HomeTabs() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={({route}) =>({
+        headerShown: false,
+        tabBarShowLabel: false,
+      })}>
         <Tab.Screen
           name='Home'
-          component={HomeStack}
+          component={HomeScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={20} />
@@ -42,7 +43,7 @@ const AppNavigation = () => {
         />
         <Tab.Screen
           name='Upload'
-          component={UserProfileStack}
+          component={SecondScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Feather name={focused ? 'upload-cloud' : 'upload-cloud'} size={20} />
@@ -59,11 +60,10 @@ const AppNavigation = () => {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 
 
-export default AppNavigation;
+// export default AppNavigation;
 
   

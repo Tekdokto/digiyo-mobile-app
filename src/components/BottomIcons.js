@@ -1,9 +1,18 @@
 import React from 'react'
-import { Pressable, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Text } from 'react-native-paper'
+import { create } from 'apisauce'
+import BottomSheets from './BottomSheets'
 
 const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save, saveLink, saveColor, saveName, share, shareLink, }) => {
+
+    const api = create({
+        baseURL: "https://jsonplaceholder.typicode.com",
+        headers: {}
+    })
+
+    api.any({ method: 'GET', url: "/comments?postId=", params: {id: 1} })
   return (
     <View style={{ flex: 1, }}>
         <View style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 20 }}>
@@ -13,8 +22,10 @@ const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save
             </Pressable>
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={chatLink}>
                 <Ionicons name={"chatbubble-outline"} size={30} />
+                
                 <Text>{chat}</Text>
             </Pressable>
+             
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={saveLink}>
                 <Ionicons name={saveName} size={30} color={saveColor} />
                 <Text>{save}</Text>
@@ -28,4 +39,5 @@ const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save
   )
 }
 
-export default BottomIcons
+export default BottomIcons;
+
