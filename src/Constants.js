@@ -20,7 +20,7 @@ export const posts = [
         profilePic: require("../assets/images/2.jpg"),
          content: {
       type: "video", // "image" for images, "video" for videos
-      source: require('../assets/images/5.mp4'),
+      source: require('../assets/images/fam.mp4'),
     },
         likes: 800,
         comments: 500,

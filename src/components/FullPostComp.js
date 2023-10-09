@@ -5,25 +5,13 @@ import {View, TouchableWithoutFeedback, Text, Image, TouchableOpacity, StyleShee
 // import Video from 'react-native-video';
 import styles from '../constants/styles';
 
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Video, ResizeMode } from 'expo-av';
 
 
-const FullPostComp = ({ vids }) => {
-//   const [post, setPost] = useState(props.post);
-  const [isLiked, setIsLiked] = useState(false);
-  const [videoUri, setVideoUri] = useState('');
+const FullPostComp = ({ vids, isVisible }) => {
 
-//   const [paused, setPaused] = useState(false);
-
-//   const onPlayPausePress = () => {
-//     setPaused(!paused);
-//     console.log('tap play')
-//   };
-
+  const [paused, setPaused] = useState(!isVisible);
+ 
   const [isPlaying, setIsPlaying] = useState(true);
 
   const videoRef = useRef(null);
@@ -31,9 +19,22 @@ const FullPostComp = ({ vids }) => {
   useEffect(() => {
     // When the component mounts, autoplay the video
     if (videoRef.current) {
+      videoRef.current.pauseAsync();
+    } 
+    else {
       videoRef.current.playAsync();
     }
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isVisible && !paused ) {
+        videoRef.current.playAsync()
+      } else {
+        videoRef.current.pauseAsync()
+      }
+    }
+  }, [isVisible, paused])
 
   const togglePlayPause = async () => {
     if (videoRef.current) {
@@ -43,94 +44,32 @@ const FullPostComp = ({ vids }) => {
         await videoRef.current.playAsync();
       }
       setIsPlaying(!isPlaying);
+      setPaused(!isPlaying);
     }
   }
 
-  const onLikePress = () => {
-    const likesToAdd = isLiked ? -1 : 1;
-    setPost({
-      ...post,
-      likes: post.likes + likesToAdd,
-    });
-    setIsLiked(!isLiked);
-  };
-
-  const getVideoUri = async () => {
-    if (post.videoUri.startsWith('http')) {
-      setVideoUri(post.videoUri);
-      return;
-    }
-    setVideoUri(await Storage.get(post.videoUri));
-  };
-
-  useEffect(() => {
-    getVideoUri();
-  },[]);
-
-  
 
   return (
     <View style={styles.containerFull}>
       <TouchableWithoutFeedback onPress={togglePlayPause}>
-        <View>
+        {/* <View> */}
            <Video
-              // source={{uri: 'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-llea-8725-311975ea9616/processed_720.mp4'}}
               source={ vids }
-              // source={{uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
               ref={videoRef}
               style={styles.videoFull}
               onError={(e) => console.log(e)}
               // useNativeControls={true}
               resizeMode={ResizeMode.COVER}
-              isLooping={true}
-              shouldPlay={isPlaying} // Set to true to start playing automatically
+              isLooping={false}
+              shouldPlay={!paused} // Set to true to start playing automatically
               onPlaybackStatusUpdate={(status) => {
                 if (!status.isLoaded) {
                   console.error('Video load error:', status.error);
                 }
               }} 
             /> 
-          <View style={styles.uiContainer}>
-            <View style={styles.rightContainer}>
-              {/* <Image
-                style={styles.profilePicture}
-                source={{uri: post.user.imageUri}}
-              /> */}
-
-              <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
-                <AntDesign name={'heart'} size={40} color={isLiked ? 'red' : 'white'} />
-                <Text style={styles.statsLabel}>post.likes</Text>
-              </TouchableOpacity>
-
-              <View style={styles.iconContainer}>
-                <FontAwesome name={'commenting'} size={40} color="white" />
-                <Text style={styles.statsLabel}>post.comments</Text>
-              </View>
-
-              <View style={styles.iconContainer}>
-                <Fontisto name={'share-a'} size={35} color="white" />
-                <Text style={styles.statsLabel}>post.shares</Text>
-              </View>
-            </View>
-
-            <View style={styles.bottomContainer}>
-              <View>
-                <Text style={styles.handle}>@username</Text>
-                <Text style={styles.description}>description</Text>
-
-                <View style={styles.songRow}>
-                  <Entypo name={'beamed-note'} size={24} color="white" />
-                  <Text style={styles.songName}>song name</Text>
-                </View>
-              </View>
-
-              {/* <Image
-                style={styles.songImage}
-                source={{uri: post.song.imageUri}}
-              /> */}
-            </View>
-          </View>
-        </View>
+          
+        {/* </View> */}
       </TouchableWithoutFeedback>
     </View>
   );

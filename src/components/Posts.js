@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Dimensions, FlatList, Image, Pressable, StyleSheet, View, Share } from 'react-native'
 import { posts } from '../Constants'
 import { Text } from 'react-native-paper'
@@ -8,17 +8,23 @@ import { useNavigation } from '@react-navigation/native'
 import { HEIGHT, WIDTH } from '../constants/sizes' 
 import HomeVidComp from './HomeVideos'
 
+
+
 const Posts = ({ toggleSheet }) => {
     
     const navigation = useNavigation();
 
-    // const handleNavigate = () => {
-    //     console.log('first')
-    //     navigation.navigate("PostFull", )
-    // }
+    const [visibleVideos, setVisibleVideos] = useState(
+        posts.map(() => false)
+      );
+    onViewableItemsChanged = useCallback(({ viewableItems }) => {
+        const visibleVideoIndices = viewableItems.filter((item) => item.item.content.type === 'video').map((item) => item.index)
+        
+        const newVisibleVideos = posts.map((_, index) => visibleVideoIndices.includes(index))
 
-    //   const video = React.useRef(null);
-    //   const [status, setStatus] = React.useState({});
+        setVisibleVideos(newVisibleVideos)
+    }, [])    
+ 
     const [likeStates, setLikeStates] = useState(posts.map(() => false));
     const [savedStates, setSavedStates] = useState(posts.map(() => false));
     const [likes, setLikes] = useState(posts.map((post) => post.likes));
@@ -87,9 +93,11 @@ const Posts = ({ toggleSheet }) => {
             numColumns={1}
             showsVerticalScrollIndicator= {false}
             data={posts}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={{itemVisiblePercentThreshold: 60}}
             renderItem=
             {({ item, index }) => 
-                <Pressable onPress={()=> navigation.navigate("PostFull", { item: item } )}>
+                <Pressable onPress={()=> navigation.navigate("PostFull", { item } )}>
                     <View key={item.id}  style={{ marginHorizontal: WIDTH *0.17 }} >
                         <View  style={{marginTop: 20, flexDirection: "row"}}>
                             <Pressable  
@@ -109,16 +117,13 @@ const Posts = ({ toggleSheet }) => {
                         <View style={{ marginBottom: 10 }}>
                             {item.content.type == "image" ? 
                                 (
-                                    // <Text>image</Text>
-                                    <Image source={item.content.source} 
-                                        style={ styles.mediaFrame } />
-                                    ) : (
-                                        <View> 
-                                        <HomeVidComp vids={item.content.source} />
-                                        </View>
-                                    
-                                    // <Text>vid</Text>
-                                
+                                // <Text>image</Text>
+                                <Image source={item.content.source} 
+                                    style={ styles.mediaFrame } />
+                                ) : (
+                                    <View> 
+                                    <HomeVidComp vids={item.content.source} isVisible={visibleVideos[index]} />
+                                    </View>
                                 )
                             }
                         </View>

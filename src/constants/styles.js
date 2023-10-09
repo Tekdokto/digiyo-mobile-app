@@ -35,8 +35,14 @@ const styles = StyleSheet.create({
   },
 
   uiContainer: {
-    height: '100%',
-    justifyContent: 'flex-end',
+    flex: 1,
+    width: WIDTH,
+    position: "absolute",
+    bottom: 30,
+    alignItems: "flex-end"
+    // left: "12"
+    // height: '100%',
+    // justifyContent: 'flex-end',
   },
   bottomContainer: {
     padding: 10,
@@ -76,10 +82,12 @@ const styles = StyleSheet.create({
 
   //  right container
   rightContainer: {
-    alignSelf: 'flex-end',
-    height: 300,
-    justifyContent: 'space-between',
-    marginRight: 5,
+    // flex: 1,
+    // width: WIDTH*0.3,
+    // flexDirection: "column",
+    marginRight: 10,
+    alignItems: "center",
+    alignContent: "center" 
   },
   profilePicture: {
     width: 50,
@@ -97,13 +105,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginTop: 5,
+    textAlign: "center",
   },
 
     // full post container
     containerFull: {
-      width: '100%',
+      width: WIDTH,
       height: HEIGHT,
-      overflow: "hidden"
+      // overflow: "hidden"
     },
 
   // full image frame
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
     // borderRadius: 20, 
     height: HEIGHT, 
     width: WIDTH, 
-    overflow:"hidden"
+    // overflow:"hidden"
 },
   // image frame
   mediaFrame: { 

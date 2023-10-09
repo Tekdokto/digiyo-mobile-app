@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
+import { Dimensions, Pressable, StatusBar, StyleSheet, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderComp from '../components/Header';
@@ -37,45 +37,48 @@ const HomeScreen = () => {
   }))
 
   return (
-    // <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex:1, backgroundColor: "#999" }}>
-        <View style={{ backgroundColor: "white"}}>
-          <HeaderComp headerLogo={"DigiYo"} menu={"menu"} onPressed={handlePress} />
-        </View>
+    <>
+      <StatusBar barStyle={"light-content"} />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex:1, backgroundColor: "#000" }}>
+          <View style={{ backgroundColor: "white"}}>
+            <HeaderComp headerLogo={"DigiYo"} menu={"menu"} onPressed={handlePress} />
+          </View>
 
-            {/* side icons */}
-            <View style={{ flex: 1, }}>
-              <View>
-                <Posts toggleSheet={toggleSheet} />
-              </View>
-              <SideIconsComp />
-              { isOpen && (
-                <>
-                <AnimatedPressable 
-                  style={styles.backdrop} onPress={toggleSheet} 
-                  entering={FadeIn}
-                  exiting={FadeOut}  
-                />
-                  {/* <GestureDetector gesture={pan}> */}
-                    <Animated.View 
-                      style={ [ styles.sheet, 
-                        // translateY 
-                      ] }
-                      entering={SlideInDown.springify().damping(15)}
-                      exiting={SlideOutDown}
-                    >
-                          <BottomSheets />
-                    </Animated.View>
-                  {/* </GestureDetector> */}
-                
-                
-                </>
-              )
-              }
+              {/* side icons */}
+              <View style={{ flex: 1, }}>
+                <View>
+                  <Posts toggleSheet={toggleSheet} />
+                </View>
+                <SideIconsComp />
+                { isOpen && (
+                  <>
+                  <AnimatedPressable 
+                    style={styles.backdrop} onPress={toggleSheet} 
+                    entering={FadeIn}
+                    exiting={FadeOut}  
+                  />
+                    {/* <GestureDetector gesture={pan}> */}
+                      <Animated.View 
+                        style={ [ styles.sheet, 
+                          // translateY 
+                        ] }
+                        entering={SlideInDown.springify().damping(15)}
+                        exiting={SlideOutDown}
+                      >
+                            <BottomSheets />
+                      </Animated.View>
+                    {/* </GestureDetector> */}
+                  
+                  
+                  </>
+                )
+                }
 
-            </View> 
-      </SafeAreaView>
-    // </GestureHandlerRootView>
+              </View> 
+        </SafeAreaView>
+      </GestureHandlerRootView>
+    </>
   )
 }
 
