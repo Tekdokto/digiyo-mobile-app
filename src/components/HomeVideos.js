@@ -4,6 +4,7 @@ import {View, TouchableWithoutFeedback, Text, Image, TouchableOpacity, StyleShee
 import styles from '../constants/styles'; 
 
 import { Video, ResizeMode } from 'expo-av';
+import { useIsFocused } from '@react-navigation/native';
 
 const HomeVidComp = ({ vids, isVisible }) => {  
 
@@ -23,6 +24,8 @@ const HomeVidComp = ({ vids, isVisible }) => {
     }
   }, [])
 
+
+  // only play when the video is in view
   useEffect(() => {
     // When the component mounts, autoplay the video
     if (videoRef.current) {

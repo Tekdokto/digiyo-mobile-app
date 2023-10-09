@@ -4,7 +4,7 @@ import { posts } from '../Constants'
 import { Text } from 'react-native-paper'
 import BottomIcons from './BottomIcons'
 import { Video, ResizeMode } from 'expo-av'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { HEIGHT, WIDTH } from '../constants/sizes' 
 import HomeVidComp from './HomeVideos'
 
@@ -29,6 +29,9 @@ const Posts = ({ toggleSheet }) => {
     const [savedStates, setSavedStates] = useState(posts.map(() => false));
     const [likes, setLikes] = useState(posts.map((post) => post.likes));
     const [saved, setSaves] = useState(posts.map((post) => post.saved));
+
+    
+    const isFocused = useIsFocused();
 
 
     const toggleLike = (index) => {
@@ -122,7 +125,7 @@ const Posts = ({ toggleSheet }) => {
                                     style={ styles.mediaFrame } />
                                 ) : (
                                     <View> 
-                                    <HomeVidComp vids={item.content.source} isVisible={visibleVideos[index]} />
+                                    <HomeVidComp vids={item.content.source} isVisible={visibleVideos[index] && isFocused} />
                                     </View>
                                 )
                             }
