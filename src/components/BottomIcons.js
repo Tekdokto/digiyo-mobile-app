@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Text } from 'react-native-paper'
 import { create } from 'apisauce'
@@ -15,23 +15,24 @@ const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save
     api.any({ method: 'GET', url: "/comments?postId=", params: {id: 1} })
   return (
     <View style={{ flex: 1, }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 20 }}>
+        <View style={{ flexDirection: "row", alignItems: "center",   }}>
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={likeLink}>
-                <FontAwesome name={likeName} size={30} style={{color: likeColor}} />
+                <Image source={likeName}  />
                 <Text>{like}</Text>
             </Pressable>
+             
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={chatLink}>
-                <Ionicons name={"chatbubble-outline"} size={30} />
-                
+                <Image source={require("../../assets/icons/chat-round.png")}  />
                 <Text>{chat}</Text>
             </Pressable>
              
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={saveLink}>
-                <Ionicons name={saveName} size={30} color={saveColor} />
+                <Image source={saveName}  />
                 <Text>{save}</Text>
             </Pressable>
+            
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={shareLink}>
-                <MaterialCommunityIcons name={"share-outline"} size={30} />
+                <Image source={require("../../assets/icons/share.png")}  />
                 <Text>{share}</Text>
             </Pressable>
         </View>

@@ -134,12 +134,12 @@ const Posts = ({ toggleSheet }) => {
                             <BottomIcons 
                             likeLink={() => toggleLike(index)}
                             likeColor={likeStates[index] ? 'red' : '#000'}
-                            likeName={!likeStates[index] ? 'heart-o' : 'heart'}
+                            likeName={!likeStates[index] ? require("../../assets/icons/heart.png") : require("../../assets/icons/heart-fill.png")}
                             like={likes[index]} 
                             chat={item.comments} 
                             chatLink={toggleSheet}
                             saveLink={() => toggleSave(index)}
-                            saveName={savedStates[index] ? "md-bookmark" : "md-bookmark-outline"}
+                            saveName={savedStates[index] ? require("../../assets/icons/bookmark-fill.png") : require("../../assets/icons/bookmark.png")}
                             save={saved[index]} 
                             saveColor={savedStates[index] ? 'blue' : '#000'}
                             shareLink={() => onShare(item.image)}

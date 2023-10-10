@@ -9,6 +9,8 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import MyProfileScreen from '../screens/MyProfileScreen';
 import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from '../screens/FullVideoScreen';
+import { Image } from 'react-native';
+import FollowersScreen from '../screens/FollowersScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,6 +23,7 @@ return (
       <Stack.Screen name='HomeScreen' component={HomeTabs} />
       <Stack.Screen name='PostFull' component={FullVideoScreen} />
       <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
+      <Stack.Screen name='FollowersScreen' component={FollowersScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 )};
@@ -37,7 +40,7 @@ function HomeTabs() {
           component={HomeScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={20} />
+              <Image source={focused ? require('../../assets/icons/house.png') : require('../../assets/icons/house.png')} style={{  }} />
             ),
           }}
         />
@@ -46,7 +49,7 @@ function HomeTabs() {
           component={SecondScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <Feather name={focused ? 'upload-cloud' : 'upload-cloud'} size={20} />
+              <Image source={focused ? require('../../assets/icons/cloud.png') : require('../../assets/icons/cloud.png')} style={{  }} />
             ),
           }}
         />
@@ -55,7 +58,7 @@ function HomeTabs() {
           component={UserProfileScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <FontAwesome name={focused ? 'bell' : 'bell-o'} size={20} />
+              <Image source={focused ? require('../../assets/images/2.jpg') : require('../../assets/images/2.jpg')} style={{ borderRadius:40, width:40, height:40 }} />
             ),
           }}
         />
