@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Pressable, View } from 'react-native'
+import { Dimensions, Image, Pressable, View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 import { FontAwesome, Feather } from '@expo/vector-icons'
 import {  } from '@expo/vector-icons';
@@ -12,11 +12,11 @@ const HeaderComp = ({headerLogo, menu, onPressed}) => {
     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 15, marginHorizontal: 20 }}> 
         <Image source={require("../../assets/icons/logo-black.png")} />
         <View style={{ flexDirection: "row", backgroundColor: "#EDEBE9", paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, width: WIDTH * 0.41, justifyContent: "space-between" }}>
-          <Pressable onPress={(e)=> navigate.navigate("")}>
-            <Text style={{  fontWeight: "bold", fontSize: 15 }}>Friends</Text>
+          <Pressable onPress={(e)=> navigate.navigate("FollowingScreen")}>
+            <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Following</Text>
           </Pressable>
           <Pressable onPress={(e)=> navigate.navigate("FollowersScreen")}>
-            <Text style={{  fontWeight: "bold", fontSize: 15 }}>Followers</Text>
+            <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
           </Pressable>
         </View>
         <Pressable onPress={onPressed}>

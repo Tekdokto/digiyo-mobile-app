@@ -127,7 +127,14 @@ const styles = StyleSheet.create({
     borderRadius: 20, 
     height: HEIGHT * 0.51, 
     width: WIDTH,
+},
+mediaFrame: { 
+  borderRadius: 20, 
+  height: HEIGHT * 0.6, 
+  width: "100%" 
 }
 });
+
+
 
 export default styles;

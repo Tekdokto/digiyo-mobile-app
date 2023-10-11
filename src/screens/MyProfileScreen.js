@@ -8,10 +8,11 @@ const MyProfileScreen = ({ navigation }) => {
     <View>
       <StatusBar barStyle={"dark-content"} />
       <SafeAreaView style={{ backgroundColor: "#fff"}}>
-
-        <Text>
-            MyProfileScreen
-        </Text>
+        <View style={{ flex: 1 }}>
+          <Text>
+              MyProfileScreen
+          </Text>
+        </View>
       </SafeAreaView>
     </View>
   )

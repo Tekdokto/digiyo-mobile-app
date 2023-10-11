@@ -6,11 +6,13 @@ import HomeScreen from '../screens/HomeScreen';
 import SecondScreen from '../screens/Second';
 import UserProfileScreen from '../screens/UserProfileScreen';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import MyProfileScreen from '../screens/MyProfileScreen';
-import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
+// import MyProfileScreen from '../screens/MyProfileScreen';
+// import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from '../screens/FullVideoScreen';
 import { Image } from 'react-native';
 import FollowersScreen from '../screens/FollowersScreen';
+import FollowingScreen from '../screens/FollowingScreen';
+import MyProfileScreen from '../screens/MyProfileScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +25,9 @@ return (
       <Stack.Screen name='HomeScreen' component={HomeTabs} />
       <Stack.Screen name='PostFull' component={FullVideoScreen} />
       <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
+      <Stack.Screen name='MyProfileScreen' component={MyProfileScreen} />
       <Stack.Screen name='FollowersScreen' component={FollowersScreen} />
+      <Stack.Screen name='FollowingScreen' component={FollowingScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 )};
@@ -55,7 +59,7 @@ function HomeTabs() {
         />
         <Tab.Screen
           name='Myprofile'
-          component={UserProfileScreen}
+          component={MyProfileScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Image source={focused ? require('../../assets/images/2.jpg') : require('../../assets/images/2.jpg')} style={{ borderRadius:40, width:40, height:40 }} />

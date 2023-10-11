@@ -7,6 +7,7 @@ import { Video, ResizeMode } from 'expo-av'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { HEIGHT, WIDTH } from '../constants/sizes' 
 import HomeVidComp from './HomeVideos'
+import styles from '../constants/styles'
 
 
 
@@ -158,11 +159,3 @@ const Posts = ({ toggleSheet }) => {
 }
 
 export default Posts;
-
-const styles = StyleSheet.create({
-    mediaFrame: { 
-        borderRadius: 20, 
-        height: HEIGHT * 0.51, 
-        width: "100%" 
-    }
-})

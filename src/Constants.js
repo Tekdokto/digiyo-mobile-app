@@ -6,7 +6,7 @@ export const posts = [
         profilePic: require("../assets/images/1.jpeg"),
          content: {
       type: "image", // "image" for images, "video" for videos
-      source: require("../assets/images/4.jpg"),
+      source: require("../assets/images/4.jpeg"),
     },
         likes: 200,
         comments: 500,
@@ -45,7 +45,7 @@ export const posts = [
         id: 4,
         username: "Sani",
         post: "lorem. sdihi isduhiudv",
-        profilePic: require("../assets/images/4.jpg"),
+        profilePic: require("../assets/images/4.jpeg"),
          content: {
       type: "video", // "image" for images, "video" for videos
       source: require('../assets/images/hum.mp4'),
