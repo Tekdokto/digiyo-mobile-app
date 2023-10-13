@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import { Dimensions, Pressable, StatusBar, StyleSheet, View } from 'react-native'
-import { Text, useTheme } from 'react-native-paper'
+import React, { useContext, useState } from 'react'
+import {  Pressable, StatusBar, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderComp from '../components/Header';
 import SideIconsComp from '../components/SideIcons';
 import Posts from '../components/Posts';
 import BottomSheets from '../components/BottomSheets';
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Gesture,  GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BACKDROP_COLOR, } from '../constants/colors';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { HEIGHT, OVERDRAG, WIDTH } from '../constants/sizes';
+import { HEIGHT, OVERDRAG, } from '../constants/sizes';
+import ThemeContext from '../theme/ThemeContext';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 
 const HomeScreen = () => {
-  // const theme = useTheme();
+  const theme = useContext(ThemeContext);
 
   const offSet = useSharedValue(0);
   const [isOpen, setOpen ] = useState(false);
@@ -40,16 +40,16 @@ const HomeScreen = () => {
     <>
       <StatusBar barStyle={"light-content"} />
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex:1, backgroundColor: "#000" }}>
+        <SafeAreaView style={{ flex:1, backgroundColor: theme.backgroundColor }}>
           <View style={{ backgroundColor: "white"}}>
             <HeaderComp headerLogo={"DigiYo"} menu={"menu"} onPressed={handlePress} />
           </View>
 
-              {/* side icons */}
               <View style={{ flex: 1, }}>
                 <View>
                   <Posts toggleSheet={toggleSheet} />
                 </View>
+              {/* side icons */}
                 <SideIconsComp />
                 { isOpen && (
                   <>

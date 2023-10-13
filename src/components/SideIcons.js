@@ -1,7 +1,7 @@
 import React from 'react'
-import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { Dimensions, Image, Pressable, StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
+// import { FontAwesome, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Text, Image, Pressable, StyleSheet, View } from 'react-native'
+import {  } from 'react-native-paper'
 import { HEIGHT } from '../constants/sizes'
 
 

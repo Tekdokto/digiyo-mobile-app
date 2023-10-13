@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, TouchableWithoutFeedback, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableWithoutFeedback, } from 'react-native';
  
 import styles from '../constants/styles'; 
 
 import { Video, ResizeMode } from 'expo-av';
-import { useIsFocused } from '@react-navigation/native';
+// import { useIsFocused } from '@react-navigation/native';
 
 const HomeVidComp = ({ vids, isVisible }) => {  
 

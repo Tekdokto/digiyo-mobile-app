@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, } from 'react-native';
 import { HEIGHT, WIDTH } from './sizes';
 
 const styles = StyleSheet.create({
@@ -132,6 +132,9 @@ mediaFrame: {
   borderRadius: 20, 
   height: HEIGHT * 0.6, 
   width: "100%" 
+},
+iconText: {
+  fontSize: HEIGHT * 0.02
 }
 });
 

@@ -1,8 +1,9 @@
 export const posts = [
     {
         id: 1,
+        time: 1,
         username: "whiteman",
-        post: "lorem. sdihi isduhiudv",
+        post: "lorem. sdihi isduhiud iohv dsvoi sddsdo isdio isdouids sudihvurei e uieru v",
         profilePic: require("../assets/images/1.jpeg"),
          content: {
       type: "image", // "image" for images, "video" for videos
@@ -15,8 +16,9 @@ export const posts = [
     },
     {
         id: 2,
+        time: 2,
         username: "creed",
-        post: "lorem. sdihi isduhiudv",
+        post: "lorem. sdihi ojoje wa;c;j reijbda, abdhj ,ahbuuw jsv sjdh sdd isduhiudv",
         profilePic: require("../assets/images/2.jpg"),
          content: {
       type: "video", // "image" for images, "video" for videos
@@ -29,8 +31,9 @@ export const posts = [
     },
     {
         id: 3,
+        time: 3,
         username: "machine",
-        post: "lorem. sdihi isduhiudv",
+        post: "lorem. sdihi isduh fpe e0-0w w-0ev fof ioe oefiv iudv",
         profilePic: require("../assets/images/3.jpg"),
          content: {
       type: "image", // "image" for images, "video" for videos
@@ -43,8 +46,9 @@ export const posts = [
     },
     {
         id: 4,
+        time: 4,
         username: "Sani",
-        post: "lorem. sdihi isduhiudv",
+        post: "lorem. sdihi isdvbp fpodf dpfiej reio ero e uhiudv",
         profilePic: require("../assets/images/4.jpeg"),
          content: {
       type: "video", // "image" for images, "video" for videos

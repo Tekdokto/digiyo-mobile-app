@@ -1,6 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StatusBar } from 'react-native'
-import { Text } from 'react-native-paper'
+import { SafeAreaView, StatusBar, Text } from 'react-native'
 
 const UserProfileScreen = () => {
   return (

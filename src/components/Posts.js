@@ -1,17 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Dimensions, FlatList, Image, Pressable, StyleSheet, View, Share } from 'react-native'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Text, FlatList, Image, Pressable, View, Share } from 'react-native'
 import { posts } from '../Constants'
-import { Text } from 'react-native-paper'
 import BottomIcons from './BottomIcons'
-import { Video, ResizeMode } from 'expo-av'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { HEIGHT, WIDTH } from '../constants/sizes' 
 import HomeVidComp from './HomeVideos'
-import styles from '../constants/styles'
+import styles from '../constants/styles' 
+import ThemeContext from '../theme/ThemeContext'
 
 
 
 const Posts = ({ toggleSheet }) => {
+
+    const theme = useContext(ThemeContext);
     
     const navigation = useNavigation();
 
@@ -93,7 +94,7 @@ const Posts = ({ toggleSheet }) => {
  
   return (
     <View>
-        <FlatList  style={{ backgroundColor: "white", }}
+        <FlatList  style={{ backgroundColor: theme.background, }}
             numColumns={1}
             showsVerticalScrollIndicator= {false}
             data={posts}
@@ -112,11 +113,14 @@ const Posts = ({ toggleSheet }) => {
                                     style={{ width: 50, height: 50, borderRadius:60 }} />
                             </Pressable>
                             <Pressable onPress={() => navigation.navigate("UserProfileScreen")} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
-                                <Text style={{fontWeight: "bold", fontSize: 20}}>{item.username}</Text>
+                            <View style={{ flex: 1, flexDirection: "column", alignItems: "flex-start"}}>
+                                <Text style={{fontWeight: "bold", fontSize: 20, color: theme.color}}>{item.username}</Text>
+                                <Text style={{fontWeight: "400", fontSize: 10, color: theme.color}}>{item.time} hr ago</Text>
+                            </View>
                             </Pressable>
                         </View>
-                        <View>
-                            <Text>{ item.post }</Text>
+                        <View style={{ marginBottom: 4}}>
+                            <Text style={{fontWeight: "400", color: theme.color}}>{ item.post }</Text>
                         </View>
                         <View style={{ marginBottom: 10 }}>
                             {item.content.type == "image" ? 
@@ -125,7 +129,7 @@ const Posts = ({ toggleSheet }) => {
                                 <Image source={item.content.source} 
                                     style={ styles.mediaFrame } />
                                 ) : (
-                                    <View> 
+                                    <View>  
                                     <HomeVidComp vids={item.content.source} isVisible={visibleVideos[index] && isFocused} />
                                     </View>
                                 )
@@ -134,7 +138,7 @@ const Posts = ({ toggleSheet }) => {
                         <View style={{marginBottom: 20}}>
                             <BottomIcons 
                             likeLink={() => toggleLike(index)}
-                            likeColor={likeStates[index] ? 'red' : '#000'}
+                            likeColor={likeStates[index] ? 'red' : 'none'}
                             likeName={!likeStates[index] ? require("../../assets/icons/heart.png") : require("../../assets/icons/heart-fill.png")}
                             like={likes[index]} 
                             chat={item.comments} 

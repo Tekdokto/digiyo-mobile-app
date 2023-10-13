@@ -1,6 +1,6 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, StatusBar, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { SafeAreaView, Text, StatusBar, View } from 'react-native'
+import {  } from 'react-native-paper'
 
 const FollowingScreen = () => {
   return (
