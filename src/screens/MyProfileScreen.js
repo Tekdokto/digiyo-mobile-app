@@ -24,6 +24,9 @@ const MyProfileScreen = ({ navigation }) => {
             {/* <Image  source={ require("../../assets/icons/arrow-back.png")} /> */}
             <Switch 
               value={darkMode}
+              thumbColor="#ff0000"
+              trackColor={{ false: "#767577", 
+              true: "#81b0ff" }}
               onValueChange={(value) => {
                 setDarkMode(value)
                 EventRegister.emit("ChangeTheme", value)
