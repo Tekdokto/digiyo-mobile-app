@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Image } from 'react-native';
 import { Switch } from 'react-native';
 import { StatusBar, View, Text } from 'react-native'
@@ -8,10 +8,29 @@ import ThemeContext from '../theme/ThemeContext';
 import { HEIGHT, WIDTH } from '../constants/sizes';
 import { Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MyProfileScreen = ({ navigation }) => {
+const MyProfileScreen = ({ }) => {
+
   const theme = useContext(ThemeContext)
+
   const [darkMode, setDarkMode ] = useState(false)
+
+  useEffect(() => {
+    const loadDarkMode = async () => {
+      try {
+        const storedDarkMode = await AsyncStorage.getItem('darkMode');
+        if (storedDarkMode !== null) {
+          setDarkMode(storedDarkMode === 'true')
+        }
+      } catch (error) {
+        console.log('error dark mode', error)
+      }
+    }
+
+    loadDarkMode()
+  }, [])
+ 
   return (
     <>
         <StatusBar barStyle={"dark-content"} />
@@ -20,16 +39,13 @@ const MyProfileScreen = ({ navigation }) => {
           <View style={{ backgroundColor: theme.background, 
             justifyContent: "flex-end", 
             flexDirection: "row", paddingHorizontal: 20, 
-            paddingVertical: 20 }}>
-            {/* <Image  source={ require("../../assets/icons/arrow-back.png")} /> */}
+            paddingVertical: 20 }}> 
             <Switch 
-              value={darkMode}
-              thumbColor="#ff0000"
-              trackColor={{ false: "#767577", 
-              true: "#81b0ff" }}
+              value={darkMode} 
               onValueChange={(value) => {
                 setDarkMode(value)
                 EventRegister.emit("ChangeTheme", value)
+                AsyncStorage.setItem('darkMode', value.toString())
               }}
             />
           </View>

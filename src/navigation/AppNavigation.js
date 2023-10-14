@@ -2,10 +2,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useContext, useEffect, useState } from 'react'
 import HomeScreen from '../screens/HomeScreen';
-// import { StyleSheet } from 'react-native';
-import SecondScreen from '../screens/Second';
-import UserProfileScreen from '../screens/UserProfileScreen';
-// import MyProfileScreen from '../screens/MyProfileScreen';
+import UserProfileScreen from '../screens/UserProfileScreen'; 
 // import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from '../screens/FullVideoScreen';
 import { Image } from 'react-native';
@@ -22,6 +19,7 @@ import UploadSvg  from '../../assets/icons/upload.svg'
 import HomeSvg  from '../../assets/icons/home1.svg' 
 import { HEIGHT } from '../constants/sizes';
 import CameraScreen from '../screens/camera';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,6 +27,23 @@ const Tab = createBottomTabNavigator();
 export default function AppNavigation() { 
 
   const [ darkMode, setDarkMode ] = useState(false)
+
+  useEffect(() => {
+    // Load the dark mode state from AsyncStorage when the component mounts
+    const loadDarkMode = async () => {
+      try {
+        const storedDarkMode = await AsyncStorage.getItem('darkMode');
+        if (storedDarkMode !== null) {
+          setDarkMode(storedDarkMode === 'true'); // Convert the stored value to a boolean
+        }
+      } catch (error) {
+        console.error('Error loading dark mode:', error);
+      }
+    };
+
+    loadDarkMode();
+  }, []);
+
 
   useEffect(() => {
     const listener = EventRegister.addEventListener("ChangeTheme", (data) => {
