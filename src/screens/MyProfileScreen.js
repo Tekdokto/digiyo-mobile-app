@@ -9,6 +9,7 @@ import { HEIGHT, WIDTH } from '../constants/sizes';
 import { Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ACCENT_COLOR, PRIMARY_COLOR } from '../constants/colors';
 
 const MyProfileScreen = ({ }) => {
 
@@ -109,7 +110,7 @@ const MyProfileScreen = ({ }) => {
             marginTop: 20,}]}>
             <Pressable onPress={{}}>
               <View style={ styles.buttonGreen}>
-                <Text style={{color: "#0AFB05",  fontWeight: "bold"}}>
+                <Text style={{color: ACCENT_COLOR,  fontWeight: "bold"}}>
                   Message
                 </Text>
               </View>
@@ -138,17 +139,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 3,
     borderWidth: 1.4,
-    borderColor: "#0AFB05",
+    borderColor: ACCENT_COLOR,
 
   },
   buttonOrange: {
-    backgroundColor: "#FF4500",
+    backgroundColor: PRIMARY_COLOR,
     paddingHorizontal: WIDTH * 0.1,
     paddingVertical: HEIGHT * 0.01,
     alignItems: "center",
     borderRadius: 3,
     borderWidth: 1.4,
-    borderColor: "#FF4500",
+    borderColor: PRIMARY_COLOR,
 
   },
   flexRow: {

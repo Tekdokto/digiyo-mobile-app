@@ -20,6 +20,8 @@ import HomeSvg  from '../../assets/icons/home1.svg'
 import { HEIGHT } from '../constants/sizes';
 import CameraScreen from '../screens/camera';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginScreen from '../screens/auth/LoginScreen';
+import SignupScreen from '../screens/auth/SignupScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,14 +61,16 @@ export default function AppNavigation() {
 return (
   <ThemeContext.Provider value={darkMode === true ? theme.dark : theme.light }>
     <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='HomeScreen' component={HomeTabs} />
         <Stack.Screen name='PostFull' component={FullVideoScreen} />
         <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
         <Stack.Screen name='MyProfileScreen' component={MyProfileScreen} />
         <Stack.Screen name='FollowersScreen' component={FollowersScreen} />
         <Stack.Screen name='FollowingScreen' component={FollowingScreen} />
-        <Stack.Screen name='XameraScreen' component={CameraScreen} />
+        <Stack.Screen name='CameraScreen' component={CameraScreen} />
+        <Stack.Screen name='LoginScreen' component={LoginScreen} />
+        <Stack.Screen name='SignupScreen' component={SignupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   </ThemeContext.Provider>

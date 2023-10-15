@@ -6,7 +6,11 @@ import { HEIGHT, WIDTH } from '../constants/sizes';
 import { useNavigation } from '@react-navigation/native';
 import ThemeContext from '../theme/ThemeContext';
 
-const HeaderComp = ({headerLogo, menu, onPressed}) => {
+import Logo from '../../assets/icons/logo.svg'
+import LogoBlack from '../../assets/icons/logo-black.svg'
+
+
+const HeaderComp = ({ menu, navigation}) => {
   const theme = useContext(ThemeContext)
   const navigate = useNavigation()
   return (
@@ -20,7 +24,11 @@ const HeaderComp = ({headerLogo, menu, onPressed}) => {
       paddingLeft: 20,
       paddingRight: 20,
       }}> 
-        <Image source={theme.logo} />
+      {theme.theme === "dark" ? (
+        <Logo height={35} width={87} />
+        ) : (
+        <LogoBlack height={35} width={87} />
+      )}
         <View style={{ flexDirection: "row", backgroundColor: "#EDEBE9", paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, width: WIDTH * 0.41, justifyContent: "space-between" }}>
           <Pressable onPress={(e)=> navigate.navigate("FollowingScreen")}>
             <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Following</Text>
@@ -29,7 +37,7 @@ const HeaderComp = ({headerLogo, menu, onPressed}) => {
             <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
           </Pressable>
         </View>
-        <Pressable onPress={onPressed}>
+        <Pressable onPress={() => navigation.openDrawer()}>
             <Feather name={menu} color={theme.color} size={24} />
         </Pressable>
         {/* <Button icon="search">

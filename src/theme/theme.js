@@ -5,7 +5,7 @@ const theme = {
         navColor: 'yellow',
         background: 'white',
         white: '#fff',
-        logo: require("../../assets/icons/logo-black.png")
+        // logo: require("../../assets/icons/logo-black.png")
     },
     dark: {
         theme: 'dark',
@@ -14,7 +14,7 @@ const theme = {
         background: '#000',
         // background: '#010621',
         white: '#010621',
-        logo: require("../../assets/icons/logo.png")
+        // logo: require("../../assets/icons/logo.png")
     }
 }
 
