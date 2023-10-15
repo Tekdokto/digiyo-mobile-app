@@ -52,9 +52,26 @@ const styles = StyleSheet.create({
     },
     sideContainer: {
         position: "absolute",
-        top: 60,
+        top: 40,
         marginHorizontal: 20,
         right: 0,
+    },
+    sideContainerLeft: {
+        position: "absolute",
+        top: 40,
+        marginHorizontal: 20,
+        left: 0,
+    },
+    previewVideo: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+    },
+    recordingDurationText: {
+        color: "white",
+        fontSize: 20
     }
   });
 

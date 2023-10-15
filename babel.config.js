@@ -10,6 +10,7 @@ module.exports = function(api) {
       },
     },
     plugins: [
+      'react-native-iconify/plugin',
       'react-native-reanimated/plugin',
     ],
   };

@@ -33,7 +33,7 @@ const MyProfileScreen = ({ }) => {
  
   return (
     <>
-        <StatusBar barStyle={"dark-content"} />
+        <StatusBar barStyle={ theme.theme == "dark" ? "light-content" : "dark-content"} />
       <View style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
           <View style={{ backgroundColor: theme.background, 

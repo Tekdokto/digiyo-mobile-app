@@ -10,6 +10,7 @@ import PeopleSvg  from '../../assets/icons/people.svg'
 import SearchSvg  from '../../assets/icons/search.svg' 
 import GroupSvg  from '../../assets/icons/group.svg' 
 import ThemeContext from '../theme/ThemeContext'
+// import { Iconify } from 'react-native-iconify'
 
 
 const SideIconsComp = () => {
@@ -21,8 +22,8 @@ const SideIconsComp = () => {
     const theme = useContext(ThemeContext);
   let icon;
   let themeColorsLight = theme.theme == "dark" ? "white" : "black"
-  let themeColorsDark = theme.theme == "dark" ? "silver" : "silver"
-  const size = 30
+  let themeColorsDark = theme.theme == "dark" ? "white" : "none"
+  const size = 25
 
   return (
     <View style={{ flexDirection: "row", position: "absolute",  }}>
@@ -40,7 +41,8 @@ const SideIconsComp = () => {
                 <Text style={ styles.text }>Book a private</Text>
             </Pressable>
             <Pressable onPress={handlePress} style={ styles.container } >
-                <PeopleSvg fill={"none"} width={size} stroke={themeColorsLight} height={size} />
+                <PeopleSvg fill={themeColorsLight} width={size} stroke={themeColorsLight} height={size} />
+                {/* <Iconify icon="mdi:heart" size={24} color="#900" /> */}
                 {/* <Image source={require("../../assets/icons/run.png")}  /> */}
                 <Text style={ styles.text }>
                     Challenge Match
@@ -57,14 +59,14 @@ const SideIconsComp = () => {
             </Pressable> 
             <Pressable onPress={handlePress} style={ styles.container } >
                 {/* <Image source={require("../../assets/icons/chat.png")} size={20} /> */}
-                <ChatSvg fill={"none"} width={size} stroke={themeColorsLight} height={size} />
+                <ChatSvg fill={themeColorsDark} width={size} stroke={themeColorsLight} height={size} />
                 <Text style={ styles.text }>
                     Inbox
                 </Text>
             </Pressable> 
             <Pressable onPress={handlePress} style={ styles.container } >
                 {/* <Image source={require("../../assets/icons/console.png")} size={20} /> */}
-                <GameSvg fill={"none"} width={size} stroke={themeColorsLight} height={size} />
+                <GameSvg fill={themeColorsDark} width={size} stroke={themeColorsLight} height={size} />
                 <Text style={ styles.text }>
                     Gaming
                 </Text>

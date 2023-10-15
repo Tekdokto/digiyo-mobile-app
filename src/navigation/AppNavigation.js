@@ -82,6 +82,7 @@ function HomeTabs() {
         tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => menuIcons(route, focused),
         tabBarStyle: {
+          height: HEIGHT * 0.1,
           paddingVertical: HEIGHT*0.01,
           margin: 0,
           backgroundColor: theme.theme == "dark" ? "#000" : "white"
@@ -119,11 +120,11 @@ const menuIcons = (route, focused) => {
   let icon;
   let themeColorsLight = theme.theme == "dark" ? "white" : "black"
   let themeColorsDark = theme.theme == "dark" ? "silver" : "silver"
-  let size = 25
+  let size = 35
   if (route.name == 'Home') {
-    icon = focused ? <HomeSvg fill={themeColorsLight} width={size} stroke={themeColorsLight} height={size} /> : <HomeSvg width={20} height={size} fill={themeColorsDark} stroke={themeColorsDark} />
+    icon = focused ? <HomeSvg fill={themeColorsLight} width={size} stroke={themeColorsLight} height={size} /> : <HomeSvg width={size} height={size} fill={themeColorsDark} stroke={themeColorsDark} />
   } else if (route.name == 'Upload') {
-    icon = focused ? <UploadSvg stroke={themeColorsLight} width={20} height={size} /> : <UploadSvg stroke={themeColorsDark} width={20} height={size} />
+    icon = focused ? <UploadSvg stroke={themeColorsLight} width={size} height={size} /> : <UploadSvg stroke={themeColorsDark} width={size} height={size} />
   } else if (route.name == 'Myprofile') {
     icon = focused ? <Image source={require('../../assets/images/2.jpg')} style={{ borderRadius:40, width:30, height:30 }} /> : <Image source={require('../../assets/images/2.jpg')} style={{ borderRadius:40, width:30, height:30 }} />
   }
