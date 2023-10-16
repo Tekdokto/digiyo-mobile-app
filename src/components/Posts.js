@@ -17,7 +17,7 @@ const Posts = ({ toggleSheet }) => {
     const navigation = useNavigation();
 
     const [visibleVideos, setVisibleVideos] = useState(
-        posts.map(() => false)
+        posts.map(() => true)
       );
     onViewableItemsChanged = useCallback(({ viewableItems }) => {
         const visibleVideoIndices = viewableItems.filter((item) => item.item.content.type === 'video').map((item) => item.index)

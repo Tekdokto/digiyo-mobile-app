@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
+import { PRIMARY_COLOR } from "../../constants/colors";
 
 
 const cameraRatio = 9 / 16
@@ -63,15 +64,27 @@ const styles = StyleSheet.create({
         left: 0,
     },
     previewVideo: {
+        width: WIDTH,
+        height: HEIGHT,
         position: "absolute",
         top: 0,
         right: 0,
         bottom: 0,
         left: 0,
+        zIndex: 1,
+        backgroundColor: "white",
     },
     recordingDurationText: {
+        padding: 10,
         color: "white",
         fontSize: 20
+    },
+    input: {
+        width:WIDTH * 0.9, 
+        marginVertical: 5, 
+        backgroundColor:"#00000010", 
+        borderRadius:10, 
+        padding: 20
     }
   });
 

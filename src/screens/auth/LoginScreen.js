@@ -7,6 +7,7 @@ import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
+import styles from '../../constants/styles';
 
 
 export default function LoginScreen() {
@@ -125,13 +126,3 @@ export default function LoginScreen() {
     </KeyboardAvoidingView>
   )
 }
-
-const styles= StyleSheet.create({
-    input: {
-        width:WIDTH * 0.9, 
-        marginVertical: 5, 
-        backgroundColor:"#00000010", 
-        borderRadius:10, 
-        padding: 20
-    }
-})

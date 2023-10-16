@@ -166,7 +166,14 @@ iconText: {
     alignContent: "center", 
     justifyContent: "space-between",
     
-  }
+  },
+  input: {
+    width:WIDTH * 0.9, 
+    marginVertical: 5, 
+    backgroundColor:"#00000010", 
+    borderRadius:10, 
+    padding: 20
+}
 });
 
 const generalStyles = StyleSheet.create({

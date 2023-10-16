@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Image, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import ThemeContext from '../theme/ThemeContext'
 import styles from '../constants/styles'
-import { HEIGHT, WIDTH } from '../constants/sizes'
-import { ACCENT_COLOR } from '../constants/colors'
+import { HEIGHT, WIDTH } from '../constants/sizes' 
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
@@ -45,57 +44,69 @@ const MessageUserScreen = ({ route }) => {
       </Pressable>
       
       {/*  */}
-      <View style={{ backgroundColor: theme.background, alignItems: "center" }}>
-          <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
-        <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
-            {item.username}
-        </Text>
-      </View>
+      { message.length == 0 ? (
+        <>
+            <View style={{ backgroundColor: theme.background, alignItems: "center" }}>
+                <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
+                <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
+                    {item.username}
+                </Text>
+            </View>
 
-      {/*  */}
-      <View 
-      style={[ 
-        styles.flexRow, 
-        {marginHorizontal: WIDTH * 0.2,
-        marginTop: 20,} ]}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={{  fontSize: HEIGHT * 0.03, fontWeight: "700", color: theme.color }}>
-            110
-          </Text>
-          <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-            Posts
-          </Text>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <Text
-           style={{  
-            fontSize: HEIGHT * 0.03, 
-            fontWeight: "700", 
-            color: theme.color }}>
-            110
-          </Text>
-          <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-            Posts
-          </Text>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <Text 
-          style={{  
-            fontSize: HEIGHT * 0.03, 
-            fontWeight: "700", 
-            color: theme.color }}>
-            110
-          </Text>
-          <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-            Posts
-          </Text>
-        </View>
-      </View>
+            {/*  */}
+            <View 
+            style={[ 
+                styles.flexRow, 
+                {marginHorizontal: WIDTH * 0.2,
+                marginTop: 20,} ]}>
+                <View style={{ alignItems: "center" }}>
+                <Text style={{  fontSize: HEIGHT * 0.03, fontWeight: "700", color: theme.color }}>
+                    110
+                </Text>
+                <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
+                    Posts
+                </Text>
+                </View>
+                <View style={{ alignItems: "center" }}>
+                <Text
+                style={{  
+                    fontSize: HEIGHT * 0.03, 
+                    fontWeight: "700", 
+                    color: theme.color }}>
+                    110
+                </Text>
+                <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
+                    Posts
+                </Text>
+                </View>
+                <View style={{ alignItems: "center" }}>
+                <Text 
+                style={{  
+                    fontSize: HEIGHT * 0.03, 
+                    fontWeight: "700", 
+                    color: theme.color }}>
+                    110
+                </Text>
+                <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
+                    Posts
+                </Text>
+                </View>
+            </View>
 
-      {/*  */}
-      <View style={{ alignItems: "center", top: HEIGHT * 0.5, flex:1, left: 0, right: 0, position: "absolute", zIndex: -1, height: HEIGHT}}>
-          <StartChat width={140} />
-      </View>
+            {/*  */}
+            <View style={{ 
+                alignItems: "center", 
+            top: HEIGHT * 0.5, 
+            flex:1, 
+            left: 0, 
+            right: 0, position: "absolute", zIndex: -1, height: HEIGHT}}>
+                <StartChat width={140} />
+            </View>
+        </>
+        ) : (
+            <></>
+        )
+      }
 
       <View style={ styles2.container}>
         <View style={styles2.containerInput}>
