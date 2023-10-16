@@ -6,9 +6,13 @@ import { FlatList, Image, View, Text, Dimensions, StatusBar} from 'react-native'
 import styles from '../constants/styles'
 import { HEIGHT } from '../constants/sizes'
 import FullScreenLikeIcons from '../components/FullScreenLikeIcons'
+import { useIsFocused } from '@react-navigation/native'
 
 const FullVideoScreen = ({ navigation, route }) => {
+
+    const isFocused = useIsFocused()
     const { item } = route.params;
+
     // console.log(item)
     const postsArray = posts;
     const currentIndex = postsArray.findIndex((postItem) => postItem.id === item.id);
@@ -16,7 +20,7 @@ const FullVideoScreen = ({ navigation, route }) => {
     console.log(postsArray)
 
     const [visibleVideos, setVisibleVideos] = useState(
-        postsArray.map(() => false)
+        postsArray.map(() => true)
       );
     onViewableItemsChanged = useCallback(({ viewableItems }) => {
         const visibleVideoIndices = viewableItems.filter((item) => item.item.content.type === 'video').map((item) => item.index)
@@ -54,7 +58,7 @@ const FullVideoScreen = ({ navigation, route }) => {
                                     />
                             ) : (
                                 <View> 
-                                <FullPostComp isVisible={visibleVideos[index]} vids={item.content.source} />
+                                <FullPostComp isVisible={visibleVideos[index] && isFocused} vids={item.content.source} />
                                 </View>
                             )
                         }

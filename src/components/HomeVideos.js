@@ -10,7 +10,7 @@ const HomeVidComp = ({ vids, isVisible }) => {
 
   const [paused, setPaused] = useState(!isVisible);
  
-  const [isPlaying, setIsPlaying] = useState(!paused);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const videoRef = useRef(null);
 
