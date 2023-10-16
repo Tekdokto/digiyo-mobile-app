@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { Image, Pressable, SafeAreaView, StatusBar, Text, View } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { Image, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import ThemeContext from '../theme/ThemeContext'
 import styles from '../constants/styles'
 import { HEIGHT, WIDTH } from '../constants/sizes'
@@ -7,15 +7,29 @@ import { ACCENT_COLOR } from '../constants/colors'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-const UserProfileScreen = ({ route }) => {
+import StartChat from '../../assets/icons/startchat.svg'
+import ChatIcon from '../../assets/icons/sendicon.svg'
+// import { Ionicons } from '@expo/vector-icons'
+
+const MessageUserScreen = ({ route }) => {
 
   const { item } = route.params
+  
+  const [message, setMessage] = useState('')
+
+  const handleCommentSend = () => {
+    if (message.length == 0) {
+        return;
+    }
+    setMessage('')
+    // sendMessage(chatIdInst, message)
+}
   
   const theme = useContext(ThemeContext)
 
   const navigate = useNavigation()
 
-  console.log(item)
+//   console.log(item)
   return (
     <>
     <StatusBar barStyle={ theme.theme == "dark" ? "light-content" : "dark-content"} />
@@ -35,9 +49,6 @@ const UserProfileScreen = ({ route }) => {
           <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
         <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
             {item.username}
-        </Text>
-        <Text style={{ fontSize: 16, color: theme.color, fontWeight: "400", }}>
-            Canada
         </Text>
       </View>
 
@@ -82,25 +93,23 @@ const UserProfileScreen = ({ route }) => {
       </View>
 
       {/*  */}
-      <View 
-      style={[ 
-        styles.flexRow, {
-        marginHorizontal: WIDTH * 0.1,
-        marginTop: 20,}]}>
-        <Pressable onPress={() => navigate.navigate("messageUserScreen", {item: item})}>
-          <View style={ styles.buttonGreen}>
-            <Text style={{color: ACCENT_COLOR,  fontWeight: "bold"}}>
-              Message
-            </Text>
-          </View>
-        </Pressable>
-        <Pressable>
-          <View style={ styles.buttonOrange}>
-            <Text style={{color: "#fff", fontWeight: "bold"}}>
-              Follow
-            </Text>
-          </View>
-        </Pressable>
+      <View style={{ alignItems: "center", top: HEIGHT * 0.5, flex:1, left: 0, right: 0, position: "absolute", zIndex: -1, height: HEIGHT}}>
+          <StartChat width={140} />
+      </View>
+
+      <View style={ styles2.container}>
+        <View style={styles2.containerInput}>
+            <TextInput
+                value={message}
+                onChangeText={setMessage}
+                placeholder='send Message...'
+                style={styles2.input}
+            />
+            <TouchableOpacity onPress={() => handleCommentSend()}>
+                <ChatIcon />
+                {/* <Ionicons name="arrow-up-circle" size={34} color={'crimson'} /> */}
+            </TouchableOpacity>
+        </View >
       </View>
     </SafeAreaView>
   </View>
@@ -108,5 +117,32 @@ const UserProfileScreen = ({ route }) => {
   )
 }
 
-export default UserProfileScreen
+export default MessageUserScreen
 
+const styles2 = StyleSheet.create({
+    container: {
+        // justifyContent: 'flex-end',
+        backgroundColor: "lightgrey",
+        marginHorizontal: 10,
+        borderRadius: 40,
+        width: WIDTH *0.95,
+        flex: 1,
+        position: "absolute",
+        bottom: 0,
+        left: 0, 
+        right: 0
+
+    },
+    containerInput: {
+        padding: 10,
+        flexDirection: 'row',
+
+    },
+    input: {
+        backgroundColor: 'lightgrey',
+        borderRadius: 4,
+        flex: 1,
+        marginHorizontal: 10,
+        paddingHorizontal: 10
+    },
+})

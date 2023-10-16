@@ -112,7 +112,7 @@ const Posts = ({ toggleSheet }) => {
                                     source={item.profilePic} 
                                     style={{ width: 50, height: 50, borderRadius:60 }} />
                             </Pressable>
-                            <Pressable onPress={() => navigation.navigate("UserProfileScreen")} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
+                            <Pressable onPress={() => navigation.navigate("UserProfileScreen", { item: item })} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
                             <View style={{ flex: 1, flexDirection: "column", alignItems: "flex-start"}}>
                                 <Text style={{fontWeight: "bold", fontSize: 20, color: theme.color}}>{item.username}</Text>
                                 <Text style={{fontWeight: "400", fontSize: 10, color: theme.color}}>{item.time} hr ago</Text>

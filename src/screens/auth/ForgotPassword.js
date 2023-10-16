@@ -1,5 +1,5 @@
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -7,10 +7,13 @@ import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
+import ThemeContext from '../../theme/ThemeContext';
 
 
-export default function LoginScreen() {
+export default function ForgotPasswordScreen() {
     const navigation = useNavigation();
+
+    const theme = useContext(ThemeContext)
 
   return (
     <KeyboardAvoidingView 
@@ -44,13 +47,13 @@ export default function LoginScreen() {
                     
                     {/* title */}
                     <View 
-                    style={{flex: 1, alignItems:"center"}}
+                    style={{flex: 1, top: HEIGHT* 0.4, alignItems:"center"}}
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:"white", fontWeight:"bold", fontSize:40}}
+                            style={{ color:theme.color, fontWeight:"bold", fontSize:40}}
                             >
-                                Login
+                                Reset Password
                         </Animated.Text>
                     </View>
 
@@ -68,28 +71,17 @@ export default function LoginScreen() {
                                 placeholderTextColor={'gray'}
                             />
                         </Animated.View>
-                        <Animated.View 
-                            entering={FadeInDown.delay(200).duration(1000).springify()} 
-                            style={styles.input}
-                            >
-
-                            <TextInput
-                                placeholder="Password"
-                                placeholderTextColor={'gray'}
-                                secureTextEntry
-                            />
-                        </Animated.View>
-
+                       
                         <Animated.View 
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("HomeScreen")}
+                            <TouchableOpacity onPress={() => navigation.push("NewPasswordScreen")}
                             style={[ ]}
                             >
                                 <Text 
                                 style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
-                                >Login</Text>
+                                >Continue</Text>
                             </TouchableOpacity>
                         </Animated.View>
 
@@ -98,24 +90,11 @@ export default function LoginScreen() {
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
 
-                            <Text>Forgot password? </Text>
-                            <TouchableOpacity onPress={()=> navigation.push('ForgotPasswordScreen')}>
-                                <Text 
-                                // style="text-sky-600"
-                                >Yes</Text>
-                            </TouchableOpacity>
-                        </Animated.View>
-
-                        <Animated.View 
-                            entering={FadeInDown.delay(600).duration(1000).springify()} 
-                            style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
-                            >
-
-                            <Text>Don't have an account? </Text>
+                            <Text>Already have an account? </Text>
                             <TouchableOpacity onPress={()=> navigation.push('SignupScreen')}>
                                 <Text 
                                 // style="text-sky-600"
-                                >SignUp</Text>
+                                >Sign in</Text>
                             </TouchableOpacity>
                         </Animated.View>
                     </View>

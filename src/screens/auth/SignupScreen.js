@@ -95,7 +95,7 @@ export default function SignupScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("HomeScreen")}
+                            <TouchableOpacity onPress={() => navigation.push("OTPScreen")}
                             style={[ ]}
                             >
                                 <Text 

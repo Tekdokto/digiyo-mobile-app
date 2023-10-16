@@ -1,5 +1,6 @@
 import {StyleSheet, } from 'react-native';
 import { HEIGHT, WIDTH } from './sizes';
+import { ACCENT_COLOR, PRIMARY_COLOR } from './colors';
 
 const styles = StyleSheet.create({
 
@@ -135,7 +136,37 @@ mediaFrame: {
 },
 iconText: {
   fontSize: HEIGHT * 0.02
-}
+},
+
+  buttonGreen: {
+    flexDirection: "row",
+    // marginHorizontal: WIDTH * 0.35,
+    paddingHorizontal: WIDTH * 0.1,
+    paddingVertical: HEIGHT * 0.01,
+    alignItems: "center",
+    borderRadius: 3,
+    borderWidth: 1.4,
+    borderColor: ACCENT_COLOR,
+
+  },
+  buttonOrange: {
+    flexDirection: "row",
+    backgroundColor: PRIMARY_COLOR,
+    paddingHorizontal: WIDTH * 0.1,
+    paddingVertical: HEIGHT * 0.01,
+    alignItems: "center",
+    borderRadius: 3,
+    borderWidth: 1.4,
+    borderColor: PRIMARY_COLOR,
+
+  },
+  flexRow: {
+    flexDirection: "row", 
+    alignItems: 'center', 
+    alignContent: "center", 
+    justifyContent: "space-between",
+    
+  }
 });
 
 const generalStyles = StyleSheet.create({

@@ -22,6 +22,11 @@ import CameraScreen from '../screens/camera';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignupScreen from '../screens/auth/SignupScreen';
+import ForgotPassworScreen from '../screens/auth/ForgotPassword';
+import OTPScreen from '../screens/auth/OTP';
+import FoundersScreen from '../screens/auth/Founders';
+import NewPasswordScreen from '../screens/auth/NewPassword';
+import MessageUserScreen from '../screens/MessageUserScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -71,6 +76,11 @@ return (
         <Stack.Screen name='CameraScreen' component={CameraScreen} />
         <Stack.Screen name='LoginScreen' component={LoginScreen} />
         <Stack.Screen name='SignupScreen' component={SignupScreen} />
+        <Stack.Screen name='OTPScreen' component={OTPScreen} />
+        <Stack.Screen name='ForgotPasswordScreen' component={ForgotPassworScreen} />
+        <Stack.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
+        <Stack.Screen name='FoundersScreen' component={FoundersScreen} />
+        <Stack.Screen name='messageUserScreen' component={MessageUserScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   </ThemeContext.Provider>

@@ -11,6 +11,9 @@ import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ACCENT_COLOR, PRIMARY_COLOR } from '../constants/colors';
 
+import ShareSvg from '../../assets/icons/share.svg'
+import EditSvg from '../../assets/icons/edit.svg'
+
 const MyProfileScreen = ({ }) => {
 
   const theme = useContext(ThemeContext)
@@ -73,7 +76,7 @@ const MyProfileScreen = ({ }) => {
                 110
               </Text>
               <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-                Posts
+                Followers
               </Text>
             </View>
             <View style={{ alignItems: "center" }}>
@@ -82,24 +85,13 @@ const MyProfileScreen = ({ }) => {
                 fontSize: HEIGHT * 0.03, 
                 fontWeight: "700", 
                 color: theme.color }}>
-                110
+                0
               </Text>
               <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-                Posts
+                Following
               </Text>
             </View>
-            <View style={{ alignItems: "center" }}>
-              <Text 
-              style={{  
-                fontSize: HEIGHT * 0.03, 
-                fontWeight: "700", 
-                color: theme.color }}>
-                110
-              </Text>
-              <Text style={{ fontSize: HEIGHT * 0.025, color: theme.color}}>
-                Posts
-              </Text>
-            </View>
+             
           </View>
 
           {/*  */}
@@ -110,15 +102,17 @@ const MyProfileScreen = ({ }) => {
             marginTop: 20,}]}>
             <Pressable onPress={{}}>
               <View style={ styles.buttonGreen}>
-                <Text style={{color: ACCENT_COLOR,  fontWeight: "bold"}}>
-                  Message
+                <ShareSvg width= {20} stroke={ACCENT_COLOR} />
+                <Text style={{color: ACCENT_COLOR, fontSize: 20, fontWeight: "bold"}}>
+                  Share
                 </Text>
               </View>
             </Pressable>
             <Pressable>
               <View style={ styles.buttonOrange}>
-                <Text style={{color: "#fff", fontWeight: "bold"}}>
-                  Follow
+                <EditSvg width= {20} stroke={"white"} />
+                <Text style={{color: "#fff", fontWeight: "bold", paddingLeft: 5, fontSize: 20}}>
+                  Edit
                 </Text>
               </View>
             </Pressable>
@@ -133,6 +127,7 @@ export default MyProfileScreen;
 
 const styles = StyleSheet.create({
   buttonGreen: {
+    flexDirection: "row",
     // marginHorizontal: WIDTH * 0.35,
     paddingHorizontal: WIDTH * 0.1,
     paddingVertical: HEIGHT * 0.01,
@@ -143,6 +138,7 @@ const styles = StyleSheet.create({
 
   },
   buttonOrange: {
+    flexDirection: "row",
     backgroundColor: PRIMARY_COLOR,
     paddingHorizontal: WIDTH * 0.1,
     paddingVertical: HEIGHT * 0.01,
