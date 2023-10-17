@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react'
 import {  Pressable, StatusBar, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import HeaderComp from '../components/Header';
-import SideIconsComp from '../components/SideIcons';
-import Posts from '../components/Posts';
-import BottomSheets from '../components/BottomSheets';
+import HeaderComp from '../../components/home/Header';
+import SideIconsComp from '../../components/home/SideIcons';
+import Posts from '../../components/home/Posts';
+import BottomSheets from '../../components/BottomSheets';
 import { Gesture,  GestureHandlerRootView } from 'react-native-gesture-handler';
-import { BACKDROP_COLOR, } from '../constants/colors';
+import { BACKDROP_COLOR, } from '../../constants/colors';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { HEIGHT, OVERDRAG, } from '../constants/sizes';
-import ThemeContext from '../theme/ThemeContext';
+import { HEIGHT, OVERDRAG, } from '../../constants/sizes';
+import ThemeContext from '../../theme/ThemeContext';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
@@ -28,13 +28,13 @@ const HomeScreen = () => {
     setOpen(!isOpen);
   }
 
-  const pan = Gesture.Pan().onChange((event) => {
-    offSet.value += event.changeY
-  })
+  // const pan = Gesture.Pan().onChange((event) => {
+  //   offSet.value += event.changeY
+  // })
 
-  const translateY = useAnimatedStyle(() => ({
-    transform: [{ translateY: offSet.value }]
-  }))
+  // const translateY = useAnimatedStyle(() => ({
+  //   transform: [{ translateY: offSet.value }]
+  // }))
 
   return (
     <>

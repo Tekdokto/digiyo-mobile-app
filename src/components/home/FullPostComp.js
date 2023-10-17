@@ -3,7 +3,7 @@ import {View, TouchableWithoutFeedback, Text, Image, TouchableOpacity, StyleShee
 // import {Storage} from 'aws-amplify';
 
 // import Video from 'react-native-video';
-import styles from '../constants/styles';
+import styles from '../../constants/styles';
 
 import { Video, ResizeMode } from 'expo-av';
 

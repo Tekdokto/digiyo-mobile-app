@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Text, FlatList, Image, Pressable, View, Share } from 'react-native'
-import { posts } from '../Constants'
-import BottomIcons from './BottomIcons'
+import { posts } from '../../Constants'
+import BottomIcons from '../BottomIcons'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
-import { HEIGHT, WIDTH } from '../constants/sizes' 
+import { HEIGHT, WIDTH } from '../../constants/sizes' 
 import HomeVidComp from './HomeVideos'
-import styles from '../constants/styles' 
-import ThemeContext from '../theme/ThemeContext'
+import styles from '../../constants/styles' 
+import ThemeContext from '../../theme/ThemeContext'
 
 
 

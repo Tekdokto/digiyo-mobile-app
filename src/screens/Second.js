@@ -9,7 +9,7 @@ const SecondScreen = () => {
       <StatusBar barStyle={"light-content"} />
       <SafeAreaView style={{ flex: 1, backgroundColor: "#000" }}>
         <Text>
-          My profile not
+          Second screen
         </Text>
       </SafeAreaView>
      </>

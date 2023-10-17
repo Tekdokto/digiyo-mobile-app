@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../constants/styles'
+import styles from '../../constants/styles'
 
 
 import Entypo from 'react-native-vector-icons/Entypo';

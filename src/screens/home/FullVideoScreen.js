@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import FullPostComp from '../components/FullPostComp'
-import { posts } from '../Constants'
+import FullPostComp from '../../components/home/FullPostComp'
+import { posts } from '../../Constants'
 import { FlatList, Image, View, Text, Dimensions, StatusBar} from 'react-native'
-import styles from '../constants/styles'
-import { HEIGHT } from '../constants/sizes'
-import FullScreenLikeIcons from '../components/FullScreenLikeIcons'
+import styles from '../../constants/styles'
+import { HEIGHT } from '../../constants/sizes'
+import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
 import { useIsFocused } from '@react-navigation/native'
 
 const FullVideoScreen = ({ navigation, route }) => {

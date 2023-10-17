@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, TouchableWithoutFeedback, } from 'react-native';
  
-import styles from '../constants/styles'; 
+import styles from '../../constants/styles'; 
 
 import { Video, ResizeMode } from 'expo-av';
 // import { useIsFocused } from '@react-navigation/native';
