@@ -173,7 +173,7 @@ iconText: {
     backgroundColor:"#00000010", 
     borderRadius:10, 
     padding: 20
-}
+},
 });
 
 const generalStyles = StyleSheet.create({

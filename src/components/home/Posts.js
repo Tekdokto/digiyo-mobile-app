@@ -7,6 +7,7 @@ import { HEIGHT, WIDTH } from '../../constants/sizes'
 import HomeVidComp from './HomeVideos'
 import styles from '../../constants/styles' 
 import ThemeContext from '../../theme/ThemeContext'
+// import ThemeContext from '../../theme/ThemeContext'
 
 
 
@@ -139,12 +140,12 @@ const Posts = ({ toggleSheet }) => {
                             <BottomIcons 
                             likeLink={() => toggleLike(index)}
                             likeColor={likeStates[index] ? 'red' : 'none'}
-                            likeName={!likeStates[index] ? require("../../assets/icons/heart.png") : require("../../assets/icons/heart-fill.png")}
+                            likeName={!likeStates[index] ? require("../../../assets/icons/heart.png") : require("../../../assets/icons/heart-fill.png")}
                             like={likes[index]} 
                             chat={item.comments} 
                             chatLink={toggleSheet}
                             saveLink={() => toggleSave(index)}
-                            saveName={savedStates[index] ? require("../../assets/icons/bookmark-fill.png") : require("../../assets/icons/bookmark.png")}
+                            saveName={savedStates[index] ? require("../../../assets/icons/bookmark-fill.png") : require("../../../assets/icons/bookmark.png")}
                             save={saved[index]} 
                             saveColor={savedStates[index] ? 'blue' : '#000'}
                             shareLink={() => onShare(item.image)}

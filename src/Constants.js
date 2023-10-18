@@ -72,7 +72,7 @@ export const posts = [
       type: "video", // "image" for images, "video" for videos
       source: require('../assets/images/hum.mp4'),
     },
-        likes: 20,
+    likes: 20,
         comments: 5,
         saved: 920,
         shared: 9150,
@@ -80,3 +80,22 @@ export const posts = [
         following: 900,
     },
 ];
+
+// staticMessages.js
+
+export const staticMessages = [
+    {
+        sender: 'user1',
+        text: 'CachoF Game previews and reviews, games are universal, therefore you need to win the game. wao soo interesting keep it up',
+        timestamp: new Date(),
+        source: require('../assets/images/hum.mp4'),
+    },
+    {
+        sender: 'user2',
+        text: 'CachoF Game previews and reviews, games are universal, therefore you need to win the game. wao soo interesting keep it up',
+        timestamp: new Date(),
+        source: require('../assets/images/hum.mp4'),
+    },
+    // Add more messages as needed
+  ];
+  

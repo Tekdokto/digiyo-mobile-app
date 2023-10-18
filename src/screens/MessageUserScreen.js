@@ -8,13 +8,14 @@ import { useNavigation } from '@react-navigation/native'
 
 import StartChat from '../../assets/icons/startchat.svg'
 import ChatIcon from '../../assets/icons/sendicon.svg'
+import { staticMessages } from '../Constants'
 // import { Ionicons } from '@expo/vector-icons'
 
 const MessageUserScreen = ({ route }) => {
 
   const { item } = route.params
   
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(staticMessages)
 
   const handleCommentSend = () => {
     if (message.length == 0) {
@@ -49,7 +50,7 @@ const MessageUserScreen = ({ route }) => {
             <View style={{ backgroundColor: theme.background, alignItems: "center" }}>
                 <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
                 <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
-                    {item.username}
+                    df
                 </Text>
             </View>
 

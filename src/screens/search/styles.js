@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     textInput: {
         margin: 10,
         backgroundColor: 'lightgray',
-        padding: 5,
-        borderRadius: 4,
+        padding: 15,
+        borderRadius: 42,
     }
 });
 

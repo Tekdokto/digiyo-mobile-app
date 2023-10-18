@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         zIndex: 1,
-        backgroundColor: "white",
+        // backgroundColor: "white",
     },
     recordingDurationText: {
         padding: 10,
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
     input: {
         width:WIDTH * 0.9, 
         marginVertical: 5, 
-        backgroundColor:"#00000010", 
+        backgroundColor:"#cccccc50", 
         borderRadius:10, 
-        padding: 20
+        padding: 20,
     }
   });
 

@@ -13,6 +13,7 @@ import ThemeContext from '../../theme/ThemeContext'
 import { HEIGHT, WIDTH } from '../../constants/sizes'
 import { FadeInDown } from 'react-native-reanimated'
 import { posts } from '../../Constants'
+import SelectedPreview from './preview'
 
 const CameraScreen = () => {
 
@@ -42,10 +43,11 @@ const CameraScreen = () => {
     // const [type, setType] = useState(0);
 
     const [isRecording, setIsRecording] = useState(false);
-const [recordingDuration, setRecordingDuration] = useState(0);
-const [videoSource, setVideoSource] = useState(null);
-const [pictureSource, setPictureSource] = useState(null);
-const [galleryImageSource, setGalleryImageSource] = useState(null);
+    const [recordingDuration, setRecordingDuration] = useState(0);
+    const [videoSource, setVideoSource] = useState(null);
+    const [videoFromGallerySource, setVideoFromGallerySource] = useState(null);
+    const [pictureSource, setPictureSource] = useState(null);
+    const [galleryImageSource, setGalleryImageSource] = useState(null);
 
 
     const recordVideo = async () => {
@@ -57,7 +59,7 @@ const [galleryImageSource, setGalleryImageSource] = useState(null);
                 setRecordingDuration((prevDuration) => prevDuration + 1);
               }, 1000);
             try {
-                const options = {maxDuration: 60, quality: Camera.Constants.VideoQuality["480"]}
+                const options = {maxDuration: 120, quality: Camera.Constants.VideoQuality["480"],}
                 const videoRecordPromise = cameraRef.recordAsync(options)
                 
                 if (videoRecordPromise) {
@@ -105,11 +107,16 @@ const [galleryImageSource, setGalleryImageSource] = useState(null);
             quality: 1,
         })
 
-        console.log(result.assets[0].uri, "ressssssssssssssss oooooooooot")
+        // console.log(result.assets, "ressssssssssssssss oooooooooot")
 
         if (!result.canceled) {
-            setGalleryImageSource(result.assets[0].uri)
-            
+            if (result.assets[0].type == "image") { 
+                setVideoFromGallerySource(null)
+                setGalleryImageSource(result.assets[0].uri)
+            } else if (result.assets[0].type == "video") {
+                setVideoFromGallerySource(null)
+                setVideoFromGallerySource(result.assets[0].uri)
+            }
         }
     }
 
@@ -270,221 +277,41 @@ const [galleryImageSource, setGalleryImageSource] = useState(null);
             </View>
         
 
-        { videoSource || pictureSource || galleryImageSource != null ? 
+        { videoSource || pictureSource || galleryImageSource || videoFromGallerySource != null ? 
         (
             <>
-                <View style={{flex: 1, top: 30, height:HEIGHT,backgroundColor: "white", position: "absolute" }}>
-                    {videoSource && (
-                        <View style={styles.previewVideo}>
-                            <Pressable onPress={() => setVideoSource(null)}
-                                style={{ 
-                                    position: "absolute", 
-                                    zIndex: 1, top: 40, 
-                                    }} >
-                                        <Text style={{left: 30, color: "white", 
-                                    fontSize: 20 }}> 
-                                            cancel
-                                        </Text>
-                            </Pressable>
-                            
-                        </View>
+                <View style={{flex: 1,  height:HEIGHT,backgroundColor: theme.backgroundColor, position: "absolute" }}>
+                    {videoFromGallerySource && ( 
+                        <SelectedPreview 
+                            cancel={() => setVideoFromGallerySource(null)} 
+                            handlePost={handlePost}    
+                            videoUrl={videoFromGallerySource}
+                            isVid={true}
+                        />
                     )}
                     {videoSource && (
-                        <View style={[styles.previewVideo, {}]} >
-                            <View style={{ 
-                                flexDirection: "row", flex: 1,
-                                justifyContent: "space-between",
-                                position: "absolute",
-                                zIndex: 1, top: 40,
-                                width: WIDTH * 0.9
-                                }}>
-
-                                <Pressable onPress={() => setVideoSource(null)}
-                                     style={{flex: 1}}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Cancel
-                                            </Text>
-                                </Pressable>
-                                
-                                <Pressable onPress={handlePost}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Post
-                                            </Text>
-                                </Pressable>
-                            </View>
-                            
-                            <View
-                                style={[ {
-                                        top: HEIGHT *0.15,
-                                        alignSelf: "center",
-                                    }]}
-                            >
-
-                                <Text style={{ fontWeight: "bold", fontSize: 20 }}>Description</Text>
-                                <View 
-                                    style={[
-                                        styles.input, ]}
-                                    >
-                                    <TextInput
-                                        placeholder="Post Description"
-                                        placeholderTextColor={'gray'} 
-                                        inputMode='text'
-                                        numberOfLines={5}
-                                        multiline={true}
-                                        keyboardType='default'
-                                        maxLength={100}
-                                    />
-                                </View>
-                            </View>
-
-                            <View style={{ width:WIDTH * 0.9, 
-                                alignSelf: "center", 
-                                position: "absolute",
-                                height:HEIGHT * 0.4,  
-                                backgroundColor: theme.backgroundColor,
-                                bottom: HEIGHT * 0.2,
-                             }}>
-                                <Video style={{ flex: 1, borderRadius: 20}}
-                                    useNativeControls
-                                    isLooping
-                                    source={{ uri: videoSource }}
-                                />
-                            </View>
-                        </View>
+                        <SelectedPreview 
+                            cancel={() => setVideoSource(null)} 
+                            handlePost={handlePost}    
+                            videoUrl={videoSource}
+                            isVid={true}
+                        />
                     )}
-                    {pictureSource && (
-                        <View style={[styles.previewVideo, {}]} >
-                            <View style={{ 
-                                flexDirection: "row", flex: 1,
-                                justifyContent: "space-between",
-                                position: "absolute",
-                                zIndex: 1, top: 40,
-                                width: WIDTH * 0.9
-                                }}>
-
-                                <Pressable onPress={() => setPictureSource(null)}
-                                     style={{flex: 1}}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Cancel
-                                            </Text>
-                                </Pressable>
-                                
-                                <Pressable onPress={handlePost}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Post
-                                            </Text>
-                                </Pressable>
-                            </View>
-                            
-                            <View
-                                style={[ {
-                                        top: HEIGHT *0.15,
-                                        alignSelf: "center",
-                                    }]}
-                            >
-
-                                <Text style={{ fontWeight: "bold", fontSize: 20 }}>Description</Text>
-                                <View 
-                                    style={[
-                                        styles.input, ]}
-                                    >
-                                    <TextInput
-                                        placeholder="Post Description"
-                                        placeholderTextColor={'gray'} 
-                                        inputMode='text'
-                                        numberOfLines={5}
-                                        multiline={true}
-                                        keyboardType='default'
-                                        maxLength={100}
-                                    />
-                                </View>
-                            </View>
-
-                            <View style={{ width:WIDTH * 0.9, 
-                                alignSelf: "center", 
-                                position: "absolute",
-                                height:HEIGHT * 0.4,  
-                                backgroundColor: theme.backgroundColor,
-                                bottom: HEIGHT * 0.2,
-                             }}>
-                                <Image source={{ uri: pictureSource }} style={{ flex: 1,
-                                borderRadius: 20
-                                 }} />
-                            </View>
-                        </View>
+                    {pictureSource && ( 
+                        <SelectedPreview 
+                            cancel={() => setPictureSource(null)} 
+                            handlePost={handlePost}    
+                            imageUrl={pictureSource}
+                            isVid={false}
+                        />
                     )}
                     {galleryImageSource && (
-                        <View style={[styles.previewVideo, {}]} >
-                            <View style={{ 
-                                flexDirection: "row", flex: 1,
-                                justifyContent: "space-between",
-                                position: "absolute",
-                                zIndex: 1, top: 40,
-                                width: WIDTH * 0.9
-                                }}>
-
-                                <Pressable onPress={() => setGalleryImageSource(null)}
-                                     style={{flex: 1}}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Cancel
-                                            </Text>
-                                </Pressable>
-                                
-                                <Pressable onPress={handlePost}
-                                     >
-                                            <Text style={{left: 30, color: "silver", 
-                                        fontSize: 20 }}> 
-                                                Post
-                                            </Text>
-                                </Pressable>
-                            </View>
-                            
-                            <View
-                                style={[ {
-                                        top: HEIGHT *0.15,
-                                        alignSelf: "center",
-                                    }]}
-                            >
-
-                                <Text style={{ fontWeight: "bold", fontSize: 20 }}>Description</Text>
-                                <View 
-                                    style={[
-                                        styles.input, ]}
-                                    >
-                                    <TextInput
-                                        placeholder="Post Description"
-                                        placeholderTextColor={'gray'} 
-                                        inputMode='text'
-                                        numberOfLines={5}
-                                        multiline={true}
-                                        keyboardType='default'
-                                        maxLength={100}
-                                    />
-                                </View>
-                            </View>
-
-                            <View style={{ width:WIDTH * 0.9, 
-                                alignSelf: "center", 
-                                position: "absolute",
-                                height:HEIGHT * 0.4,  
-                                backgroundColor: theme.backgroundColor,
-                                bottom: HEIGHT * 0.2,
-                             }}>
-                                <Image source={{ uri: galleryImageSource }} style={{ flex: 1,
-                                borderRadius: 20
-                                 }} />
-                            </View>
-                        </View>
+                        <SelectedPreview 
+                            cancel={() => setGalleryImageSource(null)} 
+                            handlePost={handlePost}    
+                            imageUrl={galleryImageSource}
+                            isVid={false}
+                        />
                     )}
 
                 </View>

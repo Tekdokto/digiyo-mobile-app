@@ -3,12 +3,13 @@ import { Image, Pressable, Text, View } from 'react-native'
 // import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons' 
 import { create } from 'apisauce'
 // import BottomSheets from './BottomSheets'
-import ThemeContext from '../theme/ThemeContext'
+// import ThemeContext from '../theme/ThemeContext'
 import ShareSvg from '../../assets/icons/share.svg'
 import HeartSvg from '../../assets/icons/heart.svg'
 import ChatSvg from '../../assets/icons/chat-round.svg'
 import BookmarkSvg from '../../assets/icons/bookmark.svg'
 import styles from '../constants/styles'
+import ThemeContext from '../theme/ThemeContext'
 
 const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save, saveLink, saveColor, saveName, share, shareLink, }) => {
 

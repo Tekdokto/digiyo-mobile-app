@@ -4,10 +4,11 @@ import { FontAwesome, Feather } from '@expo/vector-icons'
 import {  } from '@expo/vector-icons';
 import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { useNavigation } from '@react-navigation/native';
-import ThemeContext from '../../theme/ThemeContext';
+// import ThemeContext from '../../theme/ThemeContext';
 
-import Logo from '../../assets/icons/logo.svg'
-import LogoBlack from '../../assets/icons/logo-black.svg'
+import Logo from '../../../assets/icons/logo.svg'
+import LogoBlack from '../../../assets/icons/logo-black.svg'
+import ThemeContext from '../../theme/ThemeContext';
 
 
 const HeaderComp = ({ menu, navigation}) => {

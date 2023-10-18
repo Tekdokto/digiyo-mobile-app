@@ -4,15 +4,15 @@ import { Switch } from 'react-native';
 import { StatusBar, View, Text } from 'react-native'
 import { EventRegister } from 'react-native-event-listeners';
 import { SafeAreaView } from 'react-native-safe-area-context'; 
-import ThemeContext from '../theme/ThemeContext';
-import { HEIGHT, WIDTH } from '../constants/sizes';
+import ThemeContext from '../../theme/ThemeContext';
+import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { Pressable } from 'react-native';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ACCENT_COLOR, PRIMARY_COLOR } from '../constants/colors';
+import { ACCENT_COLOR, PRIMARY_COLOR } from '../../constants/colors';
 
-import ShareSvg from '../../assets/icons/share.svg'
-import EditSvg from '../../assets/icons/edit.svg'
+import ShareSvg from '../../../assets/icons/share.svg'
+import EditSvg from '../../../assets/icons/edit.svg'
 
 const MyProfileScreen = ({ }) => {
 
@@ -56,7 +56,7 @@ const MyProfileScreen = ({ }) => {
           
           {/*  */}
           <View style={{ backgroundColor: theme.background, alignItems: "center" }}>
-              <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
+              <Image  source={ require("../../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
             <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
                 MyProfileScreen
             </Text>
