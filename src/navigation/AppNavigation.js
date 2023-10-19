@@ -14,6 +14,7 @@ import ThemeContext from '../theme/ThemeContext';
 import theme from '../theme/theme';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import UploadSvg  from '../../assets/icons/upload.svg'
 import HomeSvg  from '../../assets/icons/home1.svg' 
@@ -29,8 +30,12 @@ import NewPasswordScreen from '../screens/auth/NewPassword';
 import MessageUserScreen from '../screens/MessageUserScreen';
 import SearchScreen from '../screens/search/SearchScreen';
 import Inbox from '../screens/Inbox';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import SecondScreen from '../screens/Second';
+import EditProfileScreen from '../screens/profile/EditProfileScreen';
+import ProfileSettingsScreen from '../screens/profile/profileSettingsScreen';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function AppNavigation() { 
@@ -68,28 +73,40 @@ export default function AppNavigation() {
 return (
   <ThemeContext.Provider value={darkMode === true ? theme.dark : theme.light }>
     <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='HomeScreen' component={HomeTabs} />
-        <Stack.Screen name='PostFull' component={FullVideoScreen} />
-        <Stack.Screen name='UserProfileScreen' component={UserProfileScreen} />
-        <Stack.Screen name='MyProfileScreen' component={MyProfileScreen} />
-        <Stack.Screen name='FollowersScreen' component={FollowersScreen} />
-        <Stack.Screen name='FollowingScreen' component={FollowingScreen} />
-        <Stack.Screen name='CameraScreen' component={CameraScreen} />
-        <Stack.Screen name='LoginScreen' component={LoginScreen} />
-        <Stack.Screen name='SignupScreen' component={SignupScreen} />
-        <Stack.Screen name='OTPScreen' component={OTPScreen} />
-        <Stack.Screen name='ForgotPasswordScreen' component={ForgotPassworScreen} />
-        <Stack.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
-        <Stack.Screen name='FoundersScreen' component={FoundersScreen} />
-        <Stack.Screen name='messageUserScreen' component={MessageUserScreen} />
-        <Stack.Screen name='Inbox' component={Inbox} />
-        <Stack.Screen name='SearchScreen' component={SearchScreen} />
-      </Stack.Navigator>
+      {/* <AllScreenTabs /> */}
+      <DrawerGroup />
     </NavigationContainer>
   </ThemeContext.Provider>
 )};
 
+const ScreenTabs = createNativeStackNavigator()
+
+function AllScreenTabs() {
+  return (
+    <ScreenTabs.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
+        <ScreenTabs.Screen name='HomeScreen' component={HomeTabs} />
+        <ScreenTabs.Screen name='PostFull' component={FullVideoScreen} />
+        <ScreenTabs.Screen name='UserProfileScreen' component={UserProfileScreen} />
+        <ScreenTabs.Screen name='MyProfileScreen' component={MyProfileScreen} />
+        <ScreenTabs.Screen name='FollowersScreen' component={FollowersScreen} />
+        <ScreenTabs.Screen name='FollowingScreen' component={FollowingScreen} />
+        <ScreenTabs.Screen name='CameraScreen' component={CameraScreen} />
+        <ScreenTabs.Screen name='LoginScreen' component={LoginScreen} />
+        <ScreenTabs.Screen name='SignupScreen' component={SignupScreen} />
+        <ScreenTabs.Screen name='OTPScreen' component={OTPScreen} />
+        <ScreenTabs.Screen name='ForgotPasswordScreen' component={ForgotPassworScreen} />
+        <ScreenTabs.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
+        <ScreenTabs.Screen name='FoundersScreen' component={FoundersScreen} />
+        <ScreenTabs.Screen name='messageUserScreen' component={MessageUserScreen} />
+        <ScreenTabs.Screen name='Inbox' component={Inbox} />
+        <ScreenTabs.Screen name='SearchScreen' component={SearchScreen} />
+        <ScreenTabs.Screen name='editProfileScreen' component={EditProfileScreen} />
+        <ScreenTabs.Screen name='profileSettingsScreen' component={ProfileSettingsScreen} />
+      </ScreenTabs.Navigator>
+  )
+}
+
+// tabgroup == hometabs
 
 function HomeTabs() {
 
@@ -157,3 +174,28 @@ const menuIcons = (route, focused) => {
 // export default AppNavigation;
 
   
+
+// APP DRAWER
+const Drawer = createDrawerNavigator()
+
+function DrawerGroup() {
+  return (
+    <Drawer.Navigator screenOptions={{headerShown: false}}>
+      <Drawer.Screen name='AllScreenTabs' component={AllScreenTabs} />
+      <Drawer.Screen name='SecondSCreen' component={SecondScreen} />
+    </Drawer.Navigator>
+  )
+}
+
+// PROFILE PAGE TOP TABS 
+// const ProfileTabs = createMaterialTopTabNavigator()
+
+// function ProfileTabsGroup() {
+//   return (
+//     <ProfileTabs.Navigator>
+//       <ProfileTabs.Screen name='Followers' component={FollowersScreen} />
+//       <ProfileTabs.Screen name='Followers' component={FollowersScreen} />
+//       <ProfileTabs.Screen name='Following' component={FollowingScreen} />
+//     </ProfileTabs.Navigator>
+//   )
+// }

@@ -1,0 +1,265 @@
+{
+    "onboardingScreen": {
+        "showTalentHere": "أظهر موهبتك هنا",
+        "signIn": "تسجيل الدخول",
+        "signUp": "اشتراك",
+        "tapBack": "اضغط مرة أخرى للخروج من التطبيق"
+    },
+    "signInScreen": {
+        "signIn": "تسجيل الدخول",
+        "enterNumber": "أدخل رقم هاتفك",
+        "oTPVerification": "*سنرسل OTP للتحقق",
+        "or": "أو",
+        "noAccount": "ليس لديك حساب؟",
+        "signUp": "اشتراك",
+        "tapBack": "اضغط مرة أخرى للخروج من التطبيق"
+    },
+    "signUpScreen": {
+        "signUp": "اشتراك",
+        "name": "أدخل أسمك",
+        "emailId": "أدخل معرف البريد الإلكتروني الخاص بك",
+        "number": "أدخل رقم هاتفك",
+        "or": "أو",
+        "alreadyAccount": "هل لديك حساب؟",
+        "signIn": "تسجيل الدخول"
+    },
+    "verificationScreen": {
+        "verification": "التحقق من OTP",
+        "pleaseEnter": "الرجاء إدخال رمز التحقق هنا الذي أرسلناه لك للتو",
+        "receiveCode": "إذا لم تتلق رمز!",
+        "resend": "إعادة إرسال",
+        "verify": "يؤكد"
+    },
+    "languagesScreen": {
+        "selectLanguage": "حدد لغاتك",
+        "hindi": "الهندية",
+        "gujrati": "يمر من خلال",
+        "english": "إنجليزي",
+        "marathi": "المهاراتية",
+        "telugu": "التيلجو",
+        "malayalam": "الملايالام",
+        "tamil": "التاميل",
+        "panjabi": "البنجابية",
+        "kannada": "الكانادا",
+        "bhojpuri": "بوجبوري",
+        "bengali": "البنغالية",
+        "haryanvi": "مضايقة",
+        "selectMoreThan": "*حدد أكثر من 3 لغات",
+        "continue": "يكمل"
+    },
+    "bottomTab": {
+        "tapBack": "اضغط مرة أخرى للخروج من التطبيق"
+    },
+    "homeScreen": {
+        "forYou": "لك",
+        "following": "التالي",
+        "unfollow": "الغاء المتابعة"
+    },
+    "forYouAndFollowingVideo": {
+        "follow": "يتبع"
+    },
+    "menuBottomSheet": {
+        "saveVideo": "حفظ الفيديو",
+        "downloadVideo": "تحميل الفيديو"
+    },
+    "commentsBottomSheet": {
+        "comments": "تعليقات",
+        "reply": "رد",
+        "comment": "تعليق"
+    },
+    "audioScreen": {
+        "originalAudio": "الصوت الأصلي",
+        "saveAudio": "حفظ الصوت",
+        "useThisAudio": "استخدم هذا الصوت"
+    },
+    "recordVideoScreen": {
+        "next": "التالي",
+        "flip": "يواجه",
+        "timer": "مؤقت",
+        "speed": "سرعة",
+        "filters": "المرشحات",
+        "flash": "فلاش",
+        "effect": "تأثير",
+        "music": "موسيقى",
+        "upload": "رفع",
+        "dargeAndTab": "دارج وانقر لتحديد المدة",
+        "start": "يبدأ"
+    },
+    "effectsBottomSheet": {
+        "effects": "تأثيرات"
+    },
+    "userAudioScreen": {
+        "follow": "يتبع",
+        "useThisAudio": "استخدم هذا الصوت",
+        "deleteVideo": "حذف الفيديو",
+        "unFollow": "الغاء المتابعة"
+    },
+    "musicScreen": {
+        "library": "مكتبة",
+        "dialogue": "حوار",
+        "favorite": "مفضل",
+        "search": "يبحث"
+    },
+    "musicLibraryTab": {
+        "apply": "يتقدم",
+        "remove": "تمت إزالته من الموسيقى المحببة.",
+        "added": "إضافة إلى الموسيقى أحب."
+    },
+    "dialogueTab": {
+        "apply": "يتقدم",
+        "remove": "تمت إزالته من الحوار المحبوب.",
+        "added": "أضاف إلى الحوار أحب."
+    },
+    "favoriteMusicTab": {
+        "apply": "يتقدم",
+        "remove": "يزيل",
+        "removedFavorite": "تمت إزالته من المفضل.",
+        "empty": "القائمة المفضلة الفارغة"
+    },
+    "postScreen": {
+        "describeVideo": "صف الفيديو الخاص بك",
+        "saveGallery": "حفظ المعرض",
+        "sharePost": "آخر حصة",
+        "post": "بريد"
+    },
+    "otherUserProfileScreen": {
+        "follow": "يتبع",
+        "following": "التالي",
+        "followers": "متابعون",
+        "post": "بريد",
+        "shareProfile": "مشاركة الملف الشخصي",
+        "report": "تقرير",
+        "block": "حاجز",
+        "unFollow": "الغاء المتابعة"
+    },
+
+    "userVideoScreen": {
+        "follow": "يتبع",
+        "downloadVideo": "تحميل الفيديو",
+        "deleteVideo": "حذف الفيديو"
+    },
+    "followingScreen": {
+        "following": "التالي"
+    },
+    "followingAndFollowersCard": {
+        "following": "التالي",
+        "follow": "يتبع",
+        "followers": "متابعون"
+    },
+    "followersScreen": {
+        "followers": "متابعون"
+    },
+    "searchScreen": {
+        "search": "يبحث",
+        "seeAll": "اظهار الكل",
+        "birthday": "عيد ميلاد سعيد",
+        "trending": "الشائع",
+        "funny": "مضحك",
+        "popular": "شائع",
+        "emotional": "عاطفي",
+        "christmas": "عيد الميلاد",
+        "unFollow": "الغاء المتابعة"
+    },
+    "searchSeeAllScreen": {
+        "unFollow": "الغاء المتابعة"
+    },
+    "notificationScreen": {
+        "notification": "إشعار",
+        "noNotification": "لا يوجد إشعار جديد",
+        "remove": "الإخطار تمت إزالته."
+    },
+    "profileScreen": {
+        "profile": "حساب تعريفي",
+        "following": "التالي",
+        "followers": "متابعون",
+        "post": "بريد",
+        "editProfile": "تعديل الملف الشخصي",
+        "video": "فيديو",
+        "savelist": "سافيليست"
+    },
+    "videoTab": {
+        "deleteVideo": "حذف الفيديو"
+    },
+    "saveListTab": {
+        "emptySaveList": "قائمة حفظ فارغة",
+        "description": "لا يشعر أي شيء بحفظه في قائمتك. دعنا أضف شخصًا ما"
+    },
+    "profileSettingsScreen": {
+        "profileSettings": "إعدادات الملف الشخصي",
+        "notification": "إشعار",
+        "language": "لغة",
+        "shareProfile": "مشاركة الملف الشخصي",
+        "blockList": "قائمة الحظر",
+        "whoPost": "من يستطيع رؤية رسالتك",
+        "rate": "معدل",
+        "about": "عن",
+        "logout": "تسجيل خروج"
+    },
+    "logoutModal": {
+        "areYouSureLogout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+        "cancel": "يلغي",
+        "logout": "تسجيل خروج"
+    },
+    "rateModal": {
+        "likeApp": "هل مثل هذا التطبيق",
+        "description": "امنحنا ملاحظاتك مع التصنيف ، حتى نعرف ما إذا كنت ترغب في ذلك؟",
+        "submit": "يُقدِّم",
+        "notNow": "ليس الآن"
+    },
+    "notificationSettingScreen": {
+        "notification": "إشعار",
+        "follow": "يتبع",
+        "likes": "الإعجابات",
+        "comments": "تعليقات",
+        "shareItem": "مشاركة البند",
+        "update": "تحديث من الأشخاص الذين تتبعهم"
+    },
+    "blockListScreen": {
+        "blockList": "قائمة الحظر",
+        "block": "حاجز",
+        "unblock": "رفع الحظر",
+        "followers": "متابعون"
+    },
+    "whoCanSeeYourPostScreen": {
+        "yourPost": "من يستطيع رؤية رسالتك",
+        "everyone": "الجميع",
+        "onlyMe": "انا فقط",
+        "onlyFollowers": "أتباع فقط"
+    },
+    "aboutScreen": {
+        "about": "عن",
+        "privacyPolicy": "سياسة الخصوصية",
+        "termsUse": "شروط الاستخدام"
+    },
+    "privacyPolicyScreen": {
+        "privacyPolicy": "سياسة الخصوصية"
+    },
+    "termOfUseScreen": {
+        "termUse": "مصطلح الاستخدام"
+    },
+    "editProfileScreen": {
+        "editProfile": "تعديل الملف الشخصي",
+        "name": "اسم",
+        "enterName": "أدخل أسمك",
+        "email": "عنوان الايميل",
+        "enterEmail": "أدخل معرف البريد الإلكتروني الخاص بك",
+        "mobile": "رقم التليفون",
+        "enterMobile": "أدخل رقم هاتفك",
+        "bio": "السيرة الذاتية",
+        "enterBio": "أدخل سيرتك الذاتية",
+        "update": "تحديث",
+        "changeProfile": "تغيير صورة الملف الشخصي",
+        "camera": "آلة تصوير",
+        "gallery": "صالة عرض",
+        "remove": "يزيل",
+        "removeImage": "تمت إزالة صورة الملف الشخصي.",
+        "deny": "لقد أنكرت الوصول إلى الكاميرا !!!"
+    },
+    "userFollowingScreen": {
+        "following": "التالي"
+    },
+    "languageScreen": {
+        "language": "لغة",
+        "update": "تحديث"
+    }
+}

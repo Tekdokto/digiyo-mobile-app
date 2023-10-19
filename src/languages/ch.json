@@ -1,0 +1,265 @@
+{
+    "onboardingScreen": {
+        "showTalentHere": "在这里展示你的才华",
+        "signIn": "登入",
+        "signUp": "报名",
+        "tapBack": "再次点击以退出应用程序"
+    },
+    "signInScreen": {
+        "signIn": "登入",
+        "enterNumber": "输入你的电话号码",
+        "oTPVerification": "*我们将发送OTP进行验证",
+        "or": "或者",
+        "noAccount": "没有帐户？",
+        "signUp": "报名",
+        "tapBack": "再次点击以退出应用程序"
+    },
+    "signUpScreen": {
+        "signUp": "报名",
+        "name": "输入你的名字",
+        "emailId": "输入您的电子邮件ID",
+        "number": "输入你的电话号码",
+        "or": "或者",
+        "alreadyAccount": "已经有一个帐户？",
+        "signIn": "登入"
+    },
+    "verificationScreen": {
+        "verification": "OTP验证",
+        "pleaseEnter": "请在此处输入验证代码，我们刚刚发送给您",
+        "receiveCode": "如果您没有收到代码！",
+        "resend": "重发",
+        "verify": "核实"
+    },
+    "languagesScreen": {
+        "selectLanguage": "选择您的语言",
+        "hindi": "印地语",
+        "gujrati": "通过",
+        "english": "英语",
+        "marathi": "马拉地语",
+        "telugu": "泰卢固语",
+        "malayalam": "马拉雅拉姆语",
+        "tamil": "泰米尔人",
+        "panjabi": "潘贾比",
+        "kannada": "卡纳达语",
+        "bhojpuri": "bhojpuri",
+        "bengali": "孟加拉",
+        "haryanvi": "骚扰",
+        "selectMoreThan": "*选择3种以上的语言",
+        "continue": "继续"
+    },
+    "bottomTab": {
+        "tapBack": "再次点击以退出应用程序"
+    },
+    "homeScreen": {
+        "forYou": "为你",
+        "following": "下列的",
+        "unfollow": "取消关注"
+    },
+    "forYouAndFollowingVideo": {
+        "follow": "跟随"
+    },
+    "menuBottomSheet": {
+        "saveVideo": "保存视频",
+        "downloadVideo": "下载视频"
+    },
+    "commentsBottomSheet": {
+        "comments": "评论",
+        "reply": "回复",
+        "comment": "评论"
+    },
+    "audioScreen": {
+        "originalAudio": "原始音频",
+        "saveAudio": "保存音频",
+        "useThisAudio": "使用此音频"
+    },
+    "recordVideoScreen": {
+        "next": "下一个",
+        "flip": "翻动",
+        "timer": "计时器",
+        "speed": "速度",
+        "filters": "过滤器",
+        "flash": "闪光",
+        "effect": "影响",
+        "music": "音乐",
+        "upload": "上传",
+        "dargeAndTab": "darge和点击以设定持续时间",
+        "start": "开始"
+    },
+    "effectsBottomSheet": {
+        "effects": "效果"
+    },
+    "userAudioScreen": {
+        "follow": "跟随",
+        "useThisAudio": "使用此音频",
+        "deleteVideo": "删除视频",
+        "unFollow": "取消关注"
+    },
+    "musicScreen": {
+        "library": "图书馆",
+        "dialogue": "对话",
+        "favorite": "最喜欢的",
+        "search": "搜索"
+    },
+    "musicLibraryTab": {
+        "apply": "申请",
+        "remove": "从喜欢的音乐中删除。",
+        "added": "添加到喜欢的音乐。"
+    },
+    "dialogueTab": {
+        "apply": "申请",
+        "remove": "从喜欢的对话中删除。",
+        "added": "添加到喜欢的对话中。"
+    },
+    "favoriteMusicTab": {
+        "apply": "申请",
+        "remove": "消除",
+        "removedFavorite": "从最喜欢的地方删除。",
+        "empty": "空喜欢的列表"
+    },
+    "postScreen": {
+        "describeVideo": "描述您的视频",
+        "saveGallery": "保存画廊",
+        "sharePost": "分享帖子",
+        "post": "邮政"
+    },
+    "otherUserProfileScreen": {
+        "follow": "跟随",
+        "following": "下列的",
+        "followers": "追随者",
+        "post": "邮政",
+        "shareProfile": "共享个人资料",
+        "report": "报告",
+        "block": "堵塞",
+        "unFollow": "取消关注"
+    },
+
+    "userVideoScreen": {
+        "follow": "跟随",
+        "downloadVideo": "下载视频",
+        "deleteVideo": "删除视频"
+    },
+    "followingScreen": {
+        "following": "下列的"
+    },
+    "followingAndFollowersCard": {
+        "following": "下列的",
+        "follow": "跟随",
+        "followers": "追随者"
+    },
+    "followersScreen": {
+        "followers": "追随者"
+    },
+    "searchScreen": {
+        "search": "搜索",
+        "seeAll": "查看全部",
+        "birthday": "生日快乐",
+        "trending": "趋势",
+        "funny": "有趣的",
+        "popular": "受欢迎的",
+        "emotional": "情绪化",
+        "christmas": "圣诞节",
+        "unFollow": "取消关注"
+    },
+    "searchSeeAllScreen": {
+        "unFollow": "取消关注"
+    },
+    "notificationScreen": {
+        "notification": "通知",
+        "noNotification": "没有新的通知",
+        "remove": "删除了通知。"
+    },
+    "profileScreen": {
+        "profile": "轮廓",
+        "following": "下列的",
+        "followers": "追随者",
+        "post": "邮政",
+        "editProfile": "编辑个人资料",
+        "video": "视频",
+        "savelist": "Savelist"
+    },
+    "videoTab": {
+        "deleteVideo": "删除视频"
+    },
+    "saveListTab": {
+        "emptySaveList": "空保存列表",
+        "description": "觉得没什么可以保存在您的列表中。"
+    },
+    "profileSettingsScreen": {
+        "profileSettings": "配置文件设置",
+        "notification": "通知",
+        "language": "语言",
+        "shareProfile": "共享个人资料",
+        "blockList": "黑名单",
+        "whoPost": "谁可以看到您的帖子",
+        "rate": "速度",
+        "about": "关于",
+        "logout": "登出"
+    },
+    "logoutModal": {
+        "areYouSureLogout": "您确定要注销吗？",
+        "cancel": "取消",
+        "logout": "登出"
+    },
+    "rateModal": {
+        "likeApp": "你喜欢这个应用吗",
+        "description": "通过评分给我们您的反馈，所以我们知道您是否喜欢吗？",
+        "submit": "提交",
+        "notNow": "现在不要"
+    },
+    "notificationSettingScreen": {
+        "notification": "通知",
+        "follow": "跟随",
+        "likes": "喜欢",
+        "comments": "评论",
+        "shareItem": "共享项目",
+        "update": "您关注的人的更新"
+    },
+    "blockListScreen": {
+        "blockList": "黑名单",
+        "block": "堵塞",
+        "unblock": "解体",
+        "followers": "追随者"
+    },
+    "whoCanSeeYourPostScreen": {
+        "yourPost": "谁可以看到您的帖子",
+        "everyone": "每个人",
+        "onlyMe": "只有我",
+        "onlyFollowers": "只有追随者"
+    },
+    "aboutScreen": {
+        "about": "关于",
+        "privacyPolicy": "隐私政策",
+        "termsUse": "使用条款"
+    },
+    "privacyPolicyScreen": {
+        "privacyPolicy": "隐私政策"
+    },
+    "termOfUseScreen": {
+        "termUse": "使用期限"
+    },
+    "editProfileScreen": {
+        "editProfile": "编辑个人资料",
+        "name": "姓名",
+        "enterName": "输入你的名字",
+        "email": "电子邮件ID",
+        "enterEmail": "输入您的电子邮件ID",
+        "mobile": "电话号码",
+        "enterMobile": "输入你的电话号码",
+        "bio": "生物",
+        "enterBio": "输入您的简历",
+        "update": "更新",
+        "changeProfile": "更改个人资料照片",
+        "camera": "相机",
+        "gallery": "画廊",
+        "remove": "消除",
+        "removeImage": "删除了个人资料照片。",
+        "deny": "您否认访问相机！！！"
+    },
+    "userFollowingScreen": {
+        "following": "下列的"
+    },
+    "languageScreen": {
+        "language": "语言",
+        "update": "更新"
+    }
+}

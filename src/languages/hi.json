@@ -1,0 +1,265 @@
+{
+    "onboardingScreen": {
+        "showTalentHere": "अपनी प्रतिभा यहाँ दिखाओ",
+        "signIn": "दाखिल करना",
+        "signUp": "साइन अप करें",
+        "tapBack": "ऐप से बाहर निकलने के लिए फिर से टैप करें"
+    },
+    "signInScreen": {
+        "signIn": "दाखिल करना",
+        "enterNumber": "अपना फोन नंबर डालें",
+        "oTPVerification": "*हम सत्यापन के लिए OTP भेजेंगे",
+        "or": "या",
+        "noAccount": "कोई खाता नहीं है?",
+        "signUp": "साइन अप करें",
+        "tapBack": "ऐप से बाहर निकलने के लिए फिर से टैप करें"
+    },
+    "signUpScreen": {
+        "signUp": "साइन अप करें",
+        "name": "अपना नाम दर्ज करें",
+        "emailId": "अपना ईमेल आईडी दर्ज करें",
+        "number": "अपना फोन नंबर डालें",
+        "or": "या",
+        "alreadyAccount": "क्या आपके पास पहले से एक खाता मौजूद है?",
+        "signIn": "दाखिल करना"
+    },
+    "verificationScreen": {
+        "verification": "ओटीपी सत्यापन",
+        "pleaseEnter": "कृपया सत्यापन कोड दर्ज करें यहां हमने आपको भेजा है",
+        "receiveCode": "यदि आपको कोड नहीं मिला!",
+        "resend": "पुन: भेजें",
+        "verify": "सत्यापित करना"
+    },
+    "languagesScreen": {
+        "selectLanguage": "अपनी भाषाओं का चयन करें",
+        "hindi": "हिंदी",
+        "gujrati": "गुजरती",
+        "english": "अंग्रेज़ी",
+        "marathi": "मराठी",
+        "telugu": "तेलुगू",
+        "malayalam": "मलयालम",
+        "tamil": "तामिल",
+        "panjabi": "पंजाबी",
+        "kannada": "कन्नडा",
+        "bhojpuri": "भोजपुरी",
+        "bengali": "बंगाली",
+        "haryanvi": "परेशान",
+        "selectMoreThan": "*3 से अधिक भाषाओं का चयन करें",
+        "continue": "जारी रखना"
+    },
+    "bottomTab": {
+        "tapBack": "ऐप से बाहर निकलने के लिए फिर से टैप करें"
+    },
+    "homeScreen": {
+        "forYou": "आपके लिए",
+        "following": "अगले",
+        "unfollow": "करें"
+    },
+    "forYouAndFollowingVideo": {
+        "follow": "अनुसरण करना"
+    },
+    "menuBottomSheet": {
+        "saveVideo": "वीडियो सहेजें",
+        "downloadVideo": "वीडियो डाउनलोड करें J"
+    },
+    "commentsBottomSheet": {
+        "comments": "टिप्पणियाँ",
+        "reply": "जवाब",
+        "comment": "टिप्पणी"
+    },
+    "audioScreen": {
+        "originalAudio": "मूल ऑडियो",
+        "saveAudio": "ऑडियो सेव करें",
+        "useThisAudio": "इस ऑडियो का उपयोग करें"
+    },
+    "recordVideoScreen": {
+        "next": "अगला",
+        "flip": "पलटना",
+        "timer": "घड़ी",
+        "speed": "रफ़्तार",
+        "filters": "फिल्टर",
+        "flash": "चमक",
+        "effect": "प्रभाव",
+        "music": "संगीत",
+        "upload": "डालना",
+        "dargeAndTab": "अवधि निर्धारित करने के लिए darge और टैप करें",
+        "start": "शुरू"
+    },
+    "effectsBottomSheet": {
+        "effects": "प्रभाव"
+    },
+    "userAudioScreen": {
+        "follow": "अनुसरण करना",
+        "useThisAudio": "इस ऑडियो का उपयोग करें",
+        "deleteVideo": "वीडियो हटाएं",
+        "unFollow": "करें"
+    },
+    "musicScreen": {
+        "library": "पुस्तकालय",
+        "dialogue": "वार्ता",
+        "favorite": "पसंदीदा",
+        "search": "खोज"
+    },
+    "musicLibraryTab": {
+        "apply": "आवेदन करना",
+        "remove": "पसंद किए गए संगीत से हटा दिया गया।",
+        "added": "पसंद किए गए संगीत में जोड़ा गया।"
+    },
+    "dialogueTab": {
+        "apply": "आवेदन करना",
+        "remove": "पसंद किए गए संवाद से हटा दिया गया।",
+        "added": "पसंद किए गए संवाद में जोड़ा गया।"
+    },
+    "favoriteMusicTab": {
+        "apply": "आवेदन करना",
+        "remove": "निकालना",
+        "removedFavorite": "पसंदीदा से हटा दिया गया।",
+        "empty": "खाली पसंदीदा सूची"
+    },
+    "postScreen": {
+        "describeVideo": "अपने वीडियो का वर्णन करें",
+        "saveGallery": "गैलरी सहेजें",
+        "sharePost": "शेयर पद",
+        "post": "डाक"
+    },
+    "otherUserProfileScreen": {
+        "follow": "अनुसरण करना",
+        "following": "अगले",
+        "followers": "समर्थक",
+        "post": "डाक",
+        "shareProfile": "शेयर प्रोफ़ाइल",
+        "report": "प्रतिवेदन",
+        "block": "अवरोध पैदा करना",
+        "unFollow": "करें"
+    },
+
+    "userVideoScreen": {
+        "follow": "अनुसरण करना",
+        "downloadVideo": "वीडियो डाउनलोड करें ",
+        "deleteVideo": "वीडियो हटाएं"
+    },
+    "followingScreen": {
+        "following": "अगले"
+    },
+    "followingAndFollowersCard": {
+        "following": "अगले",
+        "follow": "अनुसरण करना",
+        "followers": "समर्थक"
+    },
+    "followersScreen": {
+        "followers": "समर्थक"
+    },
+    "searchScreen": {
+        "search": "खोज",
+        "seeAll": "सभी देखें",
+        "birthday": "जन्मदिन की शुभकामनाएँ",
+        "trending": "रुझान",
+        "funny": "मज़ेदार",
+        "popular": "लोकप्रिय",
+        "emotional": "भावनात्मक",
+        "christmas": "क्रिसमस",
+        "unFollow": "करें"
+    },
+    "searchSeeAllScreen": {
+        "unFollow": "करें"
+    },
+    "notificationScreen": {
+        "notification": "अधिसूचना",
+        "noNotification": "कोई नई अधिसूचना नहीं",
+        "remove": "अधिसूचना हटा दी गई।"
+    },
+    "profileScreen": {
+        "profile": "प्रोफ़ाइल",
+        "following": "अगले",
+        "followers": "समर्थक",
+        "post": "डाक",
+        "editProfile": "प्रोफ़ाइल संपादित करें",
+        "video": "वीडियो",
+        "savelist": "एक प्रकार का"
+    },
+    "videoTab": {
+        "deleteVideo": "वीडियो हटाएं"
+    },
+    "saveListTab": {
+        "emptySaveList": "खाली सहेजें सूची",
+        "description": "यह आपकी सूची में बचाने के लिए कुछ भी नहीं लगता है। किसी को जोड़ें"
+    },
+    "profileSettingsScreen": {
+        "profileSettings": "पार्श्वचित्र समायोजन",
+        "notification": "अधिसूचना",
+        "language": "भाषा",
+        "shareProfile": "शेयर प्रोफ़ाइल",
+        "blockList": "ब्लॉक सूची",
+        "whoPost": "आपकी पोस्ट कौन देख सकता है",
+        "rate": "दर",
+        "about": "के बारे में",
+        "logout": "लॉग आउट"
+    },
+    "logoutModal": {
+        "areYouSureLogout": "क्या आप लॉग आउट करना चाहते हैं?",
+        "cancel": "रद्द करना",
+        "logout": "लॉग आउट"
+    },
+    "rateModal": {
+        "likeApp": "क्या आपको यह ऐप पसंद है",
+        "description": "रेटिंग के साथ हमें अपनी प्रतिक्रिया दें, इसलिए हम जानते हैं कि क्या आप इसे पसंद करते हैं?",
+        "submit": "जमा करना",
+        "notNow": "अभी नहीं"
+    },
+    "notificationSettingScreen": {
+        "notification": "अधिसूचना",
+        "follow": "अनुसरण करना",
+        "likes": "को यह पसंद है",
+        "comments": "टिप्पणियाँ",
+        "shareItem": "शेयर आइटम",
+        "update": "जिन लोगों का आप अनुसरण करते हैं, उनसे अपडेट करें"
+    },
+    "blockListScreen": {
+        "blockList": "ब्लॉक सूची",
+        "block": "अवरोध पैदा करना",
+        "unblock": "अनब्लॉक",
+        "followers": "समर्थक"
+    },
+    "whoCanSeeYourPostScreen": {
+        "yourPost": "आपकी पोस्ट कौन देख सकता है",
+        "everyone": "सब लोग",
+        "onlyMe": "केवल मैं",
+        "onlyFollowers": "केवल अनुयायी"
+    },
+    "aboutScreen": {
+        "about": "के बारे में",
+        "privacyPolicy": "गोपनीयता नीति",
+        "termsUse": "उपयोग की शर्तें"
+    },
+    "privacyPolicyScreen": {
+        "privacyPolicy": "गोपनीयता नीति"
+    },
+    "termOfUseScreen": {
+        "termUse": "उपयोग की शर्त"
+    },
+    "editProfileScreen": {
+        "editProfile": "प्रोफ़ाइल संपादित करें",
+        "name": "नाम",
+        "enterName": "अपना नाम दर्ज करें",
+        "email": "ईमेल आईडी",
+        "enterEmail": "अपना ईमेल आईडी दर्ज करें",
+        "mobile": "फ़ोन नंबर",
+        "enterMobile": "अपना फोन नंबर डालें",
+        "bio": "जैव",
+        "enterBio": "अपना बायो दर्ज करें",
+        "update": "अद्यतन",
+        "changeProfile": "प्रोफ़ाइल फोटो बदलें",
+        "camera": "कैमरा",
+        "gallery": "गेलरी",
+        "remove": "निकालना",
+        "removeImage": "प्रोफ़ाइल फोटो हटा दिया गया।",
+        "deny": "आपने कैमरा एक्सेस करने से इनकार कर दिया है !!!"
+    },
+    "userFollowingScreen": {
+        "following": "अगले"
+    },
+    "languageScreen": {
+        "language": "भाषा",
+        "update": "अद्यतन"
+    }
+}

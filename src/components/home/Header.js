@@ -38,7 +38,7 @@ const HeaderComp = ({ menu, navigation}) => {
             <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
           </Pressable>
         </View>
-        <Pressable onPress={() => navigation.openDrawer()}>
+        <Pressable onPress={() => navigate.openDrawer()}>
             <Feather name={menu} color={theme.color} size={24} />
         </Pressable>
         {/* <Button icon="search">

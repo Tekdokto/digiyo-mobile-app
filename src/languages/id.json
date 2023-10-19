@@ -1,0 +1,265 @@
+{
+    "onboardingScreen": {
+        "showTalentHere": "Tunjukkan bakat Anda di sini",
+        "signIn": "Masuk",
+        "signUp": "Mendaftar",
+        "tapBack": "Ketuk Kembali Lagi untuk Keluar dari Aplikasi"
+    },
+    "signInScreen": {
+        "signIn": "Masuk",
+        "enterNumber": "Masukkan Nomor Telepon Anda",
+        "oTPVerification": "*Kami akan mengirim OTP untuk verifikasi",
+        "or": "Atau",
+        "noAccount": "Tidak punya akun?",
+        "signUp": "Mendaftar",
+        "tapBack": "Ketuk Kembali Lagi untuk Keluar dari Aplikasi"
+    },
+    "signUpScreen": {
+        "signUp": "Mendaftar",
+        "name": "Masukkan nama Anda",
+        "emailId": "Masukkan ID Email Anda",
+        "number": "Masukkan Nomor Telepon Anda",
+        "or": "Atau",
+        "alreadyAccount": "Sudah memiliki akun?",
+        "signIn": "Masuk"
+    },
+    "verificationScreen": {
+        "verification": "Verifikasi OTP",
+        "pleaseEnter": "Harap masukkan kode verifikasi di sini kami baru saja mengirim Anda",
+        "receiveCode": "Jika Anda tidak menerima kode!",
+        "resend": "Ulang",
+        "verify": "Memeriksa"
+    },
+    "languagesScreen": {
+        "selectLanguage": "Pilih bahasa Anda",
+        "hindi": "hindi",
+        "gujrati": "Melewati",
+        "english": "Bahasa inggris",
+        "marathi": "marathi",
+        "telugu": "telugu",
+        "malayalam": "malayalam",
+        "tamil": "tamil",
+        "panjabi": "panjabi",
+        "kannada": "kannada",
+        "bhojpuri": "bhojpuri",
+        "bengali": "Benggala",
+        "haryanvi": "Mengganggu",
+        "selectMoreThan": "*Pilih lebih dari 3 bahasa",
+        "continue": "Melanjutkan"
+    },
+    "bottomTab": {
+        "tapBack": "Ketuk Kembali Lagi untuk Keluar dari Aplikasi"
+    },
+    "homeScreen": {
+        "forYou": "Untukmu",
+        "following": "Mengikuti",
+        "unfollow": "Berhenti mengikuti"
+    },
+    "forYouAndFollowingVideo": {
+        "follow": "Mengikuti"
+    },
+    "menuBottomSheet": {
+        "saveVideo": "Simpan video",
+        "downloadVideo": "Unduh video"
+    },
+    "commentsBottomSheet": {
+        "comments": "Komentar",
+        "reply": "Membalas",
+        "comment": "Komentar"
+    },
+    "audioScreen": {
+        "originalAudio": "Audio Asli",
+        "saveAudio": "Simpan audio",
+        "useThisAudio": "Gunakan audio ini"
+    },
+    "recordVideoScreen": {
+        "next": "Berikutnya",
+        "flip": "Balik",
+        "timer": "timer",
+        "speed": "Kecepatan",
+        "filters": "Filter",
+        "flash": "Kilatan",
+        "effect": "Memengaruhi",
+        "music": "Musik",
+        "upload": "Mengunggah",
+        "dargeAndTab": "Darge dan ketuk untuk mengatur durasi",
+        "start": "Awal"
+    },
+    "effectsBottomSheet": {
+        "effects": "Efek"
+    },
+    "userAudioScreen": {
+        "follow": "Mengikuti",
+        "useThisAudio": "Gunakan audio ini",
+        "deleteVideo": "Hapus video",
+        "unFollow": "Berhenti mengikuti"
+    },
+    "musicScreen": {
+        "library": "Perpustakaan",
+        "dialogue": "Dialog",
+        "favorite": "Favorit",
+        "search": "Mencari"
+    },
+    "musicLibraryTab": {
+        "apply": "Menerapkan",
+        "remove": "Dihapus dari musik yang disukai.",
+        "added": "Ditambahkan ke musik yang disukai."
+    },
+    "dialogueTab": {
+        "apply": "Menerapkan",
+        "remove": "Dihapus dari dialog yang disukai.",
+        "added": "Ditambahkan ke dialog yang disukai."
+    },
+    "favoriteMusicTab": {
+        "apply": "Menerapkan",
+        "remove": "Menghapus",
+        "removedFavorite": "Dihapus dari favorit.",
+        "empty": "Daftar favorit kosong"
+    },
+    "postScreen": {
+        "describeVideo": "Jelaskan video Anda",
+        "saveGallery": "Simpan galeri",
+        "sharePost": "Bagikan posting",
+        "post": "Pos"
+    },
+    "otherUserProfileScreen": {
+        "follow": "Mengikuti",
+        "following": "Mengikuti",
+        "followers": "Pengikut",
+        "post": "Pos",
+        "shareProfile": "Bagikan profil",
+        "report": "Laporan",
+        "block": "Memblokir",
+        "unFollow": "Berhenti mengikuti"
+    },
+
+    "userVideoScreen": {
+        "follow": "Mengikuti",
+        "downloadVideo": "Unduh video",
+        "deleteVideo": "Hapus video"
+    },
+    "followingScreen": {
+        "following": "Mengikuti"
+    },
+    "followingAndFollowersCard": {
+        "following": "Mengikuti",
+        "follow": "Mengikuti",
+        "followers": "Pengikut"
+    },
+    "followersScreen": {
+        "followers": "Pengikut"
+    },
+    "searchScreen": {
+        "search": "Mencari",
+        "seeAll": "Lihat semua",
+        "birthday": "Selamat ulang tahun",
+        "trending": "Tren",
+        "funny": "Lucu",
+        "popular": "Populer",
+        "emotional": "Emosional",
+        "christmas": "Natal",
+        "unFollow": "Berhenti mengikuti"
+    },
+    "searchSeeAllScreen": {
+        "unFollow": "Berhenti mengikuti"
+    },
+    "notificationScreen": {
+        "notification": "Pemberitahuan",
+        "noNotification": "Tidak ada pemberitahuan baru",
+        "remove": "Pemberitahuan dihapus."
+    },
+    "profileScreen": {
+        "profile": "Profil",
+        "following": "Mengikuti",
+        "followers": "Pengikut",
+        "post": "Pos",
+        "editProfile": "Sunting profil",
+        "video": "video",
+        "savelist": "SaveList"
+    },
+    "videoTab": {
+        "deleteVideo": "Hapus video"
+    },
+    "saveListTab": {
+        "emptySaveList": "Daftar Simpan Kosong",
+        "description": "Rasanya tidak ada yang disimpan dalam daftar Anda. Mari kita tambahkan seseorang"
+    },
+    "profileSettingsScreen": {
+        "profileSettings": "Pengaturan Profil",
+        "notification": "Pemberitahuan",
+        "language": "Bahasa",
+        "shareProfile": "Bagikan profil",
+        "blockList": "Daftar blok",
+        "whoPost": "Siapa yang bisa melihat posting Anda",
+        "rate": "Kecepatan",
+        "about": "Tentang",
+        "logout": "Keluar"
+    },
+    "logoutModal": {
+        "areYouSureLogout": "Apakah Anda yakin ingin keluar?",
+        "cancel": "Membatalkan",
+        "logout": "Keluar"
+    },
+    "rateModal": {
+        "likeApp": "Apakah Anda menyukai aplikasi ini",
+        "description": "Beri kami tanggapan Anda dengan peringkat, jadi kami tahu jika Anda menyukainya?",
+        "submit": "Kirim",
+        "notNow": "Tidak sekarang"
+    },
+    "notificationSettingScreen": {
+        "notification": "Pemberitahuan",
+        "follow": "Mengikuti",
+        "likes": "Suka",
+        "comments": "Komentar",
+        "shareItem": "Bagikan item",
+        "update": "Perbarui dari orang yang Anda ikuti"
+    },
+    "blockListScreen": {
+        "blockList": "Daftar blok",
+        "block": "Memblokir",
+        "unblock": "Buka Blokir",
+        "followers": "Pengikut"
+    },
+    "whoCanSeeYourPostScreen": {
+        "yourPost": "Siapa yang bisa melihat posting Anda",
+        "everyone": "Setiap orang",
+        "onlyMe": "Hanya saya",
+        "onlyFollowers": "Hanya pengikut"
+    },
+    "aboutScreen": {
+        "about": "Tentang",
+        "privacyPolicy": "Kebijakan pribadi",
+        "termsUse": "Syarat Penggunaan"
+    },
+    "privacyPolicyScreen": {
+        "privacyPolicy": "Kebijakan pribadi"
+    },
+    "termOfUseScreen": {
+        "termUse": "Istilah penggunaan"
+    },
+    "editProfileScreen": {
+        "editProfile": "Sunting profil",
+        "name": "Nama",
+        "enterName": "Masukkan nama Anda",
+        "email": "ID Email",
+        "enterEmail": "Masukkan ID Email Anda",
+        "mobile": "Nomor telepon",
+        "enterMobile": "Masukkan Nomor Telepon Anda",
+        "bio": "bio",
+        "enterBio": "Masukkan bio Anda",
+        "update": "Memperbarui",
+        "changeProfile": "Ubah foto profil",
+        "camera": "Kamera",
+        "gallery": "Galeri",
+        "remove": "Menghapus",
+        "removeImage": "Foto profil dihapus.",
+        "deny": "Anda telah ditolak untuk mengakses kamera !!!"
+    },
+    "userFollowingScreen": {
+        "following": "Mengikuti"
+    },
+    "languageScreen": {
+        "language": "Bahasa",
+        "update": "Memperbarui"
+    }
+}
