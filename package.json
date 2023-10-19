@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@fawazahmed/react-native-read-more": "^3.0.3",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/drawer": "^6.6.4",

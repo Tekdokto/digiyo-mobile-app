@@ -20,6 +20,7 @@ import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
 import { EventRegister } from "react-native-event-listeners";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { HEIGHT } from "../../constants/sizes";
 // import MyStatusBar from "../components/myStatusBar";
 
 const ProfileSettingsScreen = ({ navigation }) => {
@@ -184,14 +185,26 @@ const ProfileSettingsScreen = ({ navigation }) => {
         keyExtractor={(item) => item.key}
         showsVerticalScrollIndicator={false}
       />
-      <Switch
-        value={darkMode} 
-        onValueChange={(value) => {
-          setDarkMode(value)
-          EventRegister.emit("ChangeTheme", value)
-          AsyncStorage.setItem('darkMode', value.toString())
-        }}
-      />
+      <View 
+        style={{ 
+            position: "absolute", 
+          bottom: HEIGHT * 0.15, 
+          left:0, 
+          right: 0, 
+          flex: 1, 
+          alignItems: "center" }}>
+        <Switch
+          value={darkMode} 
+          onValueChange={(value) => {
+            setDarkMode(value)
+            EventRegister.emit("ChangeTheme", value)
+            AsyncStorage.setItem('darkMode', value.toString())
+          }}
+        />
+        <Text style={{ color: theme.color, marginTop: 10 }}>
+          Switch Modes
+        </Text>
+      </View>
 
       <TouchableOpacity
         onPress={() => setOpenLogoutModal(true)}

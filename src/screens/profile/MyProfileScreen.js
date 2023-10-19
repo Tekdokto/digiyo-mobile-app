@@ -10,13 +10,13 @@ import VideoTab from "../../components/videoTab";
 import { Colors, Default, Fonts } from "../../constants/styles2";
 import { useTranslation } from "react-i18next";
 import ThemeContext from "../../theme/ThemeContext";
-import { EventRegister } from "react-native-event-listeners";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
 import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 
 import ShareSvg from '../../../assets/icons/share.svg'
 import EditSvg from '../../../assets/icons/edit.svg'
+import FollowersScreen from "../FollowUnfollow/FollowersScreen";
+import FollowingScreen from "../FollowUnfollow/FollowingScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -44,13 +44,6 @@ const MyProfileScreen = () => {
             marginHorizontal: Default.fixPadding * 2,
           }}
         >
-          {/* <Text
-            style={{
-              ...Fonts.Bold18white,
-            }}
-          >
-            {tr("profile")}
-          </Text> */}
           <View></View>
 
           <TouchableOpacity
@@ -62,10 +55,6 @@ const MyProfileScreen = () => {
 
         <View
           style={{
-            // flexDirection: isRtl ? "row-reverse" : "row",
-            // marginTop: Default.fixPadding * 2,
-            // marginBottom: Default.fixPadding * 2,
-            // marginHorizontal: Default.fixPadding * 2,
           }}
         >
           <Image
@@ -201,6 +190,7 @@ const MyProfileScreen = () => {
                   </Text>
                 </View>
               </AwesomeButton>
+              <View style={{margin:8}}></View>
               <AwesomeButton 
                   height={50}
                   onPressOut={() => navigation.push("editProfileScreen")}
@@ -290,28 +280,38 @@ const MyProfileScreen = () => {
     );
   };
 
-  const title1 = isRtl ? tr("savelist") : tr("video");
-  const title2 = isRtl ? tr("video") : tr("savelist");
+  const title1 = isRtl ? tr("post") : tr("followers");
+  const title2 = tr("following");
+  const title3 = isRtl ? tr("followers") : tr("post");
 
   return (
     <>
       <MyStatusBar />
       <Tab.Navigator
         tabBar={(props) => <CustomTabBar {...props} />}
-        initialRouteName="videoTab"
+        initialRouteName="post"
+        screenOptions={{headerShown: false}}
       >
         <Tab.Screen
-          name={isRtl ? "saveListTab" : "videoTab"}
-          component={isRtl ? SaveListTab : VideoTab}
+          name={isRtl ? "followers" : "post"}
+          component={!isRtl ? FollowersScreen : VideoTab}
           options={{
             title: title1,
           }}
+          screenOptions={{headerShown: false}}
         />
         <Tab.Screen
-          name={isRtl ? "videoTab" : "saveListTab"}
-          component={isRtl ? VideoTab : SaveListTab}
+          name={"following"}
+          component={FollowingScreen({isHeader: false})}
           options={{
             title: title2,
+          }}
+        />
+        <Tab.Screen
+          name={isRtl ? "post" : "followers"}
+          component={!isRtl ? VideoTab : FollowersScreen}
+          options={{
+            title: title3,
           }}
         />
       </Tab.Navigator>

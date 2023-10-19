@@ -34,6 +34,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SecondScreen from '../screens/Second';
 import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import ProfileSettingsScreen from '../screens/profile/profileSettingsScreen';
+import OtherUserProfileScreen from '../screens/otherUserProfileScreen';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,8 +74,8 @@ export default function AppNavigation() {
 return (
   <ThemeContext.Provider value={darkMode === true ? theme.dark : theme.light }>
     <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
-      {/* <AllScreenTabs /> */}
-      <DrawerGroup />
+      <AllScreenTabs />
+      {/* <DrawerGroup /> */}
     </NavigationContainer>
   </ThemeContext.Provider>
 )};
@@ -102,6 +103,7 @@ function AllScreenTabs() {
         <ScreenTabs.Screen name='SearchScreen' component={SearchScreen} />
         <ScreenTabs.Screen name='editProfileScreen' component={EditProfileScreen} />
         <ScreenTabs.Screen name='profileSettingsScreen' component={ProfileSettingsScreen} />
+        <ScreenTabs.Screen name='otherUserProfileScreen' component={OtherUserProfileScreen} />
       </ScreenTabs.Navigator>
   )
 }
@@ -186,16 +188,3 @@ function DrawerGroup() {
     </Drawer.Navigator>
   )
 }
-
-// PROFILE PAGE TOP TABS 
-// const ProfileTabs = createMaterialTopTabNavigator()
-
-// function ProfileTabsGroup() {
-//   return (
-//     <ProfileTabs.Navigator>
-//       <ProfileTabs.Screen name='Followers' component={FollowersScreen} />
-//       <ProfileTabs.Screen name='Followers' component={FollowersScreen} />
-//       <ProfileTabs.Screen name='Following' component={FollowingScreen} />
-//     </ProfileTabs.Navigator>
-//   )
-// }

@@ -10,6 +10,7 @@ import { BACKDROP_COLOR, } from '../../constants/colors';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { HEIGHT, OVERDRAG, } from '../../constants/sizes';
 import ThemeContext from '../../theme/ThemeContext';
+import CommentsBottomSheet from '../../components/commentsBottomSheet';
 // import ThemeContext from '../../theme/ThemeContext';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
@@ -18,8 +19,10 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 const HomeScreen = () => {
   const theme = useContext(ThemeContext);
 
-  const offSet = useSharedValue(0);
+  // const offSet = useSharedValue(0);
   const [isOpen, setOpen ] = useState(false);
+
+  const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
 
   const handlePress = () => {
     console.log("click")
@@ -27,16 +30,10 @@ const HomeScreen = () => {
 
   const toggleSheet = () => {
     setOpen(!isOpen);
+    setOpenCommentBottomSheet(!openCommentBottomSheet)
+    console.log(openCommentBottomSheet)
   }
-
-  // const pan = Gesture.Pan().onChange((event) => {
-  //   offSet.value += event.changeY
-  // })
-
-  // const translateY = useAnimatedStyle(() => ({
-  //   transform: [{ translateY: offSet.value }]
-  // }))
-
+ 
   return (
     <>
       <StatusBar barStyle={"light-content"} />
@@ -52,24 +49,27 @@ const HomeScreen = () => {
                 </View>
               {/* side icons */}
                 <SideIconsComp />
-                { isOpen && (
+                { openCommentBottomSheet && (
                   <>
-                  <AnimatedPressable 
+                  <CommentsBottomSheet
+                    visible={openCommentBottomSheet}
+                    closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
+                  />
+                  {/* <AnimatedPressable 
                     style={styles.backdrop} onPress={toggleSheet} 
                     entering={FadeIn}
                     exiting={FadeOut}  
-                  />
-                    {/* <GestureDetector gesture={pan}> */}
+                  /> */}
+{/*                   
                       <Animated.View 
                         style={ [ styles.sheet, 
-                          // translateY 
+                         
                         ] }
                         entering={SlideInDown.springify().damping(15)}
                         exiting={SlideOutDown}
                       >
                             <BottomSheets />
-                      </Animated.View>
-                    {/* </GestureDetector> */}
+                      </Animated.View> */}
                   
                   
                   </>

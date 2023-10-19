@@ -115,7 +115,7 @@ import ThemeContext from "../../theme/ThemeContext";
           </TouchableOpacity>
           <Text
             style={{
-              ...Fonts.SemiBold18white,
+              ...Fonts.SemiBold18white, color: theme.color,
               marginHorizontal: Default.fixPadding * 1.2,
             }}
           >

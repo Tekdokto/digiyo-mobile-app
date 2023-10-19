@@ -6,14 +6,17 @@ import {
     Dimensions,
     TouchableOpacity,
   } from "react-native";
-  import React from "react";
+  import React, { useContext } from "react";
   import Ionicons from "react-native-vector-icons/Ionicons"; 
   import { useTranslation } from "react-i18next";
 import { Default, Colors, Fonts } from "../constants/styles2";
+import ThemeContext from "../theme/ThemeContext";
   
   const { width } = Dimensions.get("window");
   
   const VideoTab = ({ navigation }) => {
+
+    const theme = useContext(ThemeContext)
     const { t, i18n } = useTranslation();
   
     const isRtl = i18n.dir() == "rtl";
@@ -143,7 +146,7 @@ import { Default, Colors, Fonts } from "../constants/styles2";
               <Ionicons name="play" size={18} color={Colors.white} />
               <Text
                 style={{
-                  ...Fonts.SemiBold12white,
+                  ...Fonts.SemiBold12white,  color:theme.color ,
                   marginHorizontal: Default.fixPadding * 0.2,
                 }}
               >
@@ -155,7 +158,7 @@ import { Default, Colors, Fonts } from "../constants/styles2";
       );
     };
     return (
-      <View style={{ flex: 1, backgroundColor: Colors.black }}>
+      <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
         <FlatList
           numColumns={3}
           data={videoList}

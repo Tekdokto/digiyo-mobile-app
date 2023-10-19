@@ -7,16 +7,19 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React, { useState } from "react";
-import { Colors, Default, Fonts } from "../constants/styles2";
+import React, { useContext, useState } from "react";
+import { Colors, Default, Fonts } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { ms } from "react-native-size-matters/extend";
 import { useTranslation } from "react-i18next";
-import MyStatusBar from "../../../components/myStatusBar";
+import MyStatusBar from "../../components/MyStatusBar";
+import ThemeContext from "../../theme/ThemeContext";
+import { Pressable } from "react-native";
 
 const { width } = Dimensions.get("window");
 
 const SearchScreen = ({ navigation }) => {
+
+  const theme = useContext(ThemeContext)
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -30,66 +33,66 @@ const SearchScreen = ({ navigation }) => {
   const happyBirthdayList = [
     {
       key: "1",
-      image: require("../assets/images/pic1.png"),
+      image: require("../../../assets/images/1.jpeg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic2.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
   ];
 
   const trendingList = [
     {
       key: "1",
-      image: require("../assets/images/pic3.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic4.png"),
+      image: require("../../../assets/images/2.jpg"),
     },
   ];
 
   const funnyList = [
     {
       key: "1",
-      image: require("../assets/images/pic5.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic6.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
   ];
 
   const popularList = [
     {
       key: "1",
-      image: require("../assets/images/pic7.png"),
+      image: require("../../../assets/images/2.jpg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic8.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
   ];
 
   const emotionalList = [
     {
       key: "1",
-      image: require("../assets/images/pic9.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic10.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
   ];
 
   const christmasList = [
     {
       key: "1",
-      image: require("../assets/images/pic11.png"),
+      image: require("../../../assets/images/2.jpg"),
     },
     {
       key: "2",
-      image: require("../assets/images/pic12.png"),
+      image: require("../../../assets/images/3.jpg"),
     },
   ];
   const renderItem = ({ item, index }) => {
@@ -115,9 +118,9 @@ const SearchScreen = ({ navigation }) => {
         <Image
           source={item.image}
           style={{
-            resizeMode: "contain",
+            resizeMode: "cover",
             width: width / 2.35,
-            height: ms(115),
+            height: 115,
             borderRadius: 10,
           }}
         />
@@ -147,7 +150,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}>
+              <Text style={{ ...Fonts.SemiBold16white, color:theme.color }}>
                 # {tr("birthday")}
               </Text>
               <TouchableOpacity
@@ -157,7 +160,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey,  color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -178,7 +181,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}>
+              <Text style={{ ...Fonts.SemiBold16white,  color:theme.color  }}>
                 # {tr("trending")}
               </Text>
               <TouchableOpacity
@@ -188,7 +191,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -209,7 +212,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}># {tr("funny")}</Text>
+              <Text style={{ ...Fonts.SemiBold16white,  color:theme.color  }}># {tr("funny")}</Text>
               <TouchableOpacity
                 onPress={() =>
                   navigation.push("searchSeeAllScreen", {
@@ -217,7 +220,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -238,7 +241,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}>
+              <Text style={{ ...Fonts.SemiBold16white, color:theme.color  }}>
                 # {tr("popular")}
               </Text>
               <TouchableOpacity
@@ -248,7 +251,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -269,7 +272,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}>
+              <Text style={{ ...Fonts.SemiBold16white, color:theme.color  }}>
                 # {tr("emotional")}
               </Text>
               <TouchableOpacity
@@ -279,7 +282,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -300,7 +303,7 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white }}>
+              <Text style={{ ...Fonts.SemiBold16white, color:theme.color  }}>
                 # {tr("christmas")}
               </Text>
               <TouchableOpacity
@@ -310,7 +313,7 @@ const SearchScreen = ({ navigation }) => {
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -319,7 +322,7 @@ const SearchScreen = ({ navigation }) => {
     );
   };
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.black }}>
+    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
       <View
         style={{
@@ -334,6 +337,9 @@ const SearchScreen = ({ navigation }) => {
           ...Default.shadow,
         }}
       >
+        <Pressable>
+          <Text>back</Text>
+        </Pressable>
         <Ionicons
           name="search-outline"
           color={Colors.grey}
@@ -350,7 +356,7 @@ const SearchScreen = ({ navigation }) => {
           placeholderTextColor={Colors.grey}
           selectionColor={Colors.primary}
           style={{
-            ...Fonts.Regular14white,
+            ...Fonts.Regular14white, color:theme.color ,
             flex: 9.3,
             textAlign: isRtl ? "right" : "left",
             marginHorizontal: Default.fixPadding,

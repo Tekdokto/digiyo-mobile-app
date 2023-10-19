@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, StatusBar, SafeAreaView } from "react-native";
 import { Colors } from "../constants/styles";
+import ThemeContext from "../theme/ThemeContext";
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const MyStatusBar = () => {
+
+    const theme = useContext(ThemeContext)
   return (
     <View style={[styles.statusBar, { 
         // backgroundColor: Colors.black 
@@ -13,7 +16,7 @@ const MyStatusBar = () => {
         <StatusBar
           translucent
         //   backgroundColor={Colors.black}
-          barStyle="light-content"
+          barStyle= {theme.dark ? "dark-content" : "light-content"}
         />
       </SafeAreaView>
     </View>

@@ -6,14 +6,18 @@ import {
     Dimensions,
     TouchableOpacity,
   } from "react-native";
-  import React from "react";
+  import React, { useContext } from "react";
   import Ionicons from "react-native-vector-icons/Ionicons";
   import { useTranslation } from "react-i18next";
 import { Default, Colors, Fonts } from "../constants/styles2";
+import ThemeContext from "../theme/ThemeContext";
   
   const { width } = Dimensions.get("window");
   
   const SaveListTab = ({ navigation, route }) => {
+
+    const theme = useContext(ThemeContext)
+
     const { t, i18n } = useTranslation();
   
     const isRtl = i18n.dir() == "rtl";
@@ -110,14 +114,14 @@ import { Default, Colors, Fonts } from "../constants/styles2";
       );
     };
     return (
-      <View style={{ flex: 1, backgroundColor: Colors.black }}>
+      <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
         {displayList.length === 0 ? (
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <Ionicons name="ios-bookmark" size={40} color={Colors.grey} />
             <Text
-              style={{ ...Fonts.SemiBold16grey, marginTop: Default.fixPadding }}
+              style={{ ...Fonts.SemiBold16grey,  color:theme.color, marginTop: Default.fixPadding }}
             >
               {tr("emptySaveList")}
             </Text>
