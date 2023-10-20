@@ -5,7 +5,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 import UserProfileScreen from '../screens/UserProfileScreen'; 
 // import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from '../screens/home/FullVideoScreen';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import FollowersScreen from '../screens/FollowUnfollow/FollowersScreen';
 import FollowingScreen from '../screens/FollowUnfollow/FollowingScreen';
 import MyProfileScreen from '../screens/profile/MyProfileScreen';
@@ -35,6 +35,10 @@ import SecondScreen from '../screens/Second';
 import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import ProfileSettingsScreen from '../screens/profile/profileSettingsScreen';
 import OtherUserProfileScreen from '../screens/otherUserProfileScreen';
+import { Default, Colors } from '../constants/styles2';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MessagesScreen from '../screens/messages';
+import Conversations from '../components/Conversations';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,6 +103,8 @@ function AllScreenTabs() {
         <ScreenTabs.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
         <ScreenTabs.Screen name='FoundersScreen' component={FoundersScreen} />
         <ScreenTabs.Screen name='messageUserScreen' component={MessageUserScreen} />
+        <ScreenTabs.Screen name='messagesScreen' component={MessagesScreen} />
+        <ScreenTabs.Screen name='conversations' component={Conversations} />
         <ScreenTabs.Screen name='Inbox' component={Inbox} />
         <ScreenTabs.Screen name='SearchScreen' component={SearchScreen} />
         <ScreenTabs.Screen name='editProfileScreen' component={EditProfileScreen} />
@@ -137,6 +143,12 @@ function HomeTabs() {
         <Tab.Screen
           name='Upload'
           component={CameraScreen}
+          options={{
+            tabBarStyle: {
+              display: "none",
+            },
+            // tabBarButton: (props) => <CustomTabBarButton {...props} />,
+          }}
           
         />
         <Tab.Screen
@@ -188,3 +200,44 @@ function DrawerGroup() {
     </Drawer.Navigator>
   )
 }
+
+const CustomTabBarButton = ({ children, onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={{
+      justifyContent: "center",
+      alignItems: "center",
+      overflow: "hidden",
+      height: 66,
+      width: 66,
+      borderRadius: 33,
+      bottom: Default.fixPadding * 3.3,
+    }}
+  >
+    <View
+      style={{
+        width: 66,
+        height: 32,
+        backgroundColor: Colors.transparent,
+      }}
+    />
+    <View
+      style={{
+        width: 66,
+        height: 34,
+        backgroundColor: Colors.black,
+      }}
+    />
+    <View style={styles.circle}>{children}</View>
+  </TouchableOpacity>
+);
+
+const styles = StyleSheet.create({
+  circle: {
+    position: "absolute",
+    height: 54,
+    width: 54,
+    borderRadius: 27,
+    backgroundColor: Colors.primary,
+  },
+});

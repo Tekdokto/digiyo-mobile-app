@@ -14,12 +14,17 @@ import { HEIGHT, WIDTH } from '../../constants/sizes'
 import { FadeInDown } from 'react-native-reanimated'
 import { posts } from '../../Constants'
 import SelectedPreview from './preview'
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Colors } from '../../constants/styles2'
+import { LinearGradient } from 'expo-linear-gradient'
+import PostScreen from './postScreen'
 
-const CameraScreen = () => {
+
+const CameraScreen = ({ navigation }) => {
 
     const theme = useContext(ThemeContext)
 
-    const navigation = useNavigation()
+    const navigate = useNavigation()
 
     const [ hasCameraPermissions, setHasCameraPermissions ] = useState(false)
     const [ hasAudioPermissions, setHasAudioPermissions ] = useState(false)
@@ -153,6 +158,31 @@ const CameraScreen = () => {
         )
     }
 
+    // all null
+    const allNull = () => {
+        setGalleryImageSource(null)
+        setVideoFromGallerySource(null)
+        setVideoSource(null)
+        setPictureSource(null)
+
+    }
+
+    const postUri = async () => {
+        if (videoSource != null) {
+            return videoSource
+        }
+        if (pictureSource != null) {
+            return pictureSource
+        }
+        if (videoFromGallerySource != null) {
+            return videoFromGallerySource
+        }
+        if (galleryImageSource != null) {
+            return galleryImageSource
+        }
+        return null
+    }
+
     // save post 
  
     const handlePost = async () => {
@@ -221,6 +251,9 @@ const CameraScreen = () => {
 
             {/* LEFT */}
             <View style={styles.sideContainerLeft}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+              <Ionicons name={"close"} size={25} color={Colors.white} />
+            </TouchableOpacity>
                 {isRecording ? (
                 <Text style={styles.recordingDurationText}>
                 {recordingDuration}
@@ -257,7 +290,36 @@ const CameraScreen = () => {
                         onPress={() => takePicture()}
                         onLongPress={() => recordVideo()}
                         onPressOut={() => stopVideo()}
-                        style={styles.recordBtn} />
+                        // style={styles.recordBtn}
+                         >
+                        <LinearGradient
+                            start={{ x: 0.0, y: 1.0 }}
+                            end={{ x: 1.0, y: 1.0 }}
+                            colors={[
+                            Colors.transparentPrimary,
+                            Colors.transparentDarkPrimary,
+                            ]}
+                            style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            overflow: "hidden",
+                            width: 80,
+                            height: 80,
+                            borderRadius: 40,
+                            }}
+                        >
+                            <LinearGradient
+                            start={{ x: 0.0, y: 1.0 }}
+                            end={{ x: 1.0, y: 1.0 }}
+                            colors={[Colors.primary, Colors.extraDarkPrimary]}
+                            style={{
+                                width: 58,
+                                height: 58,
+                                borderRadius: 29,
+                            }}
+                            />
+                        </LinearGradient>
+                        </TouchableOpacity>
                 </View>
                 <View style={{flex: 1 }}>
                     <TouchableOpacity style={styles.galleryButton}
@@ -281,7 +343,7 @@ const CameraScreen = () => {
         (
             <>
                 <View style={{flex: 1,  height:HEIGHT,backgroundColor: theme.backgroundColor, position: "absolute" }}>
-                    {videoFromGallerySource && ( 
+                    {/* {videoFromGallerySource && ( 
                         <SelectedPreview 
                             cancel={() => setVideoFromGallerySource(null)} 
                             handlePost={handlePost}    
@@ -312,7 +374,17 @@ const CameraScreen = () => {
                             imageUrl={galleryImageSource}
                             isVid={false}
                         />
+                    )} */}
+                    { videoFromGallerySource && (
+                        <PostScreen isVid={true} cancel={allNull} postUri={videoFromGallerySource} />
                     )}
+                    {videoSource  && (
+                        <PostScreen isVid={true} cancel={allNull} postUri={videoSource} />
+                    )}
+                    {galleryImageSource || pictureSource && (
+                        <PostScreen cancel={allNull} imgUrl={pictureSource || galleryImageSource} />
+                    )}
+                    {/* <PostScreen cancel={allNull}  /> */}
 
                 </View>
             </>

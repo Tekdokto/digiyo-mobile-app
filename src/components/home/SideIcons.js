@@ -61,7 +61,7 @@ const SideIconsComp = () => {
                     Shop
                 </Text>
             </Pressable> 
-            <Pressable onPress={() => navigation.navigate("Inbox")} style={ styles.container } >
+            <Pressable onPress={() => navigation.navigate("conversations")} style={ styles.container } >
                 {/* <Image source={require("../../assets/icons/chat.png")} size={20} /> */}
                 <ChatSvg fill={themeColorsDark} width={size} stroke={themeColorsLight} height={size} />
                 <Text style={ [{color: theme.color }, styles.text] }>

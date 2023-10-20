@@ -1,10 +1,11 @@
 // import { ms } from "react-native-size-matters/extend";
 
-import { PRIMARY_COLOR } from "./colors";
+import { ACCENT_COLOR, PRIMARY_COLOR } from "./colors";
 
 export const Colors = {
   primary: PRIMARY_COLOR,
-  extraDarkPrimary: "#A811DA",
+  extraDarkPrimary: PRIMARY_COLOR,
+  // extraDarkPrimary: "#A811DA",
   black: "#0C110D",
   white: "#FFFFFF",
   transparent: "transparent",
@@ -13,9 +14,9 @@ export const Colors = {
   transparentPrimary: "#BF5AE099",
   transparentDarkPrimary: "#A811DA79",
   grey: "#949494",
-  lightGrey: "#8D8D8D",
+  lightGrey: "#8D8D8D50",
   darkGrey: "#333333",
-  extraDarkGrey: "#232424",
+  extraDarkGrey: "#23242450",
   doveGray: "#757171",
   extraLightGrey: "#E7E6E6",
   regularGrey: "#B4B4B4",
