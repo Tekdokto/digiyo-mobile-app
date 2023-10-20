@@ -7,11 +7,24 @@ import styles from '../../constants/styles'
 import { HEIGHT } from '../../constants/sizes'
 import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
 import { useIsFocused } from '@react-navigation/native'
+import CommentsBottomSheet from '../../components/commentsBottomSheet'
+import MenuBottomSheet from '../../components/menuBottomSheet'
+import { useTranslation } from 'react-i18next'
 
 const FullVideoScreen = ({ navigation, route }) => {
 
     const isFocused = useIsFocused()
     const { item } = route.params;
+
+    const { t, i18n } = useTranslation();
+
+  function tr(key) {
+    return t(`forYouAndFollowingVideo:${key}`);
+  }
+
+    const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
+    const [openMenuBottomSheet, setOpenMenuBottomSheet] = useState(false);
+  
 
     // console.log(item)
     const postsArray = posts;
@@ -62,12 +75,26 @@ const FullVideoScreen = ({ navigation, route }) => {
                                 </View>
                             )
                         }
-                        <FullScreenLikeIcons /> 
+                        <FullScreenLikeIcons 
+                            openCommentBottomSheetHandler={() => setOpenCommentBottomSheet(true)}
+                            // shareVideo={shareVideo}
+                            openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
+                        /> 
                     </View>
                     )}
                     initialScrollIndex={currentIndex}
                 />
         </View>
+        <CommentsBottomSheet
+          visible={openCommentBottomSheet}
+          closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
+        />
+
+        <MenuBottomSheet
+          visible={openMenuBottomSheet}
+          closeMenuBottomSheet={() => setOpenMenuBottomSheet(false)}
+          title={`${tr("unfollow")} Jane Cooper`}
+        />
          </SafeAreaView>
     </>
   )

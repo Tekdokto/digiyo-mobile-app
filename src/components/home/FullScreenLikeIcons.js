@@ -1,92 +1,220 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../../constants/styles'
+// import styles from '../../constants/styles'
 
 
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+// import Entypo from 'react-native-vector-icons/Entypo';
+// import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-const FullScreenLikeIcons = () => {
-    //   const [post, setPost] = useState(props.post);
-  const [isLiked, setIsLiked] = useState(false);
-  const [videoUri, setVideoUri] = useState('');
+import { Colors, Fonts, Default } from "../../constants/styles2";
+// import Animated from 'react-native-reanimated';
 
-//   const onLikePress = () => {
-//     const likesToAdd = isLiked ? -1 : 1;
-//     setPost({
-//       ...post,
-//       likes: post.likes + likesToAdd,
-//     });
-//     setIsLiked(!isLiked);
-//   };
+const FullScreenLikeIcons = (props) => {
+   
+  const { t, i18n } = useTranslation();
 
-//   const getVideoUri = async () => {
-//     if (post.videoUri.startsWith('http')) {
-//       setVideoUri(post.videoUri);
-//       return;
-//     }
-//     setVideoUri(await Storage.get(post.videoUri));
-//   };
+  function tr(key) {
+    return t(`forYouAndFollowingVideo:${key}`);
+  }
 
-//   useEffect(() => {
-//     getVideoUri();
-//   },[]);
+  const isRtl = i18n.dir() == "rtl";
 
-  
   return (
-    <View 
-    style={styles.uiContainer}
-    >
-            <View 
-            style={styles.rightContainer}
-            >
-              {/* <Image
-                style={styles.profilePicture}
-                source={{uri: post.user.imageUri}}
-              /> */}
-
-              <TouchableOpacity 
-              style={styles.iconContainer}
-            //    onPress={onLikePress}
-              >
-                <AntDesign name={'heart'} size={40} 
-                // color={isLiked ? 'red' : 'white'} 
-                />
-                <Text style={styles.statsLabel}>post.likes</Text>
-              </TouchableOpacity>
-
-              <View 
-              style={styles.iconContainer}
-              >
-                <FontAwesome name={'commenting'} size={40} color="#ffffff33" />
-                <Text style={styles.statsLabel}>post.comments</Text>
-              </View>
-
-              <View style={styles.iconContainer}>
-                <Fontisto name={'share-a'} size={35} color="white" />
-                <Text style={styles.statsLabel}>post.shares</Text>
-              </View>
-            </View>
-
-            <View style={styles.bottomContainer}>
-              {/* <View>
-                <Text style={styles.handle}>@username</Text>
-                <Text style={styles.description}>description</Text>
-
-                <View style={styles.songRow}>
-                  <Entypo name={'beamed-note'} size={24} color="white" />
-                  <Text style={styles.songName}>song name</Text>
-                </View>
-              </View> */}
-
-              {/* <Image
-                style={styles.songImage}
-                source={{uri: post.song.imageUri}}
-              /> */}
-            </View>
+    <>
+      <View
+        style={{
+          top: 0,
+          bottom: 0,
+          position: "absolute",
+          justifyContent: "center",
+          alignSelf: isRtl ? "flex-start" : "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            padding: Default.fixPadding * 0.8,
+            marginRight: isRtl ? 0 : Default.fixPadding * 2,
+            marginLeft: isRtl ? Default.fixPadding * 2 : 0,
+            borderRadius: 30,
+            backgroundColor: Colors.transparentWhite,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              backgroundColor: Colors.darkGrey,
+            }}
+          >
+            <FontAwesome name="thumbs-up" size={20} color={Colors.white} />
           </View>
+          <Text
+            style={{
+              ...Fonts.SemiBold14white,
+              textAlign: "center",
+              marginBottom: Default.fixPadding * 1.5,
+            }}
+          >
+            1.2K
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => props.openCommentBottomSheetHandler()}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              backgroundColor: Colors.darkGrey,
+            }}
+          >
+            <Ionicons name="chatbox-ellipses" size={20} color={Colors.white} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              ...Fonts.SemiBold14white,
+              textAlign: "center",
+              marginBottom: Default.fixPadding * 1.5,
+            }}
+          >
+            900
+          </Text>
+
+          <TouchableOpacity
+            onPress={props.shareVideo}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              backgroundColor: Colors.darkGrey,
+            }}
+          >
+            <FontAwesome name="share" size={20} color={Colors.white} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              ...Fonts.SemiBold14white,
+              textAlign: "center",
+              marginBottom: Default.fixPadding * 1.5,
+            }}
+          >
+            58
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => props.openMenuBottomSheetHandler()}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              backgroundColor: Colors.darkGrey,
+            }}
+          >
+            <Ionicons
+              name="ellipsis-horizontal"
+              size={20}
+              color={Colors.white}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+
+      {/*  */}
+      <View
+        style={{
+          position: "absolute",
+          flexDirection: isRtl ? "row-reverse" : "row",
+          bottom: Default.fixPadding * 4,
+        }}
+      >
+        <View
+          style={{
+            flex: 8.5,
+            marginLeft: isRtl ? 0 : Default.fixPadding * 2.5,
+            marginRight: isRtl ? Default.fixPadding * 2.5 : 0,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => props.profileClickHandler()}
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={props.image}
+              style={{
+                width: 55,
+                height: 55,
+                borderRadius: 28,
+                borderWidth: 1,
+                borderColor: Colors.white,
+              }}
+            />
+            <View style={{ marginHorizontal: Default.fixPadding }}>
+              <Text style={{ ...Fonts.SemiBold16white }}>{props.name}</Text>
+              <Text style={{ ...Fonts.Bold14primary }}>{tr("follow")}</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={{ alignItems: isRtl ? "flex-end" : "flex-start" }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...Fonts.SemiBold14white,
+                overflow: "hidden",
+                marginTop: Default.fixPadding,
+              }}
+            >
+              {props.other}
+            </Text>
+            {/* <View
+              style={{
+                flexDirection: isRtl ? "row-reverse" : "row",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome name="music" size={16} color={Colors.white} />
+              <Text
+                style={{
+                  ...Fonts.Medium12white,
+                  marginHorizontal: Default.fixPadding * 0.5,
+                }}
+              >
+                {props.songName}
+              </Text>
+            </View> */}
+          </View>
+        </View>
+
+        {/* <TouchableOpacity
+          onPress={() => props.musicHandler()}
+          style={{
+            flex: 1.5,
+            justifyContent: "flex-end",
+            alignItems: isRtl ? "flex-start" : "flex-end",
+            marginHorizontal: Default.fixPadding,
+          }}
+        >
+          <Animated.Image
+            source={require("../assets/images/music.png")}
+            style={[styles.musicDisc, musicDiscAnimation]}
+          />
+        </TouchableOpacity> */}
+      </View>
+    </>
   )
 }
 
