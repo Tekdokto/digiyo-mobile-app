@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import { Colors, Fonts, Default } from "../constants/styles2";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
+import ThemeContext from "../theme/ThemeContext";
 
 const FollowingAndFollowersCard = (props) => {
+
+  const theme = useContext(ThemeContext)
+
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -40,7 +44,7 @@ const FollowingAndFollowersCard = (props) => {
         <View style={{ marginHorizontal: Default.fixPadding }}>
           <Text
             numberOfLines={1}
-            style={{ ...Fonts.SemiBold14white, overflow: "hidden" }}
+            style={{ ...Fonts.SemiBold14white, color: theme.color, overflow: "hidden" }}
           >
             {props.name}
           </Text>

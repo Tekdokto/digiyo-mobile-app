@@ -5,14 +5,18 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Colors, Default, Fonts } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FollowingAndFollowersCard from "../../components/followingAndFollowersCard";
 import { useTranslation } from "react-i18next";
 import MyStatusBar from "../../components/MyStatusBar";
+import ThemeContext from "../../theme/ThemeContext";
 
 const FollowingScreen = ({ navigation, isHeader }) => {
+
+  const theme = useContext(ThemeContext)
+
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -152,7 +156,7 @@ const FollowingScreen = ({ navigation, isHeader }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.black }}>
+    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
       {isHeader == true ? (
       <View
@@ -168,12 +172,12 @@ const FollowingScreen = ({ navigation, isHeader }) => {
           <Ionicons
             name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
             size={25}
-            color={Colors.white}
+            color={theme.color}
           />
         </TouchableOpacity>
         <Text
           style={{
-            ...Fonts.SemiBold18white,
+            ...Fonts.SemiBold18white, color: theme.color,
             marginHorizontal: Default.fixPadding * 1.2,
           }}
         >

@@ -95,7 +95,7 @@ const MyProfileScreen = () => {
               }}
             >
               <TouchableOpacity
-                onPress={() => navigation.push("userFollowingScreen")}
+                onPress={() => navigation.push("FollowingScreen")}
                 style={{
                   flex: 3.5,
                   justifyContent: "center",
@@ -127,7 +127,7 @@ const MyProfileScreen = () => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.push("followersScreen")}
+                  onPress={() => navigation.push("FollowersScreen")}
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
                   <Text style={{ ...Fonts.SemiBold14white, color:theme.color }}>36</Text>
@@ -302,7 +302,7 @@ const MyProfileScreen = () => {
         />
         <Tab.Screen
           name={"following"}
-          component={FollowingScreen({isHeader: false})}
+          component={FollowingScreen}
           options={{
             title: title2,
           }}

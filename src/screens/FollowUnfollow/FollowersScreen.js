@@ -5,14 +5,18 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Colors, Default, Fonts } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FollowingAndFollowersCard from "../../components/followingAndFollowersCard";
 import { useTranslation } from "react-i18next";
 import MyStatusBar from "../../components/MyStatusBar";
+import ThemeContext from "../../theme/ThemeContext";
 
-const FollowersScreen = ({ navigation }) => {
+const FollowersScreen = ({ navigation, isHeader }) => {
+
+  const theme = useContext(ThemeContext)
+
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -151,32 +155,37 @@ const FollowersScreen = ({ navigation }) => {
     );
   };
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.black }}>
+    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
-      <View
-        style={{
-          flexDirection: isRtl ? "row-reverse" : "row",
-          alignItems: "center",
-          paddingVertical: Default.fixPadding * 1.2,
-          paddingHorizontal: Default.fixPadding * 2,
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.pop()}>
-          <Ionicons
-            name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
-            size={25}
-            color={Colors.white}
-          />
-        </TouchableOpacity>
-        <Text
+      {isHeader == true ? (
+        <View
           style={{
-            ...Fonts.SemiBold18white,
-            marginHorizontal: Default.fixPadding * 1.2,
+            flexDirection: isRtl ? "row-reverse" : "row",
+            alignItems: "center",
+            paddingVertical: Default.fixPadding * 1.2,
+            paddingHorizontal: Default.fixPadding * 2,
           }}
         >
-          {tr("followers")}
-        </Text>
-      </View>
+          <TouchableOpacity onPress={() => navigation.pop()}>
+            <Ionicons
+              name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
+              size={25}
+              color={Colors.white}
+            />
+          </TouchableOpacity>
+          <Text
+            style={{
+              ...Fonts.SemiBold18white,
+              marginHorizontal: Default.fixPadding * 1.2,
+            }}
+          >
+            {tr("followers")}
+          </Text>
+        </View>
+
+      ) : (
+        <></>
+      )}
 
       <FlatList
         data={followersData}
