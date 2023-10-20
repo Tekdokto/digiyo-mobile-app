@@ -1,0 +1,264 @@
+{
+    "onboardingScreen": {
+        "showTalentHere": "Show your talent here ",
+        "signIn": "Sign in",
+        "signUp": "Sign up",
+        "tapBack": "Tap back again to exit the App"
+    },
+    "signInScreen": {
+        "signIn": "Sign in",
+        "enterNumber": "Enter Your Phone number",
+        "oTPVerification": "*we will sent OTP for verification",
+        "or": "Or",
+        "noAccount": "Don't have an account?",
+        "signUp": "Signup",
+        "tapBack": "Tap back again to exit the App"
+    },
+    "signUpScreen": {
+        "signUp": "Sign up",
+        "name": "Enter Your name",
+        "emailId": "Enter Your email id",
+        "number": "Enter Your Phone number",
+        "or": "Or",
+        "alreadyAccount": "Already have an account?",
+        "signIn": "Sign in"
+    },
+    "verificationScreen": {
+        "verification": " OTP Verification",
+        "pleaseEnter": "Please enter the verification code here we just sent you on ",
+        "receiveCode": "If you didn't receive code!",
+        "resend": "Resend",
+        "verify": "Verify"
+    },
+    "languagesScreen": {
+        "selectLanguage": "Select your languages",
+        "hindi": "Hindi",
+        "gujrati": "Gujrati",
+        "english": "English",
+        "marathi": "Marathi",
+        "telugu": "Telugu",
+        "malayalam": "Malayalam",
+        "tamil": "Tamil",
+        "panjabi": "Panjabi",
+        "kannada": "Kannada",
+        "bhojpuri": "Bhojpuri",
+        "bengali": "Bengali",
+        "haryanvi": "Haryanvi",
+        "selectMoreThan": "*Select more than 3 languages",
+        "continue": "Continue"
+    },
+    "bottomTab": {
+        "tapBack": "Tap back again to exit the App"
+    },
+    "homeScreen": {
+        "forYou": "For you",
+        "following": "Following ",
+        "unfollow": "Unfollow"
+    },
+    "forYouAndFollowingVideo": {
+        "follow": "Follow"
+    },
+    "menuBottomSheet": {
+        "saveVideo": "Save video",
+        "downloadVideo": "Download video"
+    },
+    "commentsBottomSheet": {
+        "comments": "Comments",
+        "reply": "Reply",
+        "comment": "Comment"
+    },
+    "audioScreen": {
+        "originalAudio": "Original audio",
+        "saveAudio": "Save audio",
+        "useThisAudio": "Use this audio"
+    },
+    "recordVideoScreen": {
+        "next": "Next",
+        "flip": "Flip",
+        "timer": "Timer",
+        "speed": "Speed",
+        "filters": "Filters",
+        "flash": "Flash",
+        "effect": "Effect",
+        "music": "Music",
+        "upload": "Upload",
+        "dargeAndTab": "Darge and tap to set duration",
+        "start": "Start"
+    },
+    "effectsBottomSheet": {
+        "effects": "Effects"
+    },
+    "userAudioScreen": {
+        "follow": "Follow",
+        "useThisAudio": "Use this audio",
+        "deleteVideo": "Delete video",
+        "unFollow": "Unfollow"
+    },
+    "musicScreen": {
+        "library": "Library",
+        "dialogue": "Dialogue",
+        "favorite": "Favorite",
+        "search": "Search "
+    },
+    "musicLibraryTab": {
+        "apply": "Apply",
+        "remove": "Removed from liked music.",
+        "added": "Added to liked music."
+    },
+    "dialogueTab": {
+        "apply": "Apply",
+        "remove": "Removed from liked dialogue.",
+        "added": "Added to liked dialogue."
+    },
+    "favoriteMusicTab": {
+        "apply": "Apply",
+        "remove": "Remove",
+        "removedFavorite": "Removed from favorite.",
+        "empty": "Empty favorite list"
+    },
+    "postScreen": {
+        "describeVideo": "Describe your video",
+        "saveGallery": "Save the Gallery",
+        "sharePost": "Share post",
+        "post": "Post"
+    },
+    "otherUserProfileScreen": {
+        "follow": "Follow",
+        "following": "Following",
+        "followers": "Followers",
+        "post": "Post",
+        "shareProfile": "Share profile",
+        "report": "Report",
+        "block": "Block",
+        "unFollow": "Unfollow"
+    },
+    "userVideoScreen": {
+        "follow": "Follow",
+        "downloadVideo": "Download video",
+        "deleteVideo": "Delete video"
+    },
+    "followingScreen": {
+        "following": "Following"
+    },
+    "followingAndFollowersCard": {
+        "following": "Following",
+        "follow": "Follow",
+        "followers": "Followers"
+    },
+    "followersScreen": {
+        "followers": "Followers"
+    },
+    "searchScreen": {
+        "search": "Search",
+        "seeAll": "see all",
+        "birthday": "Happy birthday",
+        "trending": "Trending",
+        "funny": "Funny",
+        "popular": "Popular",
+        "emotional": "Emotional",
+        "christmas": "Christmas",
+        "unFollow": "Unfollow"
+    },
+    "searchSeeAllScreen": {
+        "unFollow": "Unfollow"
+    },
+    "notificationScreen": {
+        "notification": "Notification",
+        "noNotification": "No new notification",
+        "remove": "Notification removed."
+    },
+    "profileScreen": {
+        "profile": "Profile",
+        "following": "Following",
+        "followers": "Followers",
+        "post": "Post",
+        "editProfile": "Edit profile",
+        "video": "Video",
+        "savelist": "Savelist "
+    },
+    "videoTab": {
+        "deleteVideo": "Delete video"
+    },
+    "saveListTab": {
+        "emptySaveList": "Empty Save list",
+        "description": "It feel like nothing to save in your list.let' s add someone "
+    },
+    "profileSettingsScreen": {
+        "profileSettings": "Profile settings",
+        "notification": "Notification",
+        "language": "Language",
+        "shareProfile": "Share profile",
+        "blockList": "Block list",
+        "whoPost": "Who can see your post",
+        "rate": "Rate",
+        "about": "About",
+        "logout": "Logout"
+    },
+    "logoutModal": {
+        "areYouSureLogout": "Are you sure you want to logout?",
+        "cancel": "Cancel",
+        "logout": "Logout"
+    },
+    "rateModal": {
+        "likeApp": "Do you like this App",
+        "description": "give us your feedback with rating,so we know if you like it? ",
+        "submit": "Submit",
+        "notNow": "Not now"
+    },
+    "notificationSettingScreen": {
+        "notification": "Notification",
+        "follow": "Follow",
+        "likes": "Likes",
+        "comments": "Comments",
+        "shareItem": "Share item",
+        "update": "Update from the people you follow"
+    },
+    "blockListScreen": {
+        "blockList": "Block list",
+        "block": "Block",
+        "unblock": "Unblock",
+        "followers": "Followers"
+    },
+    "whoCanSeeYourPostScreen": {
+        "yourPost": "Who can see your post",
+        "everyone": "Everyone",
+        "onlyMe": "Only me",
+        "onlyFollowers": "Only followers"
+    },
+    "aboutScreen": {
+        "about": "About",
+        "privacyPolicy": "Privacy policy",
+        "termsUse": "Terms of use"
+    },
+    "privacyPolicyScreen": {
+        "privacyPolicy": "Privacy policy"
+    },
+    "termOfUseScreen": {
+        "termUse": "Term of use"
+    },
+    "editProfileScreen": {
+        "editProfile": "Edit profile",
+        "name": "Name",
+        "enterName": "Enter your name",
+        "email": "Email id",
+        "enterEmail": "Enter your email id",
+        "mobile": "Phone number",
+        "enterMobile": "Enter your phone number",
+        "bio": "Bio",
+        "enterBio": "Enter your bio",
+        "update": "Update",
+        "changeProfile": "Change profile Photo",
+        "camera": "Camera",
+        "gallery": "Gallery",
+        "remove": "Remove",
+        "removeImage": "Profile photo removed.",
+        "deny": "You has denied to access Camera!!!"
+    },
+    "userFollowingScreen": {
+        "following": "Following"
+    },
+    "languageScreen": {
+        "language": "Language",
+        "update": "Update"
+    }
+}

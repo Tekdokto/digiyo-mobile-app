@@ -29,7 +29,7 @@ const SideIconsComp = () => {
 
   return (
     <View style={{ flexDirection: "row", position: "absolute",  }}>
-        <View style={{ width:60, flex: 1, top: HEIGHT * 0.4 }}>
+        <View style={{ width:60, flex: 1, top: HEIGHT * 0.3 }}>
             <Pressable onPress={() => navigation.push("SearchScreen")} style={ styles.container } >
                 {/* <Image source={require("../../assets/icons/search.png")} size={20} /> */}
                 <SearchSvg fill={"none"} width={size} stroke={themeColorsLight} height={size} />
@@ -53,7 +53,7 @@ const SideIconsComp = () => {
         </View>
 
         {/* right */}
-        <View style={{  width: 60, top: HEIGHT * 0.15 }}>
+        <View style={{  width: 60, top: HEIGHT * 0.3 }}>
             <Pressable onPress={handlePress} style={ styles.container } >
                 {/* <Image source={require("../../assets/icons/shop.png")} size={20} /> */}
                 <ShopSvg fill={"none"} width={size} stroke={themeColorsLight} height={size} />

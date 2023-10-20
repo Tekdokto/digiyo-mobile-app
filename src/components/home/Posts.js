@@ -7,6 +7,7 @@ import { HEIGHT, WIDTH } from '../../constants/sizes'
 import HomeVidComp from './HomeVideos'
 import styles from '../../constants/styles' 
 import ThemeContext from '../../theme/ThemeContext'
+import ReadMore from '@fawazahmed/react-native-read-more'
 // import ThemeContext from '../../theme/ThemeContext'
 
 
@@ -107,13 +108,13 @@ const Posts = ({ toggleSheet }) => {
                     <View key={item.id}  style={{ marginHorizontal: WIDTH *0.17 }} >
                         <View  style={{marginTop: 20, flexDirection: "row"}}>
                             <Pressable  
-                                onPress={() => navigation.navigate("UserProfileScreen")}
+                                onPress={() => navigation.navigate("otherUserProfileScreen")}
                                 style={{ marginBottom: 10 }}>
                                 <Image 
                                     source={item.profilePic} 
                                     style={{ width: 50, height: 50, borderRadius:60 }} />
                             </Pressable>
-                            <Pressable onPress={() => navigation.navigate("UserProfileScreen", { item: item })} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
+                            <Pressable onPress={() => navigation.navigate("otherUserProfileScreen", { item: item })} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
                             <View style={{ flex: 1, flexDirection: "column", alignItems: "flex-start"}}>
                                 <Text style={{fontWeight: "bold", fontSize: 20, color: theme.color}}>{item.username}</Text>
                                 <Text style={{fontWeight: "400", fontSize: 10, color: theme.color}}>{item.time} hr ago</Text>
@@ -121,7 +122,15 @@ const Posts = ({ toggleSheet }) => {
                             </Pressable>
                         </View>
                         <View style={{ marginBottom: 4}}>
-                            <Text style={{fontWeight: "400", color: theme.color}}>{ item.post }</Text>
+                            <ReadMore numberOfLines={1}
+                                seeLessText='hide'
+                                seeMoreText='read more'
+                            style={{
+                                fontWeight: "400", 
+                                color: theme.color
+                                }}>
+                                    { item.post }
+                            </ReadMore>
                         </View>
                         <View style={{ marginBottom: 10 }}>
                             {item.content.type == "image" ? 

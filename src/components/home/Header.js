@@ -30,7 +30,7 @@ const HeaderComp = ({ menu, navigation}) => {
         ) : (
         <LogoBlack height={35} width={87} />
       )}
-        <View style={{ flexDirection: "row", backgroundColor: "#EDEBE9", paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, width: WIDTH * 0.41, justifyContent: "space-between" }}>
+        {/* <View style={{ flexDirection: "row", backgroundColor: "#EDEBE9", paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, width: WIDTH * 0.41, justifyContent: "space-between" }}>
           <Pressable onPress={(e)=> navigate.navigate("FollowingScreen")}>
             <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Following</Text>
           </Pressable>
@@ -38,9 +38,9 @@ const HeaderComp = ({ menu, navigation}) => {
             <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
           </Pressable>
         </View>
-        <Pressable onPress={() => navigation.openDrawer()}>
+        <Pressable onPress={() => navigate.openDrawer()}>
             <Feather name={menu} color={theme.color} size={24} />
-        </Pressable>
+        </Pressable> */}
         {/* <Button icon="search">
             Press me
         </Button> */}
