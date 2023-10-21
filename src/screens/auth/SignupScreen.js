@@ -3,14 +3,69 @@ import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
+
 import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
 
+import TextInputComp from '../../components/TextInputComp';
+import TextComp from '../../components/TextComp';
+
+import validator from '../../utils/validations';
+import { showError } from '../../utils/helperFunctions';
+import { userSignup } from '../../redux/actions/auth';
+
 
 export default function SignupScreen() {
     const navigation = useNavigation();
+
+    const [userName, setUserName] = useState('')
+    const [fullName, setFullName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [secureText, setSecureText] = useState(true)
+    const [isLoading, setLoading] = useState(false)
+
+    const isValidData= () =>{
+        const error = validator({
+            userName,
+            // fullName,
+            email,
+            password
+        })
+        if(error){
+            showError(error)
+            return false
+        }
+        return true
+    }
+
+    const onPressSignup = async() => {
+        const checkValid = isValidData()
+
+        if (checkValid) {
+            setLoading(true)
+            let data  = {
+                userName:userName,
+                // fullName:fullName,
+                email:email,
+                password:password
+            }
+            try {
+                let res = await userSignup(data)
+                console.log("response -------", data)
+                setLoading(false)
+                // navigation.navigate("OTPScreen" { data: res.data})
+            } catch (error) {
+                console.log("signup error -------", error )
+                console.log("signup error data -------", data )
+                setLoading(false)
+            }
+        }
+    }
+
+
   return (
     <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -31,8 +86,6 @@ export default function SignupScreen() {
             }}>
                     <Animated.View 
                         entering={FadeInUp.delay(200).duration(1000).springify()} 
-                        // source={require('../../../assets/icons/logo-black.png')} 
-                        // style={{ width:"50%",}}
                     >
                         <Logo  height={100} width={290} />
                     </Animated.View> 
@@ -49,7 +102,9 @@ export default function SignupScreen() {
                             entering={FadeInUp.duration(1000).springify()} 
                             style={{ color:"white", fontWeight:"bold", fontSize:40}}
                             >
-                                SignUp
+                                <TextComp>
+                                    SignUp
+                                </TextComp>
                         </Animated.Text>
                     </View>
 
@@ -61,33 +116,39 @@ export default function SignupScreen() {
                             entering={FadeInDown.duration(1000).springify()} 
                             style={styles.input}
                             >
-
-                            <TextInput
+                            <TextInputComp
+                                value={userName}
+                                placeholder={strings.USERNAME}
+                                onChangeText={(value) => setUserName(value)}
+                            />
+                            {/* <TextInput
                                 placeholder="username"
                                 placeholderTextColor={'gray'}
-                            />
+                            /> */}
                         </Animated.View>
 
                         <Animated.View 
                             entering={FadeInDown.duration(1000).springify()} 
                             style={styles.input}
                             >
-
-                            <TextInput
-                                placeholder="Email"
-                                placeholderTextColor={'gray'}
+                            <TextInputComp
+                                value={userName}
+                                placeholder={strings.USERNAME}
+                                onChangeText={(value) => setEmail(value)}
                             />
                         </Animated.View>
 
                         <Animated.View 
                             entering={FadeInDown.delay(200).duration(1000).springify()} 
                             style={styles.input}
-                            >
-
-                            <TextInput
-                                placeholder="Password"
-                                placeholderTextColor={'gray'}
-                                secureTextEntry
+                            >                            
+                            <TextInputComp
+                                value={password}
+                                placeholder={strings.PASSWORD}
+                                onChangeText={(value) => setPassword(value)}
+                                secureTextEntry={secureText}
+                                secureText={secureText ? strings.SHOW : strings.HIDE}
+                                onPressSecure={() => setSecureText(!secureText)}
                             />
                         </Animated.View>
 
@@ -95,7 +156,7 @@ export default function SignupScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("OTPScreen")}
+                            <TouchableOpacity onPress={onPressSignup}
                             style={[ ]}
                             >
                                 <Text 
@@ -109,11 +170,11 @@ export default function SignupScreen() {
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
 
-                            <Text>Don't have an account? </Text>
+                            <TextComp>Don't have an account? </TextComp>
                             <TouchableOpacity onPress={()=> navigation.push('LoginScreen')}>
-                                <Text 
+                                <TextComp 
                                 // style="text-sky-600"
-                                >Login</Text>
+                                >Login</TextComp>
                             </TouchableOpacity>
                         </Animated.View>
                     </View>
