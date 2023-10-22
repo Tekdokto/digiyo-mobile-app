@@ -1,5 +1,5 @@
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -7,18 +7,62 @@ import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
+import LogoWhite from '../../../assets/icons/logo.svg'
 import styles from '../../constants/styles';
+import ThemeContext from '../../theme/ThemeContext';
+import { userLogin } from '../../redux/actions/auth';
+import TextInputComp from '../../components/TextInputComp';
+import { showError } from '../../utils/helperFunctions';
+import TextComp from '../../components/TextComp';
 
 
 export default function LoginScreen() {
     const navigation = useNavigation();
+    const theme = useContext(ThemeContext)
+
+    const [email, setUserName] = useState('')  
+    const [password, setPassword] = useState('')
+    const [secureText, setSecureText] = useState(true)
+    
+    const onPressLogin = async() => { 
+        
+            // setLoading(true)
+            let data  = {
+                email:email, 
+                password:password
+            }
+            console.log("empty =-=-= emsopidosn ", data)
+            if (data.password != "" && data.email != "" ) {
+                
+                try {
+                    let res = await userLogin(data)
+                    console.log("response -------", data)
+                    console.log("response result -------", res)
+                    // setLoading(false)
+                    console.log(" ---------- -========", res.data)
+                    // console.log(" ---------- -========", res.data.email)
+                    // showMessage(res.status)
+                    // navigation.replace("HomeScreen", { item: res.data.email})
+                } catch (error) {
+                    showError(error.message)
+                    console.log("signup error -------", error )
+                    console.log("signup error data -------", data )
+                    // setLoading(false)
+                }
+            }
+             else {
+                showError("fields must not be empty")
+             }
+        // }
+        // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+    }
 
   return (
     <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{flex: 1}}
     >
-        <View style={{ flex: 1, backgroundColor:"white", height:HEIGHT, width:WIDTH,}}>
+        <View style={{ flex: 1, backgroundColor:theme.backgroundColor, height:HEIGHT, width:WIDTH,}}>
             <StatusBar style="light" />
             {/* <Image style={{height:HEIGHT, width:WIDTH, position:"absolute"}} source={require('../../../assets/images/background.png')} /> */}
             <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
@@ -36,48 +80,52 @@ export default function LoginScreen() {
                         // source={require('../../../assets/icons/logo-black.png')} 
                         // style={{ width:"50%",}}
                     >
-                        <Logo  height={100} width={290} />
+                        { theme.theme != "dark" ? <Logo  height={100} width={290} />
+                        : <LogoWhite  height={100} width={290} />}
                     </Animated.View> 
                 </View>
 
                 {/* title and form */}
-                <View style={{flex: 1, justifyContent:"space-around", height:HEIGHT, width:WIDTH,}}>
+                <View style={{flex: 1, top: HEIGHT * 0.4, justifyContent:"space-around", height:HEIGHT, width:WIDTH,}}>
                     
                     {/* title */}
-                    <View 
-                    style={{flex: 1, alignItems:"center"}}
-                    >
-                        <Animated.Text 
-                            entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:"white", fontWeight:"bold", fontSize:40}}
-                            >
-                                Login
-                        </Animated.Text>
-                    </View>
+                   
 
                     {/* form */}
                     <View 
                     style={{flex:1, alignItems:"center"}}
+                    > 
+                    <View 
+                    style={{  alignItems:"center"}}
                     >
+                        <Animated.Text 
+                            entering={FadeInUp.duration(1000).springify()} 
+                            style={{ color:theme.color, fontWeight:"bold", fontSize:20}}
+                            >
+                                Login
+                        </Animated.Text>
+                    </View>
                         <Animated.View 
                             entering={FadeInDown.duration(1000).springify()} 
                             style={styles.input}
                             >
-
-                            <TextInput
-                                placeholder="Email"
-                                placeholderTextColor={'gray'}
+                            <TextInputComp
+                                value={email}
+                                placeholder="email"
+                                onChangeText={(value) => setUserName(value)}
                             />
                         </Animated.View>
                         <Animated.View 
                             entering={FadeInDown.delay(200).duration(1000).springify()} 
                             style={styles.input}
                             >
-
-                            <TextInput
+                            <TextInputComp
+                                value={password}
                                 placeholder="Password"
-                                placeholderTextColor={'gray'}
-                                secureTextEntry
+                                onChangeText={(value) => setPassword(value)}
+                                secureTextEntry={secureText}
+                                secureText={secureText ? "show": "hide"}
+                                onPressSecure={() => setSecureText(!secureText)}
                             />
                         </Animated.View>
 
@@ -85,7 +133,7 @@ export default function LoginScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("HomeScreen")}
+                            <TouchableOpacity onPress={onPressLogin}
                             style={[ ]}
                             >
                                 <Text 
@@ -99,11 +147,9 @@ export default function LoginScreen() {
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
 
-                            <Text>Forgot password? </Text>
+                            <TextComp text="Forgot password? "/>
                             <TouchableOpacity onPress={()=> navigation.push('ForgotPasswordScreen')}>
-                                <Text 
-                                // style="text-sky-600"
-                                >Yes</Text>
+                                <TextComp text=" Yes"/>
                             </TouchableOpacity>
                         </Animated.View>
 
@@ -112,11 +158,9 @@ export default function LoginScreen() {
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
 
-                            <Text>Don't have an account? </Text>
+                            <TextComp text="  Don't have an account?"/>
                             <TouchableOpacity onPress={()=> navigation.push('SignupScreen')}>
-                                <Text 
-                                // style="text-sky-600"
-                                >SignUp</Text>
+                                <TextComp text='SignUp'/>
                             </TouchableOpacity>
                         </Animated.View>
                     </View>

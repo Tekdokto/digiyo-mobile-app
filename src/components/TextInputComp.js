@@ -31,8 +31,9 @@ const TextInputComp = ({
         }}>
             <TextInput 
             style={{
-                ...styles.textStyle,
-                ...textStyle,
+                color: "grey"
+                // ...styles.textStyle,
+                // ...textStyle,
                 // textAlign: lang == 'ar'? 'right': 'left'
             }}
             value={value}

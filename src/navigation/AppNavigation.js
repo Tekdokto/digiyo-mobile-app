@@ -39,13 +39,22 @@ import { Default, Colors } from '../constants/styles2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MessagesScreen from '../screens/messages';
 import Conversations from '../components/Conversations';
+import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const ScreenTabs = createNativeStackNavigator()
+// APP DRAWER
+const Drawer = createDrawerNavigator()
 
 export default function AppNavigation() { 
 
   const [ darkMode, setDarkMode ] = useState(false)
+  const userData = useSelector(state=>state.auth.userData)
+
+  console.log("userData", userData)
+
 
   useEffect(() => {
     // Load the dark mode state from AsyncStorage when the component mounts
@@ -75,20 +84,42 @@ export default function AppNavigation() {
   }, [darkMode])
 
   // 
-return (
-  <ThemeContext.Provider value={darkMode === true ? theme.dark : theme.light }>
-    <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
-      <AllScreenTabs />
-      {/* <DrawerGroup /> */}
-    </NavigationContainer>
-  </ThemeContext.Provider>
-)};
+  return (
+    <ThemeContext.Provider value={darkMode === true ? theme.dark : theme.light }>
+      <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
+        {/* <DrawerGroup /> */}
+        {
+        !!userData.token ? 
 
-const ScreenTabs = createNativeStackNavigator()
+           <AllScreenTabs />
+           :
+
+        <AuthScreens />
+      }
+      </NavigationContainer>
+    </ThemeContext.Provider>
+  )
+};
+
+// AUTH SCREENS
+function AuthScreens() {
+  return (
+    <ScreenTabs.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
+        <ScreenTabs.Screen name='HomeScreen' component={HomeTabs} />
+        <ScreenTabs.Screen name='LoginScreen' component={LoginScreen} />
+        <ScreenTabs.Screen name='SignupScreen' component={SignupScreen} />
+        <ScreenTabs.Screen name='FoundersScreen' component={FoundersScreen} />
+        <ScreenTabs.Screen name='OTPScreen' component={OTPScreen} />
+        <ScreenTabs.Screen name='ForgotPasswordScreen' component={ForgotPassworScreen} />
+        <ScreenTabs.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
+  </ScreenTabs.Navigator>
+  )
+}
+
 
 function AllScreenTabs() {
   return (
-    <ScreenTabs.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
+    <ScreenTabs.Navigator initialRouteName='HomeScreen' screenOptions={{ headerShown: false }}>
         <ScreenTabs.Screen name='HomeScreen' component={HomeTabs} />
         <ScreenTabs.Screen name='PostFull' component={FullVideoScreen} />
         <ScreenTabs.Screen name='UserProfileScreen' component={UserProfileScreen} />
@@ -96,12 +127,6 @@ function AllScreenTabs() {
         <ScreenTabs.Screen name='FollowersScreen' component={FollowersScreen} />
         <ScreenTabs.Screen name='FollowingScreen' component={FollowingScreen} />
         <ScreenTabs.Screen name='CameraScreen' component={CameraScreen} />
-        <ScreenTabs.Screen name='LoginScreen' component={LoginScreen} />
-        <ScreenTabs.Screen name='SignupScreen' component={SignupScreen} />
-        <ScreenTabs.Screen name='OTPScreen' component={OTPScreen} />
-        <ScreenTabs.Screen name='ForgotPasswordScreen' component={ForgotPassworScreen} />
-        <ScreenTabs.Screen name='NewPasswordScreen' component={NewPasswordScreen} />
-        <ScreenTabs.Screen name='FoundersScreen' component={FoundersScreen} />
         <ScreenTabs.Screen name='messageUserScreen' component={MessageUserScreen} />
         <ScreenTabs.Screen name='messagesScreen' component={MessagesScreen} />
         <ScreenTabs.Screen name='conversations' component={Conversations} />
@@ -189,8 +214,6 @@ const menuIcons = (route, focused) => {
 
   
 
-// APP DRAWER
-const Drawer = createDrawerNavigator()
 
 function DrawerGroup() {
   return (

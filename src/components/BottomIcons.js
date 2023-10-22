@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
-// import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons' 
-import { create } from 'apisauce'
+
 // import BottomSheets from './BottomSheets'
 // import ThemeContext from '../theme/ThemeContext'
 import ShareSvg from '../../assets/icons/share.svg'
@@ -20,12 +19,6 @@ const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save
 //   let themeColorsDark = theme.theme == "dark" ? "silver" : "silver"
   let size = 20
 
-    const api = create({
-        baseURL: "https://jsonplaceholder.typicode.com",
-        headers: {}
-    })
-
-    api.any({ method: 'GET', url: "/comments?postId=", params: {id: 1} })
   return (
     <View style={{ flex: 1, }}>
         <View style={{ flexDirection: "row", alignItems: "center",   }}>

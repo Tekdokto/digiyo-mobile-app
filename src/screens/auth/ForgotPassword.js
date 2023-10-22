@@ -1,5 +1,5 @@
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -7,7 +7,10 @@ import { HEIGHT, WIDTH } from '../../constants/sizes';
 import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
+import LogoWhite from '../../../assets/icons/logo.svg'
 import ThemeContext from '../../theme/ThemeContext';
+import { resetPassword } from '../../redux/actions/auth';
+import { showError } from '../../utils/helperFunctions';
 
 
 export default function ForgotPasswordScreen() {
@@ -15,12 +18,51 @@ export default function ForgotPasswordScreen() {
 
     const theme = useContext(ThemeContext)
 
+    
+    const [email, setEmail] = useState('')
+
+    const onForgotpass = async() => {
+        // const checkValid = isValidData()
+        // console.log("first")
+
+        // if (checkValid) {
+            // setLoading(true)
+            let data  = {
+                email:email
+            }
+            console.log("empty =-=-= emsopidosn ", data)
+            if (data.email != "" ) {
+                
+                try {
+                    let res = await resetPassword(data)
+                    console.log("response -------", data)
+                    console.log("response result -------", res)
+                    // setLoading(false)
+                    console.log(" ---------- -========", res.data)
+                    // console.log(" ---------- -========", res.data.email)
+                    // showMessage(res.status)
+                    navigation.push("NewPasswordScreen")
+                } catch (error) {
+                    // showError(error.message)
+                    console.log("signup error -------", error )
+                    console.log("signup error data -------", data )
+                    // setLoading(false)
+                }
+            }
+             else {
+                showError("fields must not be empty")
+             }
+        // }
+        // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+    }
+
+
   return (
     <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{flex: 1}}
     >
-        <View style={{ flex: 1, backgroundColor:"white", height:HEIGHT, width:WIDTH,}}>
+        <View style={{ flex: 1, backgroundColor:theme.backgroundColor, height:HEIGHT, width:WIDTH,}}>
             <StatusBar style="light" />
             {/* <Image style={{height:HEIGHT, width:WIDTH, position:"absolute"}} source={require('../../../assets/images/background.png')} /> */}
             <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
@@ -38,7 +80,8 @@ export default function ForgotPasswordScreen() {
                         // source={require('../../../assets/icons/logo-black.png')} 
                         // style={{ width:"50%",}}
                     >
-                        <Logo  height={100} width={290} />
+                        { theme.theme != "dark" ? <Logo  height={100} width={290} />
+                        : <LogoWhite  height={100} width={290} />}
                     </Animated.View> 
                 </View>
 
@@ -51,7 +94,7 @@ export default function ForgotPasswordScreen() {
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:theme.color, fontWeight:"bold", fontSize:40}}
+                            style={{ color:theme.color, fontWeight:"400", fontSize:20}}
                             >
                                 Reset Password
                         </Animated.Text>
@@ -66,9 +109,10 @@ export default function ForgotPasswordScreen() {
                             style={styles.input}
                             >
 
-                            <TextInput
-                                placeholder="Email"
-                                placeholderTextColor={'gray'}
+<TextInputComp
+                                value={email}
+                                placeholder="email"
+                                onChangeText={(value) => setEmail(value)}
                             />
                         </Animated.View>
                        
@@ -76,7 +120,7 @@ export default function ForgotPasswordScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("NewPasswordScreen")}
+                            <TouchableOpacity onPress={onForgotpass}
                             style={[ ]}
                             >
                                 <Text 

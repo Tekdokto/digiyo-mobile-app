@@ -17,10 +17,15 @@ import ShareSvg from '../../../assets/icons/share.svg'
 import EditSvg from '../../../assets/icons/edit.svg'
 import FollowersScreen from "../FollowUnfollow/FollowersScreen";
 import FollowingScreen from "../FollowUnfollow/FollowingScreen";
+import { useSelector } from "react-redux";
 
 const Tab = createMaterialTopTabNavigator();
 
 const MyProfileScreen = () => {
+
+  const userData = useSelector(state=>state.auth.userData.authenticated_user)
+
+  console.log("userData", userData)
   
   const theme = useContext(ThemeContext)
  
@@ -78,7 +83,7 @@ const MyProfileScreen = () => {
               // marginRight: isRtl ? Default.fixPadding * 2 : 0,
             }}
           >
-            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>Bessie Cooper</Text>
+            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>{userData.username}</Text>
             <Text
               style={{
                 ...Fonts.Medium12grey,
@@ -182,7 +187,7 @@ const MyProfileScreen = () => {
               // stretch={true}
                 backgroundDarker={Colors.transparent}
                 backgroundColor={ACCENT_COLOR}
-                onPressOut={{}}>
+                onPressOut={() => console.log(userData)}>
                 <View style={ styles.buttonGreen}>
                     <ShareSvg width= {20} stroke={"white"} />
                   <Text style={{color: "white", fontSize: 20, fontWeight: "bold"}}>
