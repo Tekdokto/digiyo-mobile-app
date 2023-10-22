@@ -1,5 +1,6 @@
-import { LOGIN_API, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC } from '../../config/urls';
-import { apiPost, apiPut } from '../../utils/utils';
+// import { useSelector } from 'react-redux';
+import { ALL_POSTS, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC } from '../../config/urls';
+import { apiGet, apiPost, apiPut } from '../../utils/utils';
 import { saveUserData } from '../reducers/auth';
 import store from '../store';
 import types from '../types';
@@ -38,8 +39,7 @@ export const resendOTP = (data) => {
 export const resetPassword = (data) => {
   return apiPut(RESET_PASSWORD, data,
     {headers: {
-      'Content-Type': 'application/json',
-      // 'Authorization': 'JWT fefege...'
+      'Content-Type': 'application/json', 
   },}
     )
 };
@@ -50,6 +50,34 @@ export const verifyAccout = (data) => {
       'Content-Type': 'application/json',
       // 'Authorization': 'JWT fefege...'
   },}
+    )
+};
+
+
+// AUTHENTICATED 
+// USER
+
+
+export const myProifile = (userToken) => {
+  return apiGet(MY_PROFILE, 
+    {headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+     },}
+    )
+};
+
+
+
+
+// POSTS
+
+export const getAllPosts = (userToken) => {
+  return apiGet(ALL_POSTS,
+    {headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+     },}
     )
 };
 

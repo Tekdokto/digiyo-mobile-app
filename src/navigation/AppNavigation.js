@@ -53,7 +53,7 @@ export default function AppNavigation() {
   const [ darkMode, setDarkMode ] = useState(false)
   const userData = useSelector(state=>state.auth.userData)
 
-  console.log("userData", userData)
+  // console.log("userData", userData)
 
 
   useEffect(() => {

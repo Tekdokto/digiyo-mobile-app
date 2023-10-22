@@ -36,17 +36,17 @@ export default function LoginScreen() {
                 
                 try {
                     let res = await userLogin(data)
-                    console.log("response -------", data)
-                    console.log("response result -------", res)
+                    // console.log("response -------", data)
+                    // console.log("response result -------", res)
                     // setLoading(false)
-                    console.log(" ---------- -========", res.data)
+                    // console.log(" ---------- -========", res.data)
                     // console.log(" ---------- -========", res.data.email)
                     // showMessage(res.status)
                     // navigation.replace("HomeScreen", { item: res.data.email})
                 } catch (error) {
                     showError(error.message)
-                    console.log("signup error -------", error )
-                    console.log("signup error data -------", data )
+                    // console.log("signup error -------", error )
+                    // console.log("signup error data -------", data )
                     // setLoading(false)
                 }
             }

@@ -6,7 +6,7 @@ import styles from '../../constants/styles';
 import { Video, ResizeMode } from 'expo-av';
 // import { useIsFocused } from '@react-navigation/native';
 
-const HomeVidComp = ({ vids, isVisible }) => {  
+const HomeVidComp = ({ vids, isVisible, videoReady }) => {  
 
   const [paused, setPaused] = useState(!isVisible);
  
@@ -56,7 +56,7 @@ const HomeVidComp = ({ vids, isVisible }) => {
         <View style={{ flex: 1 }}>
            <Video
               // source={{uri: 'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-llea-8725-311975ea9616/processed_720.mp4'}}
-              source={ vids }
+              source={{uri: vids}}
               // source={{uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
               ref={videoRef}
               style={styles.video}
@@ -65,6 +65,7 @@ const HomeVidComp = ({ vids, isVisible }) => {
               resizeMode={ResizeMode.COVER}
               isLooping={false}
               shouldPlay={paused} // Set to true to start playing automatically
+              onReadyForDisplay={videoReady}
               onPlaybackStatusUpdate={(status) => {
                 if (!status.isLoaded) {
                   console.error('Video load error:', status.error);

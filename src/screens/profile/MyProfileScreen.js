@@ -18,20 +18,49 @@ import EditSvg from '../../../assets/icons/edit.svg'
 import FollowersScreen from "../FollowUnfollow/FollowersScreen";
 import FollowingScreen from "../FollowUnfollow/FollowingScreen";
 import { useSelector } from "react-redux";
+import { myProifile } from "../../redux/actions/auth";
+import { showError } from "../../utils/helperFunctions";
 
 const Tab = createMaterialTopTabNavigator();
 
 const MyProfileScreen = () => {
 
   const userData = useSelector(state=>state.auth.userData.authenticated_user)
-
-  console.log("userData", userData)
+  const user = useSelector(state=>state.auth.userData.token)
+  // console.log("userData", userData)
   
   const theme = useContext(ThemeContext)
  
   const { t, i18n } = useTranslation();
-
   const isRtl = i18n.dir() == "rtl";
+
+  
+  const [isLoading, setLoading] = useState(false)
+  const [profile, setProfile] = useState(false)
+
+  // 
+   
+  const onFetchProfile = async() => { 
+    let token = user.token
+    console.log("token ---------- " , token)
+        try {
+          setLoading(true)
+          let res = await myProifile(token)
+          console.log("response -------", res)
+          console.log("profile result -------", res.authenticated_user)
+          setProfile(res.authenticated_user)
+          setLoading(false)
+        } catch (error) {
+          showError(error.message)
+          console.log("profile error -------", error )
+          setLoading(false)
+        }
+}
+
+useEffect(() => {
+  onFetchProfile();
+  }, []);
+
 
   function tr(key) {
     return t(`profileScreen:${key}`);
@@ -83,7 +112,10 @@ const MyProfileScreen = () => {
               // marginRight: isRtl ? Default.fixPadding * 2 : 0,
             }}
           >
-            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>{userData.username}</Text>
+            <Text style={{ 
+              ...Fonts.SemiBold16white, 
+              color: theme.color }}
+              >{profile.username}</Text>
             <Text
               style={{
                 ...Fonts.Medium12grey,
@@ -109,7 +141,9 @@ const MyProfileScreen = () => {
                   // marginLeft: isRtl ? Default.fixPadding : 0,
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>456</Text>
+                <Text style={{ 
+                  ...Fonts.SemiBold14white, 
+                  color: theme.color }}>{profile.following_count}</Text>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -135,7 +169,9 @@ const MyProfileScreen = () => {
                   onPress={() => navigation.push("FollowersScreen")}
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  <Text style={{ ...Fonts.SemiBold14white, color:theme.color }}>36</Text>
+                  <Text style={{ 
+                    ...Fonts.SemiBold14white, 
+                    color:theme.color }}>{profile.follower_count}</Text>
                   <Text
                     numberOfLines={1}
                     style={{
@@ -156,7 +192,9 @@ const MyProfileScreen = () => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color:theme.color  }}>156</Text>
+                <Text style={{ 
+                  ...Fonts.SemiBold14white, 
+                  color:theme.color  }}>{profile.post_count}</Text>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -187,7 +225,8 @@ const MyProfileScreen = () => {
               // stretch={true}
                 backgroundDarker={Colors.transparent}
                 backgroundColor={ACCENT_COLOR}
-                onPressOut={() => console.log(userData)}>
+                // onPressOut={onFetchProfile}
+                >
                 <View style={ styles.buttonGreen}>
                     <ShareSvg width= {20} stroke={"white"} />
                   <Text style={{color: "white", fontSize: 20, fontWeight: "bold"}}>
