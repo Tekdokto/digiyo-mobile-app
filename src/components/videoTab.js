@@ -6,11 +6,16 @@ import {
     Dimensions,
     TouchableOpacity,
   } from "react-native";
-  import React, { useContext } from "react";
+  import React, { useContext, useEffect, useState } from "react";
   import Ionicons from "react-native-vector-icons/Ionicons"; 
   import { useTranslation } from "react-i18next";
 import { Default, Colors, Fonts } from "../constants/styles2";
 import ThemeContext from "../theme/ThemeContext";
+import { useSelector } from "react-redux";
+import { getUserPosts } from "../redux/actions/auth";
+import { DELETE_POSTS, GET_USERS_POSTS } from "../config/urls";
+import axios from "axios";
+import { ActivityIndicator } from "react-native";
   
   const { width } = Dimensions.get("window");
   
@@ -18,6 +23,10 @@ import ThemeContext from "../theme/ThemeContext";
 
     const theme = useContext(ThemeContext)
     const { t, i18n } = useTranslation();
+
+    
+    const [isLoading, setLoading] = useState(false)
+    const [post, setPost] = useState()
   
     const isRtl = i18n.dir() == "rtl";
   
@@ -102,16 +111,108 @@ import ThemeContext from "../theme/ThemeContext";
     //     other: "150",
     //   },
     ];
+    
+    const userToken = useSelector(state=>state.auth.userData.token)
   
-    const renderItem = ({ item }) => {
+
+    function extractAuthorization(cookieString) {
+      const cookies = cookieString.split(';');
+      let authorization = '';
+    
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith('Authorization=')) {
+          authorization = cookie.substring('Authorization='.length);
+          break;
+        }
+      }
+    
+      return authorization;
+    }
+    
+    const auth = extractAuthorization(userToken)
+    const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
+
+    // console.log(auth)
+
+    const userPosts = async () => {
+
+      const config = {
+        method: "get",
+        url: GET_USERS_POSTS+userId,
+        // data: formdata,
+        headers: {
+          'Authorization': auth,
+          "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+        }
+      };
+      try {
+        setLoading(true)
+        // let res = getUserPosts(auth,  userId)
+        await axios(config).then(
+          (response) => {
+            setPost(response.data.data)
+            console.log(response.data)
+          }
+      ).catch((error) => {
+        console.log("error 1111111111111",error)
+      } )
+      
+      // console.log("---------",res)
+      setLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const deletePost = async (post_id) => {
+
+      const config = {
+        method: "delete",
+        url: DELETE_POSTS+post_id,
+        // data: formdata,
+        headers: {
+          'Authorization': auth,
+          "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+        }
+      };
+      try {
+        setLoading(true)
+        // let res = getUserPosts(auth,  userId)
+        await axios(config).then(
+          (response) => {
+            setPost(response.data.data)
+            console.log("dddddddddddddddeeeeeeeeelllllllllleeeeeeeete",response.data)
+          }
+      ).catch((error) => {
+        console.log("error 1111111111111",error)
+      } )
+      
+      // console.log("---------",res)
+      setLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    useEffect(() => {
+      userPosts()
+    }, [])
+  
+    // console.log("++++++++++++++",post)
+    const renderItem = ({ item, index }) => {
+      // const medias = item.media_items.map((media) => media.type)
+      // console.log("'''''''''''''''''''", item)
       return (
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("userVideoScreen", {
-              key: "1",
-              title: tr("deleteVideo"),
-              follow: false,
-            })
+          onPress={
+            deletePost(item.post_id)
+          
+            // navigation.navigate("userVideoScreen", {
+            //   key: "1",
+            //   title: tr("deleteVideo"),
+            //   follow: false,
+            // })
           }
           style={{
             flex: 1,
@@ -121,7 +222,7 @@ import ThemeContext from "../theme/ThemeContext";
           }}
         >
           <Image
-            source={item.image}
+            source={{uri: item.image}}
             style={{
               resizeMode: "stretch",
               width: width / 3.75,
@@ -143,14 +244,14 @@ import ThemeContext from "../theme/ThemeContext";
                 paddingHorizontal: Default.fixPadding * 0.4,
               }}
             >
-              <Ionicons name="play" size={18} color={Colors.white} />
+              <Ionicons name="play" size={18} color={"black"} />
               <Text
                 style={{
                   ...Fonts.SemiBold12white,  color:theme.color ,
                   marginHorizontal: Default.fixPadding * 0.2,
                 }}
               >
-                {item.other}
+                {item.totalLikes}
               </Text>
             </View>
           </View>
@@ -159,20 +260,26 @@ import ThemeContext from "../theme/ThemeContext";
     };
     return (
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-        <FlatList
-          numColumns={3}
-          data={videoList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.key}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingTop: Default.fixPadding * 2,
-            paddingHorizontal: Default.fixPadding,
-          }}
-        />
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            numColumns={2}
+            data={post}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.post_id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingTop: Default.fixPadding * 2,
+              paddingHorizontal: Default.fixPadding,
+            }}
+          />
+
+        )
+        }
       </View>
     );
   };
   
   export default VideoTab;
-  
+   

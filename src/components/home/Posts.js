@@ -53,12 +53,8 @@ const Posts = ({ toggleSheet }) => {
         try {
           setLoading(true)
           let res = await getAllPosts(token)
-        //   console.log("posts -------", res)
-        //   console.log("posts result -------", res)
-        // const gotit = res.data
           setPost(res)
-        //   console.log("first", post)
-        //   console.log("mapongind qqqqqqqqqqqqqqqqq ",post.map((item) => item.content))
+          
           setLoading(false)
         } catch (error) {
           showError(error.message)
@@ -155,7 +151,7 @@ useEffect(() => {
                     // console.log( "stuff ---= ",item.content)
                     const medias = item.media_items.map((media) => media.type)
                     const mediasUrl = item.media_items.map((media) => media.url.low)
-                    // console.log("medias ===== here == media types ",mediasUrl) 
+                    console.log("medias ===== here == media types ",mediasUrl) 
                     return (  
                         <Pressable onPress={()=> navigation.navigate("PostFull", { item } )}>
                             <View key={item.post_id}  style={{ marginHorizontal: WIDTH *0.17 }} >
@@ -163,7 +159,7 @@ useEffect(() => {
                                     <Pressable  
                                         onPress={() => navigation.navigate("otherUserProfileScreen")}
                                         style={{ marginBottom: 10 }}>
-                                            {}
+                                            {} 
                                             <FontAwesome
                                                 name="user-circle-o"
                                                 size={30}
@@ -226,8 +222,15 @@ useEffect(() => {
                                             </>
                                         ) : (
                                             <>
-                                            <Image source={{url: mediasUrl}} 
-                                            style={ styles.mediaFrame } /> 
+                                            {isLoading ? (
+                                                <ActivityIndicator />
+                                            ) : (
+                                                <>
+                                                <Text>{mediasUrl}</Text> 
+                                                    <Image source={{uri: mediasUrl}} 
+                                                    style={ styles.mediaFrame } /> 
+                                                </>
+                                            ) } 
                                             </>
                                         )
                                     }

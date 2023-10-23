@@ -13,8 +13,9 @@ export const MY_PROFILE = getApiURL('/auth/profile');
 
 export const ALL_POSTS = getApiURL('/posts?page=1&perPage=20');
 export const CREATE_POSTS = getApiURL('/posts'); 
-export const DELETE_POSTS = getApiURL('/posts');
+export const DELETE_POSTS = getApiURL('/posts/');
 export const GET_POSTS_BY_ID = getApiURL('/posts/id');
+export const GET_USERS_POSTS = getApiURL('/users/posts/');
 
 export const GET_POSTS_COMMENTS = getApiURL('/posts/id/comment');
 export const COMMENT_POSTS = getApiURL('/posts/id/comment');
