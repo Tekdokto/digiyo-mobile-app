@@ -1,6 +1,7 @@
 // import { useSelector } from 'react-redux';
-import { ALL_POSTS, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC } from '../../config/urls';
-import { apiGet, apiPost, apiPut } from '../../utils/utils';
+import { ALL_POSTS, CREATE_POSTS, DELETE_POSTS, GET_POSTS_BY_ID, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC } from '../../config/urls';
+import { storeData } from '../../utils/helperFunctions';
+import { apiDelete, apiGet, apiPost, apiPut } from '../../utils/utils';
 import { saveUserData } from '../reducers/auth';
 import store from '../store';
 import types from '../types';
@@ -9,8 +10,17 @@ const { dispatch } = store;
 export const userLogin = (data) => {
     return new Promise((resolve, reject)=>{
       apiPost(LOGIN_API, data).then((res)=>{
-        resolve(res)
-        dispatch(saveUserData(res.data))
+        console.log("first login res ======== ", res.data)
+        if (!!res.data) {
+          storeData('userData', res.data).then((value) => {
+            console.log("see it this ======== ", res)
+            dispatch(saveUserData(res.data))
+          }).catch((error) => {
+            resolve(res)
+          })
+        } else {
+          resolve(res)
+        }
       }).catch((error)=>{
         reject(error)
       })
@@ -53,6 +63,10 @@ export const verifyAccout = (data) => {
     )
 };
 
+export function logout() {
+  dispatch({ type: types.CLEAR_REDUX_STATE });
+}
+
 
 // AUTHENTICATED 
 // USER
@@ -72,6 +86,16 @@ export const myProifile = (userToken) => {
 
 // POSTS
 
+export const createPosts = (data, userToken ) => {
+  return apiPost(CREATE_POSTS,
+    data, 
+    { 
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${userToken}`
+    }, 
+    )
+};
+ 
 export const getAllPosts = (userToken) => {
   return apiGet(ALL_POSTS,
     {headers: {
@@ -81,7 +105,21 @@ export const getAllPosts = (userToken) => {
     )
 };
 
+export const getPostsById = (userToken) => {
+  return apiGet(GET_POSTS_BY_ID,
+    {headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+     },}
+    )
+};
 
-export function logout() {
-  dispatch({ type: types.CLEAR_REDUX_STATE });
-}
+export const deletePost = (userToken) => {
+  return apiDelete(DELETE_POSTS,
+    {headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+     },}
+    )
+};
+

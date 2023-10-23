@@ -5,31 +5,40 @@ import styles from '../../constants/styles';
 
 import { Video, ResizeMode } from 'expo-av';
 // import { useIsFocused } from '@react-navigation/native';
-
-const HomeVidComp = ({ vids, isVisible, videoReady }) => {  
-
-  const [paused, setPaused] = useState(!isVisible);
  
-  const [isPlaying, setIsPlaying] = useState(true);
+const HomeVidComp = ({ vids, isVisible, videoReady }) => {
+  const [paused, setPaused] = useState(!isVisible);
+  const [isPlaying, setIsPlaying] = useState(false); // Start paused
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const videoRef = useRef(null);
 
   useEffect(() => {
+    // Load the video when the component mounts
+    if (videoRef.current && !isVideoLoaded) {
+      videoRef.current.loadAsync(
+        { uri: vids },
+        {},
+        false // Set to true to autoplay after loading
+      ).then(() => {
+        setIsVideoLoaded(true);
+        setIsPlaying(!paused); // Autoplay after loading
+      });
+    }
+  }, [vids, isVideoLoaded, paused]);
+
+  useEffect(() => {
     return () => {
       if (videoRef.current) {
-        videoRef.current.pauseAsync()
-      } else {
-        videoRef.current.pauseAsync()
+        videoRef.current.unloadAsync();
       }
-    }
-  }, [])
+    };
+  }, []);
 
-
-  // only play when the video is in view
+  // Play or pause the video when it becomes visible or not
   useEffect(() => {
-    // When the component mounts, autoplay the video
     if (videoRef.current) {
-      if (isVisible && !paused ) {
+      if (isVisible && !paused) {
         videoRef.current.playAsync();
       } else {
         videoRef.current.pauseAsync();
@@ -47,37 +56,31 @@ const HomeVidComp = ({ vids, isVisible, videoReady }) => {
       setIsPlaying(!isPlaying);
       setPaused(!isPlaying);
     }
-  }
-  
-  
+  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={togglePlayPause}>
         <View style={{ flex: 1 }}>
-           <Video
-              // source={{uri: 'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-llea-8725-311975ea9616/processed_720.mp4'}}
-              source={{uri: vids}}
-              // source={{uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
-              ref={videoRef}
-              style={styles.video}
-              onError={(e) => console.log(e)}
-              // useNativeControls={true}
-              resizeMode={ResizeMode.COVER}
-              isLooping={false}
-              shouldPlay={paused} // Set to true to start playing automatically
-              onReadyForDisplay={videoReady}
-              onPlaybackStatusUpdate={(status) => {
-                if (!status.isLoaded) {
-                  console.error('Video load error:', status.error);
-                }
-              }} 
-            /> 
- 
+          <Video
+            ref={videoRef}
+            style={styles.video}
+            onError={(e) => console.log(e)}
+            resizeMode={ResizeMode.COVER}
+            isLooping={false}
+            shouldPlay={paused}
+            // onReadyForDisplay={videoReady}
+            onPlaybackStatusUpdate={(status) => {
+              if (!status.isLoaded) {
+                console.error('Video load error:', status.error);
+              }
+            }}
+          />
         </View>
       </TouchableWithoutFeedback>
     </View>
   );
-};
+}; 
 
 export default HomeVidComp;
  

@@ -67,8 +67,8 @@ export async function apiReq(
 	});
 }
 
-export function apiPost(endPoint, data, headers = {}) {
-	return apiReq(endPoint, data, 'post', headers);
+export function apiPost(endPoint, data, headers = {}, ) {
+	return apiReq(endPoint, data, 'post', headers, );
 }
 
 export function apiDelete(endPoint, data, headers = {}) {

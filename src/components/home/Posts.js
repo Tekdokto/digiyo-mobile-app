@@ -49,11 +49,11 @@ const Posts = ({ toggleSheet }) => {
   
   const onFetchPosts = async() => { 
     let token = user.token
-    console.log("token ---------- " , token)
+    // console.log("token ---------- " , token)
         try {
           setLoading(true)
           let res = await getAllPosts(token)
-          console.log("posts -------", res)
+        //   console.log("posts -------", res)
         //   console.log("posts result -------", res)
         // const gotit = res.data
           setPost(res)
@@ -152,17 +152,18 @@ useEffect(() => {
                 renderItem=
                 {
                     ({ item, index }) => {
-                    console.log( "stuff ---= ",item.content)
+                    // console.log( "stuff ---= ",item.content)
                     const medias = item.media_items.map((media) => media.type)
                     const mediasUrl = item.media_items.map((media) => media.url.low)
-                    console.log("medias ===== here == media types ",medias)
-                    return ( 
+                    // console.log("medias ===== here == media types ",mediasUrl) 
+                    return (  
                         <Pressable onPress={()=> navigation.navigate("PostFull", { item } )}>
                             <View key={item.post_id}  style={{ marginHorizontal: WIDTH *0.17 }} >
                                 <View  style={{marginTop: 20, flexDirection: "row", alignContent: "center", }}>
                                     <Pressable  
                                         onPress={() => navigation.navigate("otherUserProfileScreen")}
                                         style={{ marginBottom: 10 }}>
+                                            {}
                                             <FontAwesome
                                                 name="user-circle-o"
                                                 size={30}
@@ -208,8 +209,7 @@ useEffect(() => {
                                     ? 
                                         ( 
                                         // <Text>image</Text>
-                                        // <Image source={{url: mediasUrl}} 
-                                        //     style={ styles.mediaFrame } />
+                                        // 
                                             <>
                                             { isVideoReady ? ( 
                                                 <View>  
@@ -226,7 +226,8 @@ useEffect(() => {
                                             </>
                                         ) : (
                                             <>
-                                            <Text>word</Text>
+                                            <Image source={{url: mediasUrl}} 
+                                            style={ styles.mediaFrame } /> 
                                             </>
                                         )
                                     }

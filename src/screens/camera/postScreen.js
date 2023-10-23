@@ -20,6 +20,16 @@ import MyStatusBar from "../../components/MyStatusBar";
 import { WIDTH, HEIGHT } from "../../constants/sizes";
 import ThemeContext from "../../theme/ThemeContext";
 import { Video } from "expo-av";
+import { createPosts } from "../../redux/actions/auth";
+import { useSelector } from "react-redux";
+import { ActivityIndicator } from "react-native-paper";
+import axios from "axios";
+
+import mime from 'react-native-mime-types'
+
+import { CREATE_POSTS } from "../../config/urls";
+import { showError } from "../../utils/helperFunctions";
+import { showMessage } from "react-native-flash-message";
 
 const { width } = Dimensions.get("window");
 
@@ -46,13 +56,139 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
+  const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+ 
+  // const [saveGallery, setSaveGallery] = useState(true);
+  // const switchSaveGallery = () => setSaveGallery((saveGallery) => !saveGallery);
 
-  const [saveGallery, setSaveGallery] = useState(true);
-  const switchSaveGallery = () => setSaveGallery((saveGallery) => !saveGallery);
+  // const [sharePost, setSharePost] = useState(true);
+  // const switchSharePost = () => setSharePost((sharePost) => !sharePost);
 
-  const [sharePost, setSharePost] = useState(true);
-  const switchSharePost = () => setSharePost((sharePost) => !sharePost);
+  const userToken = useSelector(state=>state.auth.userData.token)
+  
+
+function extractAuthorization(cookieString) {
+  const cookies = cookieString.split(';');
+  let authorization = '';
+
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith('Authorization=')) {
+      authorization = cookie.substring('Authorization='.length);
+      break;
+    }
+  }
+
+  return authorization;
+}
+
+const auth = extractAuthorization(userToken)
+
+const filePath = postUri ?? imgUrl
+
+// Extract the file name from the path
+const fileName = filePath.split('/').pop();
+
+// Use 'react-native-mime-types' to get the MIME type based on the file extension
+const fileType = mime.lookup(fileName);
+
+// Create a file object with the extracted values
+ 
+const onPostVideo = async () => {
+    
+        const formdata = new FormData();
+        formdata.append("caption", title);
+        formdata.append("content", description);
+        formdata.append("media", {
+          uri: filePath, // Replace with the URI of your file
+          type: fileType, // Adjust the type according to your file type
+          name: fileName, // Provide a file name
+        });
+
+    const config = {
+      method: "post",
+      url: CREATE_POSTS,
+      data: formdata,
+      headers: {
+        'Authorization': auth,
+        "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+      }
+    };
+    
+
+    console.log("--------------- types ........", formdata)
+    
+    // axios.post(CREATE_POSTS, formdata, config)
+    //   .then(response => {
+    //     console.log('Response:', response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
+     
+    
+    try {
+      setIsLoading(true)
+      await axios(config).then(
+          (response) => {
+              console.log("filteredStatus", response.data);
+              // setLoading(false)
+          }
+      ).catch((error) => {
+           console.log("error 1111111111111",auth)
+           console.log("error 1111111111111",error)
+          } )
+          setIsLoading(false) 
+        } catch (error) {
+      console.log("second error =====  ",error)
+      setIsLoading(false)
+    }
+  }
+ 
+const onPostImage = async () => {
+
+    const formdata = new FormData();
+    formdata.append("caption", title);
+    formdata.append("content", description);
+    formdata.append("media", {
+      uri: filePath, // Replace with the URI of your file
+      type: fileType, // Adjust the type according to your file type
+      name: fileName, // Provide a file name
+    });
+
+    const config = {
+      method: "post",
+      url: CREATE_POSTS,
+      data: formdata,
+      headers: {
+        'Authorization': auth,
+        "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+      }
+    };
+    
+    console.log("--------------- types ........", formdata)
+    try {
+      setIsLoading(true)
+      await axios(config).then(
+          (response) => {
+              console.log("filteredStatus", response.data); 
+              showMessage(response.data.status)
+              navigation.replace("HomeScreen")
+          }
+      ).catch((error) => {
+           console.log("error 1111111111111",auth)
+           console.log("error 1111111111111",error)
+          } )
+          setIsLoading(false)
+          showError(error)
+        } catch (error) {
+      console.log("second error =====  ",error)
+      setIsLoading(false)
+    }
+  }
+ 
 
   return (
     <View style={{ flex: 1,  width: WIDTH, backgroundColor: theme.theme == "dark" ? Colors.black : Colors.white }}>
@@ -138,9 +274,9 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
               <TextInput
                 multiline={true}
                 numberOfLines={7}
-                value={description}
+                value={title}
                 textAlignVertical="top"
-                onChangeText={setDescription}
+                onChangeText={setTitle}
                 placeholder={"Title"}
                 placeholderTextColor={Colors.grey}
                 selectionColor={Colors.primary}
@@ -251,25 +387,67 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
             marginHorizontal: Default.fixPadding * 2,
           }}
         >
-          <AwesomeButton
-            height={50}
-            onPressOut={() => navigation.navigate("homeScreen")}
-            raiseLevel={1}
-            stretch={true}
-            borderRadius={10}
-            borderWidth={null}
-            backgroundDarker={Colors.transparent}
-            extra={
-              <LinearGradient
-                start={[0, 1]}
-                end={[1, 1]}
-                colors={[Colors.primary, Colors.extraDarkPrimary]}
-                style={{ ...StyleSheet.absoluteFillObject }}
-              />
-            }
-          >
-            <Text style={{ ...Fonts.Bold18white }}>{tr("post")}</Text>
-          </AwesomeButton>
+          {/* Post vid */}
+          { postUri ? (
+              <AwesomeButton
+                height={50}
+                onPressOut={onPostVideo}
+                raiseLevel={1}
+                stretch={true}
+                borderRadius={10}
+                borderWidth={null}
+                backgroundDarker={Colors.transparent}
+                extra={
+                  <LinearGradient
+                    start={[0, 1]}
+                    end={[1, 1]}
+                    colors={[Colors.primary, Colors.extraDarkPrimary]}
+                    style={{ ...StyleSheet.absoluteFillObject }}
+                  />
+                }
+              >
+                {isLoading ? 
+                  (
+                    <ActivityIndicator />
+                  ) :
+                  (
+
+                    <Text style={{ ...Fonts.Bold18white }}>post</Text>
+                  )
+                }
+              </AwesomeButton>
+
+          ) : ( 
+
+              <AwesomeButton
+                height={50}
+                onPressOut={onPostImage}
+                raiseLevel={1}
+                stretch={true}
+                borderRadius={10}
+                borderWidth={null}
+                backgroundDarker={Colors.transparent}
+                extra={
+                  <LinearGradient
+                    start={[0, 1]}
+                    end={[1, 1]}
+                    colors={[Colors.primary, Colors.extraDarkPrimary]}
+                    style={{ ...StyleSheet.absoluteFillObject }}
+                  />
+                }
+              >
+                {isLoading ? 
+                  (
+                    <ActivityIndicator color={"white"} />
+                  ) :
+                  (
+
+                    <Text style={{ ...Fonts.Bold18white }}>post</Text>
+                    // <Text style={{ ...Fonts.Bold18white }}>{tr("post image")}</Text>
+                  )
+                }
+              </AwesomeButton>
+          ) }
         </View>
       </ScrollView>
     </View>

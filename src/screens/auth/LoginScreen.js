@@ -1,4 +1,4 @@
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
@@ -23,10 +23,11 @@ export default function LoginScreen() {
     const [email, setUserName] = useState('')  
     const [password, setPassword] = useState('')
     const [secureText, setSecureText] = useState(true)
+    const [loading, setLoading] = useState(false)
     
     const onPressLogin = async() => { 
         
-            // setLoading(true)
+            setLoading(true)
             let data  = {
                 email:email, 
                 password:password
@@ -38,7 +39,7 @@ export default function LoginScreen() {
                     let res = await userLogin(data)
                     // console.log("response -------", data)
                     // console.log("response result -------", res)
-                    // setLoading(false)
+                    setLoading(false)
                     // console.log(" ---------- -========", res.data)
                     // console.log(" ---------- -========", res.data.email)
                     // showMessage(res.status)
@@ -47,7 +48,7 @@ export default function LoginScreen() {
                     showError(error.message)
                     // console.log("signup error -------", error )
                     // console.log("signup error data -------", data )
-                    // setLoading(false)
+                    setLoading(false)
                 }
             }
              else {
@@ -136,9 +137,15 @@ export default function LoginScreen() {
                             <TouchableOpacity onPress={onPressLogin}
                             style={[ ]}
                             >
-                                <Text 
-                                style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
-                                >Login</Text>
+                                {loading ? (
+                                    <ActivityIndicator />
+                                ) : (
+
+                                    <Text 
+                                    style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
+                                    >Login</Text>
+                                )
+                                }
                             </TouchableOpacity>
                         </Animated.View>
 

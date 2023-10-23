@@ -21,8 +21,11 @@ import ThemeContext from "../../theme/ThemeContext";
 import { EventRegister } from "react-native-event-listeners";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HEIGHT } from "../../constants/sizes";
+import { saveUserData } from "../../redux/reducers/auth";
+import store from "../../redux/store";
 // import MyStatusBar from "../components/myStatusBar";
 
+const { dispatch } = store
 const ProfileSettingsScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
 
@@ -232,7 +235,8 @@ const ProfileSettingsScreen = ({ navigation }) => {
         logoutModalClose={() => setOpenLogoutModal(false)}
         logoutClickHandler={() => {
           setOpenLogoutModal(false);
-          navigation.navigate("signInScreen");
+          dispatch(saveUserData({}))
+          navigation.navigate("LoginScreen");
         }}
       />
 

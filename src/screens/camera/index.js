@@ -70,6 +70,7 @@ const CameraScreen = ({ navigation }) => {
                 if (videoRecordPromise) {
                     const data = await videoRecordPromise
                     const source = data.uri
+                    console.log(data, "vid data")
                     console.log(source, "videoooooooooooooosssssss")
 
                     // Stop the timer when recording is complete
