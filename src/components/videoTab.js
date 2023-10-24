@@ -164,42 +164,43 @@ import { ActivityIndicator } from "react-native";
         console.log(error)
       }
     }
-
-    const deletePost = async (post_id) => {
-
-      const config = {
-        method: "delete",
-        url: DELETE_POSTS+post_id,
-        // data: formdata,
-        headers: {
-          'Authorization': auth,
-          "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
-        }
-      };
-      try {
-        setLoading(true)
-        // let res = getUserPosts(auth,  userId)
-        await axios(config).then(
-          (response) => {
-            setPost(response.data.data)
-            console.log("dddddddddddddddeeeeeeeeelllllllllleeeeeeeete",response.data)
-          }
-      ).catch((error) => {
-        console.log("error 1111111111111",error)
-      } )
-      
-      // console.log("---------",res)
-      setLoading(false)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     useEffect(() => {
       userPosts()
     }, [])
   
+
+    // const deletePost = async (post_id) => {
+
+    //   const config = {
+    //     method: "delete",
+    //     url: DELETE_POSTS+post_id,
+    //     // data: formdata,
+    //     headers: {
+    //       'Authorization': auth,
+    //       "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+    //     }
+    //   };
+    //   try {
+    //     setLoading(true)
+    //     // let res = getUserPosts(auth,  userId)
+    //     await axios(config).then(
+    //       (response) => {
+    //         setPost(response.data.data)
+    //         console.log("dddddddddddddddeeeeeeeeelllllllllleeeeeeeete",response.data)
+    //       }
+    //   ).catch((error) => {
+    //     console.log("error 1111111111111",error)
+    //   } )
+      
+    //   // console.log("---------",res)
+    //   setLoading(false)
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }
+
     // console.log("++++++++++++++",post)
+    
     const renderItem = ({ item, index }) => {
       // const medias = item.media_items.map((media) => media.type)
       // console.log("'''''''''''''''''''", item)
