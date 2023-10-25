@@ -13,7 +13,7 @@ import { Default, Colors, Fonts } from "../constants/styles2";
 import ThemeContext from "../theme/ThemeContext";
 import { useSelector } from "react-redux";
 import { getUserPosts } from "../redux/actions/auth";
-import { DELETE_POSTS, GET_USERS_POSTS } from "../config/urls";
+import { DELETE_POSTS, ALL_POST } from "../config/urls";
 import axios from "axios";
 import { ActivityIndicator } from "react-native";
   
@@ -139,7 +139,7 @@ import { ActivityIndicator } from "react-native";
 
       const config = {
         method: "get",
-        url: GET_USERS_POSTS+userId,
+        url: ALL_POST+userId,
         // data: formdata,
         headers: {
           'Authorization': auth,
@@ -206,8 +206,8 @@ import { ActivityIndicator } from "react-native";
       // console.log("'''''''''''''''''''", item)
       return (
         <TouchableOpacity
-          onPress={
-            deletePost(item.post_id)
+          onPress={{}
+            // deletePost(item.post_id)
           
             // navigation.navigate("userVideoScreen", {
             //   key: "1",

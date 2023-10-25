@@ -30,12 +30,15 @@ import mime from 'react-native-mime-types'
 import { CREATE_POSTS } from "../../config/urls";
 import { showError } from "../../utils/helperFunctions";
 import { showMessage } from "react-native-flash-message";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
 const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
 
   const theme = useContext(ThemeContext)
+
+  const navigate = useNavigation()
 
   const { t, i18n } = useTranslation();
 
@@ -96,6 +99,7 @@ const fileType = mime.lookup(fileName);
 
 // Create a file object with the extracted values
  
+// video
 const onPostVideo = async () => {
     
         const formdata = new FormData();
@@ -116,25 +120,20 @@ const onPostVideo = async () => {
         "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
       }
     };
-    
-
-    console.log("--------------- types ........", formdata)
-    
-    // axios.post(CREATE_POSTS, formdata, config)
-    //   .then(response => {
-    //     console.log('Response:', response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error:', error);
-    //   });
      
-    
+    // console.log("--------------- types ........", formdata)
+     
     try {
       setIsLoading(true)
       await axios(config).then(
           (response) => {
-              console.log("filteredStatus", response.data);
+              // console.log("filteredStatus", response.data);
               // setLoading(false)
+              showMessage(response.data.status)
+              if (response.data.status == "success") {
+                
+                navigate.replace("HomeScreen")
+              }
           }
       ).catch((error) => {
            console.log("error 1111111111111",auth)
@@ -147,6 +146,7 @@ const onPostVideo = async () => {
     }
   }
  
+  // image
 const onPostImage = async () => {
 
     const formdata = new FormData();
@@ -168,14 +168,17 @@ const onPostImage = async () => {
       }
     };
     
-    console.log("--------------- types ........", formdata)
+    // console.log("--------------- types ........", formdata)
     try {
       setIsLoading(true)
       await axios(config).then(
           (response) => {
-              console.log("filteredStatus", response.data); 
+              // console.log("filteredStatus", response.data); 
               showMessage(response.data.status)
-              navigation.replace("HomeScreen")
+              if (response.data.status == "success") {
+                
+                navigate.replace("HomeScreen")
+              }
           }
       ).catch((error) => {
            console.log("error 1111111111111",auth)
@@ -191,266 +194,260 @@ const onPostImage = async () => {
  
 
   return (
-    <View style={{ flex: 1,  width: WIDTH, backgroundColor: theme.theme == "dark" ? Colors.black : Colors.white }}>
-      <MyStatusBar />
-      <View
-        style={{
-          alignSelf: isRtl ? "flex-end" : "flex-start",
-          paddingVertical: Default.fixPadding * 1.2,
-          paddingHorizontal: Default.fixPadding * 2,
-        }}
-      >
-        <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={cancel}>
-        {/* <TouchableOpacity onPress={() => navigation.pop()}> */}
-          <Ionicons
-            name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
-            size={25}
-            color={theme.color}
-          />
-          <Text>Back</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ paddingVertical: 1, width: WIDTH,  backgroundColor: Colors.lightGrey, color: Colors.lightGrey  }}></View>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <> 
+      <View style={{ flex: 1, position: "absolute", 
+      // top: 30,
+      bottom: 0, height: HEIGHT,  width: WIDTH, 
+      backgroundColor: theme.theme == "dark" ? Colors.black : Colors.white 
+      }}>
+        {/* <MyStatusBar /> */}
         <View
           style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            marginTop: Default.fixPadding * 1.2,
-            marginHorizontal: Default.fixPadding * 2,
+            alignSelf: isRtl ? "flex-end" : "flex-start",
+            paddingVertical: Default.fixPadding * 1.2,
+            paddingHorizontal: Default.fixPadding * 2,
           }}
         >
-          <View style={{ flex: 3.3 }}>
-          {isVid ? (
-                <>
-                    <View style={{ width:WIDTH * 0.3,
-                        alignSelf: "center",
-                        position: "absolute",
-                        height:HEIGHT * 0.35,
-                        backgroundColor: theme.backgroundColor,
-                        // bottom: HEIGHT * 0.2,
-                        }}>
-                        <Video style={{ flex: 1, borderRadius: 20}}
-                            useNativeControls
-                            isLooping
-                            source={{ uri: postUri }}
-                        />
-                    </View>
-                </>
-            ) : (
-                <>
-                    <View style={{ width:WIDTH * 0.3, 
-                        alignSelf: "center", 
-                        position: "absolute",
-                        height:HEIGHT * 0.35,  
-                        backgroundColor: theme.backgroundColor,
-                        // top: 20,
-                        }}>
-                        <Image source={{ uri: imgUrl }} style={{ flex: 1,
-                        borderRadius: 20
-                            }} />
-                    </View>
-                </>
-            ) }
-          </View>
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={cancel}>
+          {/* <TouchableOpacity onPress={() => navigation.pop()}> */}
+            <Ionicons
+              name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
+              size={25}
+              color={theme.color}
+            />
+            <Text>Back</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ paddingVertical: 1, 
+          
+          width: WIDTH,
+          backgroundColor: Colors.lightGrey, color: Colors.lightGrey  }}></View>
+
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
-              flex: 6.7,
-              paddingLeft: isRtl ? 0 : Default.fixPadding * 2,
-              paddingRight: isRtl ? Default.fixPadding * 2 : 0,
+              flexDirection: isRtl ? "row-reverse" : "row",
+              marginTop: Default.fixPadding * 1.2,
+              marginHorizontal: Default.fixPadding * 2,
             }}
           >
-            <View
-              style={{
-                paddingVertical: Default.fixPadding * 1.2,
-                paddingHorizontal: Default.fixPadding,
-                height: 40,
-                borderRadius: 8,
-                marginBottom:20,
-                backgroundColor: Colors.lightGrey,
-                ...Default.shadow,
-              }}
-            >
-              <TextInput
-                multiline={true}
-                numberOfLines={7}
-                value={title}
-                textAlignVertical="top"
-                onChangeText={setTitle}
-                placeholder={"Title"}
-                placeholderTextColor={Colors.grey}
-                selectionColor={Colors.primary}
-                style={{
-                  ...Fonts.Medium14white,
-                  textAlign: isRtl ? "right" : "left",
-                }}
-              />
+            <View style={{ flex: 3.3 }}>
+            {isVid ? (
+                  <>
+                      <View style={{ width:WIDTH * 0.3,
+                          alignSelf: "center",
+                          position: "absolute",
+                          height:HEIGHT * 0.35,
+                          backgroundColor: theme.backgroundColor,
+                          // bottom: HEIGHT * 0.2,
+                          }}>
+                          <Video style={{ flex: 1, borderRadius: 20}}
+                              useNativeControls
+                              isLooping
+                              source={{ uri: postUri }}
+                          />
+                      </View>
+                  </>
+              ) : (
+                  <>
+                      <View style={{ width:WIDTH * 0.3, 
+                          alignSelf: "center", 
+                          position: "absolute",
+                          height:HEIGHT * 0.35,  
+                          backgroundColor: theme.backgroundColor,
+                          // top: 20,
+                          }}>
+                          <Image source={{ uri: imgUrl }} style={{ flex: 1,
+                          borderRadius: 20
+                              }} />
+                      </View>
+                  </>
+              ) }
             </View>
             <View
               style={{
-                paddingVertical: Default.fixPadding * 1.2,
-                paddingHorizontal: Default.fixPadding,
-                height: 140,
-                borderRadius: 8,
-                backgroundColor: Colors.lightGrey,
-                ...Default.shadow,
+                flex: 6.7,
+                paddingLeft: isRtl ? 0 : Default.fixPadding * 2,
+                paddingRight: isRtl ? Default.fixPadding * 2 : 0,
               }}
             >
-              <TextInput
-                multiline={true}
-                numberOfLines={7}
-                value={description}
-                textAlignVertical="top"
-                onChangeText={setDescription}
-                placeholder={tr("describeVideo")}
-                placeholderTextColor={Colors.grey}
-                selectionColor={Colors.primary}
+              <View
                 style={{
-                  ...Fonts.Medium14white,
-                  textAlign: isRtl ? "right" : "left",
+                  paddingVertical: Default.fixPadding * 1.2,
+                  paddingHorizontal: Default.fixPadding,
+                  height: 40,
+                  borderRadius: 8,
+                  marginBottom:20,
+                  backgroundColor: Colors.lightGrey,
+                  ...Default.shadow,
                 }}
-              />
+              >
+                <TextInput
+                  multiline={true}
+                  numberOfLines={7}
+                  value={title}
+                  textAlignVertical="top"
+                  onChangeText={setTitle}
+                  placeholder={"Title"}
+                  placeholderTextColor={Colors.grey}
+                  selectionColor={Colors.primary}
+                  style={{
+                    ...Fonts.Medium14white,
+                    textAlign: isRtl ? "right" : "left",
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  paddingVertical: Default.fixPadding * 1.2,
+                  paddingHorizontal: Default.fixPadding,
+                  height: 140,
+                  borderRadius: 8,
+                  backgroundColor: Colors.lightGrey,
+                  ...Default.shadow,
+                }}
+              >
+                <TextInput
+                  multiline={true}
+                  numberOfLines={7}
+                  value={description}
+                  textAlignVertical="top"
+                  onChangeText={setDescription}
+                  placeholder={tr("describeVideo")}
+                  placeholderTextColor={Colors.grey}
+                  selectionColor={Colors.primary}
+                  style={{
+                    ...Fonts.Medium14white,
+                    textAlign: isRtl ? "right" : "left",
+                  }}
+                />
+              </View>
             </View>
           </View>
-        </View>
 
-        <View
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: Default.fixPadding * 2.5,
-            marginHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          {/* <Text style={{ ...Fonts.Medium16grey }}>{tr("saveGallery")}</Text> */}
-          {/* <ToggleSwitch
-            size="medium"
-            isOn={saveGallery}
-            onColor={Colors.primary}
-            offColor={Colors.lightGrey}
-            onToggle={switchSaveGallery}
-          /> */}
-        </View>
-
-        <View
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: Default.fixPadding * 2,
-            marginHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          {/* <Text style={{ ...Fonts.Medium16grey }}>{tr("sharePost")}</Text> */}
-          {/* <ToggleSwitch
-            size="medium"
-            isOn={sharePost}
-            onColor={Colors.primary}
-            offColor={Colors.lightGrey}
-            onToggle={switchSharePost}
-          /> */}
-        </View>
-
-        <View
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            marginTop: Default.fixPadding * 0.5,
-            marginHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          {/* <Image
-            source={require("../assets/images/share1.png")}
+          <View
             style={{
-              resizeMode: "cover",
-              width: 28,
-              height: 28,
-              borderRadius: 14,
+              flexDirection: isRtl ? "row-reverse" : "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: Default.fixPadding * 2.5,
+              marginHorizontal: Default.fixPadding * 2,
             }}
-          /> */}
-          {/* <Image
-            source={require("../assets/images/share2.png")}
+          >
+            {/* <Text style={{ ...Fonts.Medium16grey }}>{tr("saveGallery")}</Text> */}
+            {/* <ToggleSwitch
+              size="medium"
+              isOn={saveGallery}
+              onColor={Colors.primary}
+              offColor={Colors.lightGrey}
+              onToggle={switchSaveGallery}
+            /> */}
+          </View>
+
+          <View
             style={{
-              resizeMode: "cover",
-              width: 28,
-              height: 28,
-              borderRadius: 14,
-              marginHorizontal: Default.fixPadding * 1.2,
+              flexDirection: isRtl ? "row-reverse" : "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: Default.fixPadding * 2,
+              marginHorizontal: Default.fixPadding * 2,
             }}
-          /> */}
-        </View>
+          >
+            {/* <Text style={{ ...Fonts.Medium16grey }}>{tr("sharePost")}</Text> */}
+            {/* <ToggleSwitch
+              size="medium"
+              isOn={sharePost}
+              onColor={Colors.primary}
+              offColor={Colors.lightGrey}
+              onToggle={switchSharePost}
+            /> */}
+          </View>
 
-        <View
-          style={{
-            marginTop: Default.fixPadding * 6,
-            marginBottom: Default.fixPadding * 2,
-            marginHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          {/* Post vid */}
-          { postUri ? (
-              <AwesomeButton
-                height={50}
-                onPressOut={onPostVideo}
-                raiseLevel={1}
-                stretch={true}
-                borderRadius={10}
-                borderWidth={null}
-                backgroundDarker={Colors.transparent}
-                extra={
-                  <LinearGradient
-                    start={[0, 1]}
-                    end={[1, 1]}
-                    colors={[Colors.primary, Colors.extraDarkPrimary]}
-                    style={{ ...StyleSheet.absoluteFillObject }}
-                  />
-                }
-              >
-                {isLoading ? 
-                  (
-                    <ActivityIndicator />
-                  ) :
-                  (
+          <View
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+              marginTop: Default.fixPadding * 0.5,
+              marginHorizontal: Default.fixPadding * 2,
+            }}
+          > 
+          </View>
 
-                    <Text style={{ ...Fonts.Bold18white }}>post</Text>
-                  )
-                }
-              </AwesomeButton>
+          <View
+            style={{
+              bottom: 0,
+              // top:120,
+              height: HEIGHT,
+              position: "relative",
+              marginTop: Default.fixPadding * 6,
+              marginBottom: Default.fixPadding * 2,
+              marginHorizontal: Default.fixPadding * 2,
+            }}
+          >
+            {/* Post vid */}
+            { postUri ? (
+                <AwesomeButton
+                  height={50}
+                  onPressOut={onPostVideo}
+                  raiseLevel={1}
+                  stretch={true}
+                  borderRadius={10}
+                  borderWidth={null}
+                  backgroundDarker={Colors.transparent}
+                  extra={
+                    <LinearGradient
+                      start={[0, 1]}
+                      end={[1, 1]}
+                      colors={[Colors.primary, Colors.extraDarkPrimary]}
+                      style={{ ...StyleSheet.absoluteFillObject }}
+                    />
+                  }
+                >
+                  {isLoading ? 
+                    (
+                      <ActivityIndicator />
+                    ) :
+                    (
 
-          ) : ( 
+                      <Text style={{ ...Fonts.Bold18white }}>post</Text>
+                    )
+                  }
+                </AwesomeButton>
 
-              <AwesomeButton
-                height={50}
-                onPressOut={onPostImage}
-                raiseLevel={1}
-                stretch={true}
-                borderRadius={10}
-                borderWidth={null}
-                backgroundDarker={Colors.transparent}
-                extra={
-                  <LinearGradient
-                    start={[0, 1]}
-                    end={[1, 1]}
-                    colors={[Colors.primary, Colors.extraDarkPrimary]}
-                    style={{ ...StyleSheet.absoluteFillObject }}
-                  />
-                }
-              >
-                {isLoading ? 
-                  (
-                    <ActivityIndicator color={"white"} />
-                  ) :
-                  (
+            ) : ( 
 
-                    <Text style={{ ...Fonts.Bold18white }}>post</Text>
-                    // <Text style={{ ...Fonts.Bold18white }}>{tr("post image")}</Text>
-                  )
-                }
-              </AwesomeButton>
-          ) }
-        </View>
-      </ScrollView>
-    </View>
+                <AwesomeButton
+                  height={50}
+                  onPressOut={onPostImage}
+                  raiseLevel={1}
+                  stretch={true}
+                  borderRadius={10}
+                  borderWidth={null}
+                  backgroundDarker={Colors.transparent}
+                  extra={
+                    <LinearGradient
+                      start={[0, 1]}
+                      end={[1, 1]}
+                      colors={[Colors.primary, Colors.extraDarkPrimary]}
+                      style={{ ...StyleSheet.absoluteFillObject }}
+                    />
+                  }
+                >
+                  {isLoading ? 
+                    (
+                      <ActivityIndicator color={"white"} />
+                    ) :
+                    (
+
+                      <Text style={{ ...Fonts.Bold18white }}>post</Text>
+                      // <Text style={{ ...Fonts.Bold18white }}>{tr("post image")}</Text>
+                    )
+                  }
+                </AwesomeButton>
+            ) }
+          </View>
+        </ScrollView>
+      </View>
+    </>
   );
 };
 

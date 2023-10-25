@@ -23,11 +23,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HEIGHT } from "../../constants/sizes";
 import { saveUserData } from "../../redux/reducers/auth";
 import store from "../../redux/store";
+import { useSelector } from "react-redux";
 // import MyStatusBar from "../components/myStatusBar";
 
 const { dispatch } = store
 const ProfileSettingsScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
+
+  const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
 
   const isRtl = i18n.dir() == "rtl";
 
@@ -235,7 +238,10 @@ const ProfileSettingsScreen = ({ navigation }) => {
         logoutModalClose={() => setOpenLogoutModal(false)}
         logoutClickHandler={() => {
           setOpenLogoutModal(false);
-          dispatch(saveUserData({}))
+          AsyncStorage.removeItem('userData').then((res) => {
+            dispatch(saveUserData())
+          })
+          console.log(userId)
           navigation.navigate("LoginScreen");
         }}
       />

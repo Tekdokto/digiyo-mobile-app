@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FullPostComp from '../../components/home/FullPostComp'
 import { posts } from '../../Constants'
@@ -10,6 +10,8 @@ import { useIsFocused } from '@react-navigation/native'
 import CommentsBottomSheet from '../../components/commentsBottomSheet'
 import MenuBottomSheet from '../../components/menuBottomSheet'
 import { useTranslation } from 'react-i18next'
+import { getAllPosts } from '../../redux/actions/auth'
+import { useSelector } from 'react-redux'
 
 const FullVideoScreen = ({ navigation, route }) => {
 
@@ -24,11 +26,38 @@ const FullVideoScreen = ({ navigation, route }) => {
 
     const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
     const [openMenuBottomSheet, setOpenMenuBottomSheet] = useState(false);
+    
+    const [isLoading, setLoading] = useState(false)
+    const [post, setPost] = useState(false)
+    
+    const user = useSelector(state=>state.auth.userData.token)
   
 
+  
+    
+  const onFetchPosts = async() => { 
+    let token = user.token
+    // console.log("token ---------- " , token)
+        try {
+          setLoading(true)
+          let res = await getAllPosts(token)
+          setPost(res.data)
+          console.log(res.data)
+          setLoading(false)
+        } catch (error) {
+          showError(error.message)
+          // console.log("post error -------", error )
+          setLoading(false)
+        }
+}
+useEffect(() => {
+  onFetchPosts();
+  }, []);
+
+
     // console.log(item)
-    const postsArray = posts;
-    const currentIndex = postsArray.findIndex((postItem) => postItem.id === item.id);
+    const postsArray = post;
+    const currentIndex = postsArray.findIndex((postItem) => postItem.id === item.post_id);
     console.log(currentIndex)
     console.log(postsArray)
 

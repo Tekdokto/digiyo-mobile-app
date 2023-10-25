@@ -45,16 +45,13 @@ const HomeScreen = () => {
 
               <View style={{ flex: 1, }}>
                 <View>
-                  <Posts toggleSheet={toggleSheet} />
+                  <Posts />
                 </View>
               {/* side icons */}
                 <SideIconsComp />
                 { openCommentBottomSheet && (
                   <>
-                  <CommentsBottomSheet
-                    visible={openCommentBottomSheet}
-                    closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
-                  />
+                  
                   {/* <AnimatedPressable 
                     style={styles.backdrop} onPress={toggleSheet} 
                     entering={FadeIn}

@@ -343,7 +343,7 @@ const CameraScreen = ({ navigation }) => {
         { videoSource || pictureSource || galleryImageSource || videoFromGallerySource != null ? 
         (
             <>
-                <View style={{flex: 1,  height:HEIGHT,backgroundColor: theme.backgroundColor, position: "absolute" }}>
+                <View style={{flex: 1,  height:HEIGHT,backgroundColor: theme.backgroundColor, top: 0, bottom: 0 }}>
                     {/* {videoFromGallerySource && ( 
                         <SelectedPreview 
                             cancel={() => setVideoFromGallerySource(null)} 
