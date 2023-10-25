@@ -1,6 +1,9 @@
 import { CardField, useConfirmPayment, useStripe } from '@stripe/stripe-react-native';
 import { Button } from 'react-native';
 import { View } from 'react-native';
+import TextComp from '../TextComp';
+import MyStatusBar from '../MyStatusBar';
+import { HEIGHT, WIDTH } from '../../constants/sizes';
 
 function PaymentScreen() {
   // ...
@@ -51,7 +54,14 @@ function PaymentScreen() {
 
 
   return (
-    <View>
+    <>
+      <MyStatusBar />
+    <View style={{flex:1, height: HEIGHT * 0.2, flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+      <View style={{
+        flexDirection: "row", width:WIDTH, alignItems: "center", justifyContent: "center"
+      }}>
+        <TextComp text='Input your card details' size={20} />
+      </View>
       <CardField
         postalCodeEnabled={true}
         placeholders={{
@@ -75,6 +85,7 @@ function PaymentScreen() {
       />
       <Button onPress={handlePayPress} title="Pay" disabled={loading} />
     </View>
+    </>
   );
 }
 

@@ -25,7 +25,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const MyProfileScreen = () => {
 
-  const userData = useSelector(state=>state.auth.userData.authenticated_user)
+  // const userData = useSelector(state=>state.auth.userData.authenticated_user)
   const user = useSelector(state=>state.auth.userData.token)
   // console.log("userData", userData)
   

@@ -10,7 +10,7 @@ const MyStatusBar = () => {
     const theme = useContext(ThemeContext)
   return (
     <View style={[styles.statusBar, { 
-        // backgroundColor: Colors.black 
+        backgroundColor: theme.dark ? "#fff" : "#000" 
         }]}>
       <SafeAreaView>
         <StatusBar

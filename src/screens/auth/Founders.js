@@ -75,8 +75,10 @@ export default function FoundersScreen() {
                             style={[ ]}
                             >
                                 {open ? (
-                                <Modal>
-                                    <JoinFoundersPaymentScreen />
+                                <Modal height={{}}>
+                                    <View style={{height:HEIGHT*0.3, backgroundColor: theme.backgroundColor}}>
+                                        <JoinFoundersPaymentScreen />
+                                    </View>
                                 </Modal>
 
                                 ) : (<></>) }

@@ -176,7 +176,7 @@ useEffect(() => {
       
                 return (
                   <>
-                    <Pressable onPress={() => navigation.navigate("PostFull", { item })}>
+                    <Pressable onPress={() => navigation.navigate("PostFull", { item: item, selectedIndex: index, postsArray: post, })}>
                       <View key={item.post_id} style={{ marginHorizontal: WIDTH * 0.17 }}>
                         <View style={{ marginTop: 20, flexDirection: "row", alignContent: "center" }}>
                           <Pressable onPress={() => navigation.navigate("otherUserProfileScreen")} style={{ marginBottom: 10 }}>
@@ -227,18 +227,8 @@ useEffect(() => {
                                 <HomeVidComp
                                   vids={mediasUrls[0]}
                                   isVisible={visibleVideos[index] && isFocused}
-                                />
-                                {/* <Video
-                                ref={video}
-                                  useNativeControls
-                                  resizeMode={ResizeMode.CONTAIN}
-                                  isLooping
-                                  onPlaybackStatusUpdate={status => setStatus(() => status)}
-                                source={{uri: mediasUrls[0]}} /> */}
-                              </View>
-                          //   ) : (
-                          //     <ActivityIndicator />
-                          //   )
+                                /> 
+                              </View> 
                           ) : mediaTypes == "image" ? (
                             isLoading ? (
                               <ActivityIndicator />

@@ -13,18 +13,23 @@ const FullPostComp = ({ vids, isVisible }) => {
   const [paused, setPaused] = useState(!isVisible);
  
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const videoRef = useRef(null);
 
   useEffect(() => {
     // When the component mounts, autoplay the video
-    if (videoRef.current) {
-      videoRef.current.pauseAsync();
-    } 
-    else {
-      videoRef.current.playAsync();
+    if (videoRef.current && !isVideoLoaded) {
+      videoRef.current.loadAsync(
+        { uri: vids },
+        {},
+        false // Set to true to autoplay after loading
+      ).then(() => {
+        setIsVideoLoaded(true);
+        setIsPlaying(!paused); // Autoplay after loading
+      });
     }
-  }, []);
+  }, [vids, isVideoLoaded, paused]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -53,21 +58,20 @@ const FullPostComp = ({ vids, isVisible }) => {
     <View style={styles.containerFull}>
       <TouchableWithoutFeedback onPress={togglePlayPause}>
         {/* <View> */}
-           <Video
-              source={ vids }
-              ref={videoRef}
-              style={styles.videoFull}
-              onError={(e) => console.log(e)}
-              // useNativeControls={true}
-              resizeMode={ResizeMode.COVER}
-              isLooping={false}
-              shouldPlay={!paused} // Set to true to start playing automatically
-              onPlaybackStatusUpdate={(status) => {
-                if (!status.isLoaded) {
-                  console.error('Video load error:', status.error);
-                }
-              }} 
-            /> 
+        <Video
+            ref={videoRef}
+            style={styles.videoFull}
+            onError={(e) => console.log(e)}
+            resizeMode={ResizeMode.COVER}
+            isLooping={false}
+            shouldPlay={paused}
+            // onReadyForDisplay={videoReady}
+            onPlaybackStatusUpdate={(status) => {
+              if (!status.isLoaded) {
+                console.error('Video load error:', status.error);
+              }
+            }}
+          />
           
         {/* </View> */}
       </TouchableWithoutFeedback>
