@@ -1,5 +1,5 @@
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React, { useContext } from 'react'
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -8,10 +8,13 @@ import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
 import ThemeContext from '../../theme/ThemeContext';
+import JoinFoundersPaymentScreen from '../foundersclubscreen/JoinFoundersClubPayment/joinFoundersPaymentScreen';
 
 
 export default function FoundersScreen() {
     const navigation = useNavigation();
+
+    const [ open, setOpen ] = useState(false)
 
     const theme = useContext(ThemeContext)
 
@@ -67,9 +70,16 @@ export default function FoundersScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("SignupScreen")}
+                            <TouchableOpacity onPress={() => setOpen(!open)
+                            }
                             style={[ ]}
                             >
+                                {open ? (
+                                <Modal>
+                                    <JoinFoundersPaymentScreen />
+                                </Modal>
+
+                                ) : (<></>) }
                                 <Text 
                                 style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
                                 >Join</Text>

@@ -104,7 +104,7 @@ export default function AppNavigation() {
 // AUTH SCREENS
 function AuthScreens() {
   return (
-    <ScreenTabs.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
+    <ScreenTabs.Navigator initialRouteName='FoundersScreen' screenOptions={{ headerShown: false }}>
         <ScreenTabs.Screen name='HomeScreen' component={HomeTabs} />
         <ScreenTabs.Screen name='LoginScreen' component={LoginScreen} />
         <ScreenTabs.Screen name='SignupScreen' component={SignupScreen} />
