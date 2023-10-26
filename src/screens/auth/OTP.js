@@ -77,12 +77,11 @@ export default function OTPScreen( route ) {
     
     const onVerify = async() => {
         console.log(otpInput)
-        console.log(item)
-        setTimer(59)
+        console.log(item) 
         console.log("tap ------ 202")
         let data = { 
-            otp: otpInput,
-            email: item.toString(),
+            "otp": otpInput,
+            "email": item,
         }
 
         try {

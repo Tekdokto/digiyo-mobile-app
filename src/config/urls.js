@@ -19,5 +19,9 @@ export const ALL_POST = getApiURL('/users/posts/');
 
 export const FOLLOW = getApiURL('/users/');
 
+export const USER = getApiURL('/users');
+
+export const SEARCH = getApiURL('/search');
+
 export const GET_POSTS_COMMENTS = getApiURL('/posts/');
 // export const COMMENT_POSTS = getApiURL('/posts/'); 

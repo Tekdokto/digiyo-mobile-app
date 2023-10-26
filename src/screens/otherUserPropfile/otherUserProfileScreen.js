@@ -11,21 +11,30 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import styles, { Colors, Default, Fonts } from "../constants/styles2";
+import styles, { Colors, Default, Fonts } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import AwesomeButton from "react-native-really-awesome-button";
 import { useTranslation } from "react-i18next";
-import MyStatusBar from "../components/MyStatusBar";
-import ThemeContext from "../theme/ThemeContext";
-import { ACCENT_COLOR, PRIMARY_COLOR } from "../constants/colors";
-import { WIDTH } from "../constants/sizes";
+import MyStatusBar from "../../components/MyStatusBar";
+import ThemeContext from "../../theme/ThemeContext";
+import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
+import { WIDTH } from "../../constants/sizes";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { FOLLOW } from "../../config/urls";
+import axios from "axios";
+import { Video } from "expo-av";
 
-const { width } = Dimensions.get("window");
 
-const OtherUserProfileScreen = ({ navigation }) => {
+const OtherUserProfileScreen = ({ navigation, route }) => {
+  
+  const { item } = route.params;
+  // console.log("item =======", item)
 
   const theme = useContext(ThemeContext)
+
+  const [user, setUser] = useState([])
 
   const { t, i18n } = useTranslation();
 
@@ -54,70 +63,74 @@ const OtherUserProfileScreen = ({ navigation }) => {
     setSettingModal(false);
   };
 
-  const videoList = [
-    {
-      key: "1",
-      image: require("../../assets/images/2.jpg"),
-      other: "130",
-    },
-    {
-      key: "2",
-      image: require("../../assets/images/2.jpg"),
-      other: "120",
-    },
-    {
-      key: "3",
-      image: require("../../assets/images/1.jpeg"),
-      other: "100",
-    },
-    {
-      key: "4",
-      image: require("../../assets/images/2.jpg"),
-      other: "220",
-    },
-    {
-      key: "5",
-      image: require("../../assets/images/rect1.png"),
-      other: "130",
-    },
-    {
-      key: "6",
-      image: require("../../assets/images/rect.png"),
-      other: "520",
-    },
-    {
-      key: "7",
-      image: require("../../assets/images/rect2.png"),
-      other: "110",
-    },
-    {
-      key: "8",
-      image: require("../../assets/images/rect1.png"),
-      other: "500",
-    },
-    {
-      key: "9",
-      image: require("../../assets/images/rect2.png"),
-      other: "800",
-    },
-    {
-      key: "10",
-      image: require("../../assets/images/rect1.png"),
-      other: "140",
-    },
-    {
-      key: "11",
-      image: require("../../assets/images/rect.png"),
-      other: "180",
-    },
-    {
-      key: "12",
-      image: require("../../assets/images/rect1.png"),
-      other: "610",
-    },
-  ];
+
+  const navigate = useNavigation();
+
+  // console.log(item);
+
+  function extractAuthorization(cookieString) {
+    const cookies = cookieString.split(";");
+    let authorization = "";
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("Authorization=")) {
+        authorization = cookie.substring("Authorization=".length);
+        break;
+      }
+    }
+
+    return authorization;
+  }
+
+  const userToken = useSelector((state) => state.auth.userData.token);
+
+  const auth = extractAuthorization(userToken);
+  const userId = useSelector(
+    (state) => state.auth.userData.authenticated_user.user_id
+  );
+
+  // console.log(auth)
+
+  const fetchUser = async () => {
+    const config = {
+      method: "get",
+      url: FOLLOW + item.author_id ,
+      // data: formdata,
+      headers: {
+        Authorization: auth,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      }, 
+    };
+    try {
+      // setLoading(true)
+      // let res = getUserPosts(auth,  userId)
+      await axios(config)
+        .then((response) => {
+          setUser(response.data);
+          // console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("error 1111111111111", error);
+        });
+
+      // console.log("---------",res)
+      // setLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+
 
   const renderItem = ({ item }) => {
+    const mediaTypes = item.media_items.map((media) => media.type);
+    const mediasUrls = item.media_items.map((media) => media.url.low);
+    const imagesUrls = item.media_items.map((media) => media.url);
+    console.log(mediasUrls[0])
     return (
       <TouchableOpacity
         onPress={() =>
@@ -132,16 +145,37 @@ const OtherUserProfileScreen = ({ navigation }) => {
           marginBottom: Default.fixPadding * 2,
           marginHorizontal: Default.fixPadding,
         }}
-      >
+      > 
+      { mediaTypes == "image" ? (
         <Image
-          source={item.image}
+          source={{ uri: imagesUrls[0] }}
           style={{
             resizeMode: "cover",
-            width: width / 3.7,
+            width: WIDTH / 3.7,
             height: 123,
             borderRadius: 10,
           }}
         />
+
+      ) : mediaTypes == "video" ? (
+        <Video 
+        source={{uri: mediasUrls[0]}} 
+        isLooping={false}
+        shouldPlay={false}
+        />
+      ) : (
+        <Image
+            source={require("../../../assets/images/2.jpg")}
+            style={{
+              // flex: 3,
+              resizeMode: "cover",
+              alignSelf: "center",
+              width: 100,
+              height: 100,
+              borderRadius: 80,
+            }}
+          />
+      ) }
         <View
           style={{
             position: "absolute",
@@ -200,7 +234,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
           }}
         >
           <Image
-            source={require("../../assets/images/2.jpg")}
+            source={require("../../../assets/images/2.jpg")}
             style={{
               // flex: 3,
               resizeMode: "cover",
@@ -216,7 +250,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
               alignItems: "center", 
             }}
           >
-            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>Bessie Cooper</Text>
+            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>{user.username}</Text>
             <Text
               style={{
                 ...Fonts.Medium12grey, color: theme.color,
@@ -242,7 +276,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
                   // marginLeft: isRtl ? Default.fixPadding : 0,
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>456</Text>
+                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>{user.following_count}</Text>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -268,7 +302,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
                   onPress={() => navigation.push("followersScreen")}
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  <Text style={{ ...Fonts.SemiBold14white, color:theme.color }}>36</Text>
+                  <Text style={{ ...Fonts.SemiBold14white, color:theme.color }}>{user.follower_count}</Text>
                   <Text
                     numberOfLines={1}
                     style={{
@@ -289,7 +323,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color:theme.color  }}>156</Text>
+                <Text style={{ ...Fonts.SemiBold14white, color:theme.color  }}>{user.post_count}</Text>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -371,9 +405,9 @@ const OtherUserProfileScreen = ({ navigation }) => {
 
       <FlatList
         numColumns={3}
-        data={videoList}
+        data={user.posts}
         renderItem={renderItem}
-        keyExtractor={(item) => item.key}
+        keyExtractor={(item) => item.post_id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: Default.fixPadding * 1.3,
@@ -402,7 +436,7 @@ const OtherUserProfileScreen = ({ navigation }) => {
               style={{
                 paddingVertical: Default.fixPadding * 1.2,
                 paddingHorizontal: Default.fixPadding,
-                width: width / 2,
+                width: WIDTH / 2,
                 left: isRtl ? null : "20%",
                 right: isRtl ? "20%" : null,
                 borderRadius: 10,

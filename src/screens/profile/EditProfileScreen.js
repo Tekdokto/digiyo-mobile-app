@@ -23,6 +23,9 @@ import { Colors, Default, Fonts  } from "../../constants/styles2";
 import MyStatusBar from "../../components/MyStatusBar";
 import SnackbarToast from "../../components/snackbarToast";
 import ThemeContext from "../../theme/ThemeContext";
+import { USER } from "../../config/urls";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
@@ -94,7 +97,83 @@ import ThemeContext from "../../theme/ThemeContext";
         setCameraNotGranted(true);
       }
     };
+
+    const navigate = useNavigation();
+
+    // console.log(item);
   
+    function extractAuthorization(cookieString) {
+      const cookies = cookieString.split(";");
+      let authorization = "";
+  
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("Authorization=")) {
+          authorization = cookie.substring("Authorization=".length);
+          break;
+        }
+      }
+  
+      return authorization;
+    }
+  
+    const userToken = useSelector((state) => state.auth.userData.token);
+  
+    const auth = extractAuthorization(userToken);
+    const userId = useSelector(
+      (state) => state.auth.userData.authenticated_user.user_id
+    );
+  
+    // console.log(auth)
+  
+    const fetchUser = async () => {
+
+      const formData = new FormData()
+      
+          formData.append("username", username,)
+          formData.append("email", email,)
+          formData.append("media", {
+            uri: filePath,
+            type: fileType,
+            name: fileName,
+          },)
+      const config = {
+        method: "put",
+        url: USER,
+        data: {
+          formData
+          
+        },
+        headers: {
+          Authorization: auth,
+          "Content-Type": "multipart/form-data",
+        }, 
+      };
+      try {
+        // setLoading(true)
+        // let res = getUserPosts(auth,  userId)
+        await axios(config)
+          .then((response) => {
+            setUser(response.data);
+            // console.log(response.data);
+          })
+          .catch((error) => {
+            console.log("error 1111111111111", error);
+          });
+  
+        // console.log("---------",res)
+        // setLoading(false)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      fetchUser();
+    }, []);
+  
+  
+  
+
     return (
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
         <MyStatusBar />

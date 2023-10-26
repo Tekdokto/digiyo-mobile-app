@@ -2,7 +2,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useContext, useEffect, useState } from 'react'
 import HomeScreen from '../screens/home/HomeScreen';
-import UserProfileScreen from '../screens/UserProfileScreen'; 
+import UserProfileScreen from '../screens/userprofilescreen/UserProfileScreen'; 
 // import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from '../screens/home/FullVideoScreen';
 import { Image, StyleSheet } from 'react-native';
@@ -34,7 +34,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SecondScreen from '../screens/Second';
 import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import ProfileSettingsScreen from '../screens/profile/profileSettingsScreen';
-import OtherUserProfileScreen from '../screens/otherUserProfileScreen';
+import OtherUserProfileScreen from '../screens/otherUserPropfile/otherUserProfileScreen';
 import { Default, Colors } from '../constants/styles2';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MessagesScreen from '../screens/messages';

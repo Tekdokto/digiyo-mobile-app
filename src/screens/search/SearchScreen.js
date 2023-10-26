@@ -7,19 +7,23 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Colors, Default, Fonts } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
 import { Pressable } from "react-native";
+import { SEARCH } from "../../config/urls";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { ActivityIndicator } from "react-native";
 
 const { width } = Dimensions.get("window");
 
 const SearchScreen = ({ navigation }) => {
-
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -29,72 +33,73 @@ const SearchScreen = ({ navigation }) => {
   }
 
   const [search, setSearch] = useState();
+  const [searchRes, setSearchRes] = useState([]);
+  const [loading, setLoading] = useState([]);
 
-  const happyBirthdayList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/1.jpeg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/3.jpg"),
-    },
-  ];
+  const navigate = useNavigation();
 
-  const trendingList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/3.jpg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/2.jpg"),
-    },
-  ];
+  // console.log(item);
 
-  const funnyList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/3.jpg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/3.jpg"),
-    },
-  ];
+  function extractAuthorization(cookieString) {
+    const cookies = cookieString.split(";");
+    let authorization = "";
 
-  const popularList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/2.jpg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/3.jpg"),
-    },
-  ];
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("Authorization=")) {
+        authorization = cookie.substring("Authorization=".length);
+        break;
+      }
+    }
 
-  const emotionalList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/3.jpg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/3.jpg"),
-    },
-  ];
+    return authorization;
+  }
 
-  const christmasList = [
-    {
-      key: "1",
-      image: require("../../../assets/images/2.jpg"),
-    },
-    {
-      key: "2",
-      image: require("../../../assets/images/3.jpg"),
-    },
-  ];
+  const userToken = useSelector((state) => state.auth.userData.token);
+
+  const auth = extractAuthorization(userToken);
+  const userId = useSelector(
+    (state) => state.auth.userData.authenticated_user.user_id
+  );
+
+  // console.log(auth)
+
+  const onSearch = async () => {
+    console.log("-------------", search);
+    setLoading(true);
+    const config = {
+      method: "post",
+      url: SEARCH,
+      data: {
+        query: search,
+      },
+      headers: {
+        Authorization: auth,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    try {
+      await axios(config)
+        .then((response) => {
+          // setSearch(response.data);
+          console.log(response.data);
+          setSearchRes(response.data.data);
+          console.log(response.data.data.users);
+        })
+        .catch((error) => {
+          console.log("error 1111111111111", error);
+        });
+
+      // console.log("---------",res)
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    onSearch();
+  }, [search]);
+
   const renderItem = ({ item, index }) => {
     const firstItem = index === 0;
     return (
@@ -136,7 +141,7 @@ const SearchScreen = ({ navigation }) => {
       <>
         <FlatList
           numColumns={2}
-          data={happyBirthdayList}
+          data={searchRes.posts.slice(0, 2)}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
           showsVerticalScrollIndicator={false}
@@ -150,17 +155,20 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white, color:theme.color }}>
-                # {tr("birthday")}
+              <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
+                # {tr("Posts")}
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("searchSeeAllScreen", {
+                  navigation.push("seeAllPosts", {
                     headerTitle: tr("birthday"),
+                    post: item,
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey,  color:theme.color  }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color: theme.color }}>
+                  {tr("seeAll")}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -168,7 +176,7 @@ const SearchScreen = ({ navigation }) => {
 
         <FlatList
           numColumns={2}
-          data={trendingList}
+          data={searchRes.profiles.slice(0, 2)}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
           showsVerticalScrollIndicator={false}
@@ -181,17 +189,20 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white,  color:theme.color  }}>
-                # {tr("trending")}
+              <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
+                # {tr("Profiles")}
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("searchSeeAllScreen", {
+                  navigation.push("seeAllProfiles", {
                     headerTitle: tr("trending"),
+                    profileS: iitem,
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color: theme.color }}>
+                  {tr("seeAll")}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -199,7 +210,7 @@ const SearchScreen = ({ navigation }) => {
 
         <FlatList
           numColumns={2}
-          data={funnyList}
+          data={searchRes.teams.slice(0, 2)}
           renderItem={renderItem}
           keyExtractor={(item) => item.key}
           showsVerticalScrollIndicator={false}
@@ -212,52 +223,60 @@ const SearchScreen = ({ navigation }) => {
                 marginHorizontal: Default.fixPadding * 2,
               }}
             >
-              <Text style={{ ...Fonts.SemiBold16white,  color:theme.color  }}># {tr("funny")}</Text>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.push("searchSeeAllScreen", {
-                    headerTitle: tr("funny"),
-                  })
-                }
-              >
-                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-
-        <FlatList
-          numColumns={2}
-          data={popularList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.key}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => (
-            <View
-              style={{
-                flexDirection: isRtl ? "row-reverse" : "row",
-                justifyContent: "space-between",
-                marginBottom: Default.fixPadding,
-                marginHorizontal: Default.fixPadding * 2,
-              }}
-            >
-              <Text style={{ ...Fonts.SemiBold16white, color:theme.color  }}>
-                # {tr("popular")}
+              <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
+                # {tr("Teams")}
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("searchSeeAllScreen", {
-                    headerTitle: tr("popular"),
+                  navigation.push("seeAllTeams", {
+                    headerTitle: tr("funny"),
+                    teams: item,
                   })
                 }
               >
-                <Text style={{ ...Fonts.Medium14grey, color:theme.color  }}>{tr("seeAll")}</Text>
+                <Text style={{ ...Fonts.Medium14grey, color: theme.color }}>
+                  {tr("seeAll")}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
         />
 
         <FlatList
+          numColumns={2}
+          data={searchRes.users.slice(0, 2)}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={() => (
+            <View
+              style={{
+                flexDirection: isRtl ? "row-reverse" : "row",
+                justifyContent: "space-between",
+                marginBottom: Default.fixPadding,
+                marginHorizontal: Default.fixPadding * 2,
+              }}
+            >
+              <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
+                # {tr("Users")}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.push("seeAllUsers", {
+                    headerTitle: tr("popular"),
+                    users: item,
+                  })
+                }
+              >
+                <Text style={{ ...Fonts.Medium14grey, color: theme.color }}>
+                  {tr("seeAll")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+
+        {/* <FlatList
           numColumns={2}
           data={emotionalList}
           renderItem={renderItem}
@@ -286,9 +305,9 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
 
-        <FlatList
+        {/* <FlatList
           numColumns={2}
           data={christmasList}
           renderItem={renderItem}
@@ -317,7 +336,7 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
       </>
     );
   };
@@ -356,7 +375,8 @@ const SearchScreen = ({ navigation }) => {
           placeholderTextColor={Colors.grey}
           selectionColor={Colors.primary}
           style={{
-            ...Fonts.Regular14white, color:theme.color ,
+            ...Fonts.Regular14white,
+            color: theme.color,
             flex: 9.3,
             textAlign: isRtl ? "right" : "left",
             marginHorizontal: Default.fixPadding,
@@ -365,7 +385,15 @@ const SearchScreen = ({ navigation }) => {
       </View>
 
       <FlatList
-        ListHeaderComponent={<ListHeaderComponent />}
+        ListHeaderComponent={
+          loading ? (
+            <>
+              <ActivityIndicator />
+            </>
+          ) : (
+            <ListHeaderComponent />
+          )
+        }
         showsVerticalScrollIndicator={false}
       />
     </View>
