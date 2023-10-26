@@ -51,7 +51,7 @@ const Drawer = createDrawerNavigator()
 export default function AppNavigation() { 
 
   const [ darkMode, setDarkMode ] = useState(false)
-  const userData = useSelector(state=>state.auth.userData)
+  const userData = useSelector(state=>state.auth.userData.token)
 
   // console.log("userData", userData)
 
@@ -89,7 +89,7 @@ export default function AppNavigation() {
       <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
         {/* <DrawerGroup /> */}
         {
-        !!userData.token ? 
+         userData ? 
 
            <AllScreenTabs />
            :

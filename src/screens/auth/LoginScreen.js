@@ -51,8 +51,9 @@ export default function LoginScreen() {
                     setLoading(false)
                 }
             }
-             else {
+            else {
                 showError("fields must not be empty")
+                setLoading(false)
              }
         // }
         // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
@@ -112,7 +113,7 @@ export default function LoginScreen() {
                             >
                             <TextInputComp
                                 value={email}
-                                placeholder="email"
+                                placeholder="email or username"
                                 onChangeText={(value) => setUserName(value)}
                             />
                         </Animated.View>
