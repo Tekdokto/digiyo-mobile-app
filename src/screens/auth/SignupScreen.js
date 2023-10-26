@@ -119,7 +119,7 @@ export default function SignupScreen() {
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:"white", fontWeight:"bold", fontSize:20}}
+                            style={{ color:"white", fontFamily: "Bold", fontSize:20}}
                             >
                                 <TextComp
                                     text=" Sign up to create account"
@@ -174,7 +174,7 @@ export default function SignupScreen() {
                             style={[ ]}
                             >
                                 <Text 
-                                style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
+                                style={{fontSize: 20, fontFamily: "Bold", color:"white", textAlign:"center"}}
                                 >SignUp</Text>
                             </TouchableOpacity>
                         </Animated.View>

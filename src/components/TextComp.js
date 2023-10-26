@@ -14,6 +14,7 @@ const TextComp = ({
     // children,
     size,
     color,
+    family
     // ...props
 }) => {
     const theme = useContext(ThemeContext)
@@ -25,6 +26,7 @@ const TextComp = ({
             style={{
                 color: color ?? theme.color,
                 fontSize: size,
+                fontFamily: family ?? "Regular"
             }}
             // {...props}
             >{text} </Text>

@@ -1,4 +1,4 @@
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
@@ -9,8 +9,10 @@ import { PRIMARY_COLOR } from '../../constants/colors';
 import Logo from '../../../assets/icons/logo-black.svg'
 import LogoWhite from '../../../assets/icons/logo.svg'
 import ThemeContext from '../../theme/ThemeContext';
-import { resetPassword } from '../../redux/actions/auth';
+import { resendOTP, resetPassword } from '../../redux/actions/auth';
 import { showError } from '../../utils/helperFunctions';
+import TextInputComp from '../../components/TextInputComp';
+import TextComp from '../../components/TextComp';
 
 
 export default function ForgotPasswordScreen() {
@@ -20,13 +22,14 @@ export default function ForgotPasswordScreen() {
 
     
     const [email, setEmail] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const onForgotpass = async() => {
         // const checkValid = isValidData()
         // console.log("first")
 
         // if (checkValid) {
-            // setLoading(true)
+            setLoading(true)
             let data  = {
                 email:email
             }
@@ -34,23 +37,24 @@ export default function ForgotPasswordScreen() {
             if (data.email != "" ) {
                 
                 try {
-                    let res = await resetPassword(data)
+                    let res = await resendOTP(data)
                     console.log("response -------", data)
                     console.log("response result -------", res)
                     // setLoading(false)
                     console.log(" ---------- -========", res.data)
                     // console.log(" ---------- -========", res.data.email)
                     // showMessage(res.status)
-                    navigation.push("NewPasswordScreen")
+                    navigation.push("NewPasswordScreen", { item: email })
                 } catch (error) {
-                    // showError(error.message)
+                    showError(error.message)
                     console.log("signup error -------", error )
                     console.log("signup error data -------", data )
-                    // setLoading(false)
+                    setLoading(false)
                 }
             }
-             else {
+            else {
                 showError("fields must not be empty")
+                setLoading(false)
              }
         // }
         // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
@@ -94,7 +98,7 @@ export default function ForgotPasswordScreen() {
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:theme.color, fontWeight:"400", fontSize:20}}
+                            style={{ color:theme.color, fontFamily:"Regular", fontSize:20}}
                             >
                                 Reset Password
                         </Animated.Text>
@@ -109,7 +113,7 @@ export default function ForgotPasswordScreen() {
                             style={styles.input}
                             >
 
-<TextInputComp
+                            <TextInputComp
                                 value={email}
                                 placeholder="email"
                                 onChangeText={(value) => setEmail(value)}
@@ -123,9 +127,17 @@ export default function ForgotPasswordScreen() {
                             <TouchableOpacity onPress={onForgotpass}
                             style={[ ]}
                             >
+                                {loading ? (
+                                    <ActivityIndicator />
+                                ) 
+                                :
+                                (
+
                                 <Text 
-                                style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
+                                    style={{fontSize: 20, fontFamily: "Bold", color:"white", textAlign:"center"}}
                                 >Continue</Text>
+                                )
+                                }
                             </TouchableOpacity>
                         </Animated.View>
 
@@ -134,11 +146,9 @@ export default function ForgotPasswordScreen() {
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
 
-                            <Text>Already have an account? </Text>
+                            <TextComp text='Already have an account?' />
                             <TouchableOpacity onPress={()=> navigation.push('SignupScreen')}>
-                                <Text 
-                                // style="text-sky-600"
-                                >Sign in</Text>
+                                <TextComp text=' Sign in' />
                             </TouchableOpacity>
                         </Animated.View>
                     </View>

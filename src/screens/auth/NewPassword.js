@@ -1,5 +1,5 @@
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -8,12 +8,98 @@ import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
 import ThemeContext from '../../theme/ThemeContext';
+import { resetPassword } from '../../redux/actions/auth';
+import { showError } from '../../utils/helperFunctions';
+import { ActivityIndicator } from 'react-native-paper';
 
 
-export default function NewPasswordScreen() {
+export default function NewPasswordScreen({ route }) {
     const navigation = useNavigation();
 
+    const { item } = route.params
+
+    console.log("_______item", item)
+    console.log("route", route)
+
     const theme = useContext(ThemeContext)
+
+    // const [email, setEmail] = useState('')
+    const [otp, setOtp] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const onForgotpass = async() => {
+        // const checkValid = isValidData()
+        // console.log("first")
+
+        // if (checkValid) {
+            setLoading(true)
+            let data  = {
+                "otp":otp,
+                "email":item,
+                "password":password
+            }
+            console.log("empty =-=-= emsopidosn ", data)
+            if (data.email != "" ) {
+                
+                try {
+                    let res = await resetPassword(data)
+                    console.log("response -------", data)
+                    console.log("response result -------", res)
+                    // setLoading(false)
+                    console.log(" ---------- -========", res.data)
+                    // console.log(" ---------- -========", res.data.email)
+                    // showMessage(res.status)
+                    navigation.push("NewPasswordScreen", { item: email })
+                } catch (error) {
+                    showError(error.message)
+                    console.log("signup error -------", error )
+                    console.log("signup error data -------", data )
+                    setLoading(false)
+                }
+            }
+            else {
+                showError("fields must not be empty")
+                setLoading(false)
+             }
+        // }
+        // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+    }
+
+    const onReset = async() => {
+            setLoading(true)
+            let data  = {
+                "otp":otp,
+                "email":item,
+                "password":password
+            }
+            console.log("empty =-=-= emsopidosn ", data)
+            if (data.otp != "" && data.password != "" ) {
+                
+                try {
+                    let res = await resetPassword(data)
+                    console.log("response -------", data)
+                    console.log("response result -------", res)
+                    // setLoading(false)
+                    console.log(" ---------- -========", res.data)
+                    // console.log(" ---------- -========", res.data.email)
+                    // showMessage(res.status)
+                    navigation.push("NewPasswordScreen", { item: email })
+                } catch (error) {
+                    showError(error.message)
+                    console.log("signup error -------", error )
+                    console.log("signup error data -------", data )
+                    setLoading(false)
+                }
+            }
+            else {
+                showError("fields must not be empty")
+                setLoading(false)
+             }
+        // }
+        // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+    }
+
 
   return (
     <KeyboardAvoidingView 
@@ -47,13 +133,13 @@ export default function NewPasswordScreen() {
                     
                     {/* title */}
                     <View 
-                    style={{flex: 1, top: HEIGHT* 0.4, alignItems:"center"}}
+                    style={{flex: 1, top: HEIGHT* 0.4, marginHorizontal: WIDTH * 0.2, alignItems:"center"}}
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:theme.color, fontWeight:"bold", fontSize:40}}
+                            style={{ color:theme.color, fontFamily: "Regular", textAlign: "center", fontSize:20}}
                             >
-                                New Password
+                                OTP has been sent to your email address
                         </Animated.Text>
                     </View>
 
@@ -61,7 +147,7 @@ export default function NewPasswordScreen() {
                     <View 
                     style={{flex:1, alignItems:"center"}}
                     >
-                        <Animated.View 
+                        {/* <Animated.View 
                             entering={FadeInDown.duration(1000).springify()} 
                             style={styles.input}
                             >
@@ -70,7 +156,20 @@ export default function NewPasswordScreen() {
                                 placeholder="Email"
                                 placeholderTextColor={'gray'}
                             />
+                        </Animated.View> */}
+                        
+                         <Animated.View 
+                            entering={FadeInDown.duration(1000).springify()} 
+                            style={styles.input}
+                            >
+
+                            <TextInput
+                                placeholder="OTP"
+                                placeholderTextColor={'gray'}
+                                onChangeText={setOtp}
+                            />
                         </Animated.View>
+                       
                         <Animated.View 
                             entering={FadeInDown.duration(1000).springify()} 
                             style={styles.input}
@@ -79,30 +178,26 @@ export default function NewPasswordScreen() {
                             <TextInput
                                 placeholder="New Password"
                                 placeholderTextColor={'gray'}
-                            />
-                        </Animated.View>
-                        <Animated.View 
-                            entering={FadeInDown.duration(1000).springify()} 
-                            style={styles.input}
-                            >
-
-                            <TextInput
-                                placeholder="OTP"
-                                placeholderTextColor={'gray'}
+                                onChangeText={setPassword}
                             />
                         </Animated.View>
                        
                         <Animated.View 
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
+                                {loading ? (
+                                    <ActivityIndicator />
+                                ) : (
+                                <TouchableOpacity onPress={onReset}
+                                style={[ ]}
+                                >
+                                    <Text 
+                                    style={{fontSize: 20, fontFamily: "Bold", color:"white", textAlign:"center"}}
+                                    >Continue</Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.push("LoginScreen")}
-                            style={[ ]}
-                            >
-                                <Text 
-                                style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
-                                >Continue</Text>
-                            </TouchableOpacity>
+                                )
+                                }
                         </Animated.View>
 
                         <Animated.View 

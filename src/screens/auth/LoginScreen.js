@@ -101,7 +101,7 @@ export default function LoginScreen() {
                     >
                         <Animated.Text 
                             entering={FadeInUp.duration(1000).springify()} 
-                            style={{ color:theme.color, fontWeight:"bold", fontSize:20}}
+                            style={{ color:theme.color, fontFamily:"Bold", fontSize:20}}
                             >
                                 Login
                         </Animated.Text>
@@ -142,7 +142,7 @@ export default function LoginScreen() {
                                 ) : (
 
                                     <Text 
-                                    style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
+                                    style={{fontSize: 20, fontFamily:"Bold", color:"white", textAlign:"center"}}
                                     >Login</Text>
                                 )
                                 }
