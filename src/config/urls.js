@@ -17,5 +17,7 @@ export const DELETE_POSTS = getApiURL('/posts/');
 export const GET_POSTS_BY_ID = getApiURL('/posts/id');
 export const ALL_POST = getApiURL('/users/posts/');
 
+export const FOLLOW = getApiURL('/users/');
+
 export const GET_POSTS_COMMENTS = getApiURL('/posts/');
 // export const COMMENT_POSTS = getApiURL('/posts/'); 

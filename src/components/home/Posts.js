@@ -17,6 +17,7 @@ import { ActivityIndicator } from 'react-native'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ResizeMode, Video } from 'expo-av'
 import CommentsBottomSheet from '../commentsBottomSheet'
+import { ACCENT_COLOR } from '../../constants/colors'
 
 
 
@@ -180,17 +181,17 @@ useEffect(() => {
                       <View key={item.post_id} style={{ marginHorizontal: WIDTH * 0.17 }}>
                         <View style={{ marginTop: 20, flexDirection: "row", alignContent: "center" }}>
                           <Pressable onPress={() => navigation.navigate("otherUserProfileScreen")} style={{ marginBottom: 10 }}>
-                            {mediaTypes.includes("image") ? (
+                            {/* {mediaTypes.includes("image") ? ( */}
                               <FontAwesome
                                 name="user-circle-o"
                                 size={30}
-                                color={"blue"}
+                                color={ACCENT_COLOR} 
                               />
-                            ) : null}
+                            {/* ) : null} */}
                           </Pressable>
                           <Pressable onPress={() => navigation.navigate("otherUserProfileScreen", { item: item })} style={{ marginLeft: 10, marginTop: 10, alignItems: "center" }}>
                             <View style={{ flex: 1, flexDirection: "column", alignItems: "flex-start" }}>
-                              <Text style={{ fontWeight: "bold", fontSize: 20, color: theme.color }}>
+                              <Text style={{ fontFamily: "SemiBold", fontSize: 20, color: theme.color }}>
                                 username
                               </Text>
                             </View>
@@ -202,10 +203,10 @@ useEffect(() => {
                             seeLessText="hide"
                             seeMoreText="read more"
                             style={{
-                              fontWeight: "400",
+                              fontFamily: "Regular",
                               color: theme.color
                             }}>
-                            {item.caption}
+                            {item.caption ?? ""}
                           </ReadMore>
                         </View>
                         <View style={{ marginBottom: 4 }}>
@@ -214,10 +215,10 @@ useEffect(() => {
                             seeLessText="hide"
                             seeMoreText="read more"
                             style={{
-                              fontWeight: "400",
+                              fontFamily: "Regular",
                               color: theme.color
                             }}>
-                            {item.content}
+                            {item.content ?? ""}
                           </ReadMore>
                         </View>
                         <View style={{ marginBottom: 10 }}>
@@ -236,7 +237,7 @@ useEffect(() => {
                               <Image source={{ uri: imagesUrls[0]  }} style={styles.mediaFrame} />
                             )
                           ) : (
-                            <Text>Unsupported media type</Text>
+                            <Text style={{fontFamily: "Regular"}}>Unsupported media type</Text>
                           )}
                         </View>
                         <View style={{ marginBottom: 20 }}>

@@ -309,14 +309,14 @@ return (
                 backgroundColor: Colors.white,
               }}
             >
-              <FontAwesome
+              {/* <FontAwesome
                 name="smile-o"
                 color={Colors.primary}
                 size={24}
                 style={{
                   flex: 1,
                 }}
-              />
+              /> */}
               <TextInput
                 value={comment}
                 onChangeText={setComment}
@@ -330,7 +330,7 @@ return (
                   marginHorizontal: Default.fixPadding * 1.2,
                 }}
               />
-              <Entypo
+              {/* <Entypo
                 name="attachment"
                 color={Colors.black}
                 size={20}
@@ -339,15 +339,15 @@ return (
                   marginRight: isRtl ? 0 : Default.fixPadding,
                   marginLeft: isRtl ? Default.fixPadding : 0,
                 }}
-              />
-              <FontAwesome
+              /> */}
+              {/* <FontAwesome
                 name="microphone"
                 color={Colors.black}
                 size={20}
                 style={{
                   flex: 0.7,
                 }}
-              />
+              /> */}
             </View>
           </LinearGradient>
         </View>
@@ -386,7 +386,7 @@ return (
             >
               <Image
                 source={require("../../assets/icons/send.png")}
-                style={{ width: 27, height: 27, resizeMode: "contain" }}
+                style={{ width: 20, height: 20, resizeMode: "contain" }}
               />
             </View>
           </LinearGradient>

@@ -153,7 +153,7 @@ useEffect(() => {
                     marginTop: Default.fixPadding * 0.5,
                   }}
                 >
-                  {tr("following")}
+                  following
                 </Text>
               </TouchableOpacity>
               <View
@@ -181,7 +181,7 @@ useEffect(() => {
                       marginTop: Default.fixPadding * 0.5,
                     }}
                   >
-                    {tr("followers")}
+                    followers
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -324,9 +324,9 @@ useEffect(() => {
     );
   };
 
-  const title1 = isRtl ? tr("post") : tr("followers");
-  const title2 = tr("following");
-  const title3 = isRtl ? tr("followers") : tr("post");
+  const title1 = isRtl ? tr("post") : tr("following");
+  const title2 = tr("followers");
+  const title3 = isRtl ? tr("followeing") : tr("post");
 
   return (
     <>

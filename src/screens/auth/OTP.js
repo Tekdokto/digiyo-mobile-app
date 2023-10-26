@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { HEIGHT, WIDTH } from '../../constants/sizes';
-import { PRIMARY_COLOR } from '../../constants/colors';
+import { ACCENT_COLOR, PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
 import LogoWhite from '../../../assets/icons/logo.svg'
@@ -152,7 +152,7 @@ export default function OTPScreen( route ) {
                             <OTPTextView
                                 style={{color: theme.color}}
                                 ref={input}
-                                // textInputStyle={styles.textInputContainer}
+                                textInputStyle={styles.textInputContainer}
                                 handleTextChange={setOtpInput}
                                 handleCellTextChange={handleCellTextChange}
                                 inputCount={6}
@@ -212,5 +212,32 @@ const styles= StyleSheet.create({
         backgroundColor:"#00000010", 
         borderRadius:10, 
         padding: 20
+    },
+    headerStyle: {
+        fontSize: 24,
+        // fontFamily: fontFamily.medium,
+
+    },
+    descStyle: {
+        fontSize: 14,
+        // fontFamily: fontFamily.regular,
+        color: ACCENT_COLOR,
+        marginTop: 8,
+        marginBottom: 52
+    },
+    textInputContainer: {
+        backgroundColor: "#ccc",
+        borderBottomWidth: 0,
+        borderRadius: 8,
+        color: "white"
+
+    },
+    resendCodeStyle: {
+        fontSize: 14,
+        // fontFamily: fontFamily.regular,
+        marginTop: 8,
+        marginBottom: 16
     }
 })
+
+// define your styles 

@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getData } from './src/utils/helperFunctions';
 // import { storeUserData } from './src/redux/actions/appSettings';
 import { saveUserData } from './src/redux/reducers/auth';
+import { useFonts } from 'expo-font';
 
 const { dispatch } = store
 export default function App() {
@@ -28,6 +29,17 @@ export default function App() {
     } catch (error) {
       console.log("no data found ------- ", error)
     }
+  }
+
+  const [loaded] = useFonts({
+    Bold: require("./assets/fonts/Montserrat-Bold.otf"),
+    SemiBold: require("./assets/fonts/Montserrat-SemiBold.otf"),
+    Regular: require("./assets/fonts/Montserrat-Regular.otf"),
+    Medium: require("./assets/fonts/Montserrat-Medium.otf"),
+  });
+
+  if (!loaded) {
+    return null;
   }
   return (
       <Provider store={store}>

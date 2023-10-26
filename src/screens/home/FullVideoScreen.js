@@ -15,6 +15,10 @@ import { useSelector } from 'react-redux'
 import { showError } from '../../utils/helperFunctions'
 
 const FullVideoScreen = ({ navigation, route }) => {
+
+  const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
+  const [openMenuBottomSheet, setOpenMenuBottomSheet] = useState(false);
+
   const isFocused = useIsFocused();
   const { t, i18n } = useTranslation();
   const { postsArray, selectedIndex, item } = route.params; // Array of posts and selected index
@@ -54,7 +58,7 @@ const FullVideoScreen = ({ navigation, route }) => {
                     renderItem={({ item, index }) => {
                       const mediaItems = item.media_items || []; // Ensure media_items is an array
                       const mediaTypes = mediaItems.map((media) => media.type);
-                      const mediasUrls = mediaItems.map((media) => media.url.low || ''); // Ensure a default value for the URL
+                      const mediasUrls = mediaItems.map((media) => media.url.low ); // Ensure a default value for the URL
                       const imagesUrls = mediaItems.map((media) => media.url || ''); // Ensure a default value for the URL
                       const newVid = mediasUrls
                       console.log("current vid", newVid) 
@@ -67,11 +71,12 @@ const FullVideoScreen = ({ navigation, route }) => {
                             <View> 
                               <FullPostComp 
                               isVisible={visibleVideos[index] && isFocused} 
-                              vids={
-                                newVid.map((vid) => {
-                                console.log("this ------------- ", vid)
-                                return (vid)
-                                })} />
+                              vids={ newVid[0]
+                                // newVid.map((vid) => {
+                                // console.log("this ------------- ", vid)
+                                // return (vid)
+                                // }) 
+                                } />
                             </View>
                           ) : (
                             <>
@@ -89,12 +94,22 @@ const FullVideoScreen = ({ navigation, route }) => {
                               <FullPostComp isVisible={visibleVideos[index] && isFocused} vids={newVid} />
                             </View>
                           ) : (
-                            <></>
+                            <></> 
                           )} */}
                           <FullScreenLikeIcons
-                            // openCommentBottomSheetHandler={() => setOpenCommentBottomSheet(true)}
-                            // openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
+                            openCommentBottomSheetHandler={() => setOpenCommentBottomSheet(true)}
+                            openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
                           />
+                           <CommentsBottomSheet
+                              visible={openCommentBottomSheet}
+                              closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
+                            />
+
+                            <MenuBottomSheet
+                              visible={openMenuBottomSheet}
+                              closeMenuBottomSheet={() => setOpenMenuBottomSheet(false)}
+                              title={`"unfollow" Jane Cooper`}
+                            />
                         </View>
                       );
                     }}
