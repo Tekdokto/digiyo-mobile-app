@@ -26,11 +26,18 @@ import ThemeContext from "../../theme/ThemeContext";
 import { USER } from "../../config/urls";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { showMessage } from "react-native-flash-message";
+
+import mime from 'react-native-mime-types'
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
   
-  const EditProfileScreen = ({ navigation }) => {
+  const EditProfileScreen = ({ navigation, route }) => {
+
+    const { profile } = route.params
+    // console.log("profile -------------",profile)
 
     const theme = useContext(ThemeContext)
 
@@ -52,12 +59,14 @@ import { useNavigation } from "@react-navigation/native";
         BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
   
-    const [name, setName] = useState("Bessie Cooper");
-    const [email, setEmail] = useState("Bessiecooper@mail.com");
-    const [number, setNumber] = useState("1234567890");
-    const [bio, setBio] = useState(
-      "Lorem ipsum dolor sit amen, consectetur advising elite. Velit sed malesuada urna ut elitpellentesque.  "
-    );
+    const [isLoading, setLoading] = useState(false);
+
+    const [name, setName] = useState(profile.username);
+    const [email, setEmail] = useState(profile.email);
+    // const [number, setNumber] = useState("1234567890");
+    // const [bio, setBio] = useState(
+    //   "Lorem ipsum dolor sit amen, consectetur advising elite. Velit sed malesuada urna ut elitpellentesque.  "
+    // );
   
     const [uploadImage, setUploadImage] = useState(false);
     const toggleCloseUploadImage = () => {
@@ -123,52 +132,99 @@ import { useNavigation } from "@react-navigation/native";
     const userId = useSelector(
       (state) => state.auth.userData.authenticated_user.user_id
     );
-  
-    // console.log(auth)
-  
-    const fetchUser = async () => {
 
-      const formData = new FormData()
-      
-          formData.append("username", username,)
-          formData.append("email", email,)
-          formData.append("media", {
-            uri: filePath,
-            type: fileType,
-            name: fileName,
-          },)
+    // console.log(auth)
+    
+    console.log(" mages srewww ========== ",pickedImage)
+    const onUpdate = async () => {
+      const filePath = pickedImage
+  
+      if (filePath) {
+        const formData = new FormData()
+        // Extract the file name from the path
+        const fileName = filePath.split('/').pop();
+        console.log(fileName)
+        // Use 'react-native-mime-types' to get the MIME type based on the file extension
+        const fileType = mime.lookup(fileName);
+        console.log(" mages srewww ========== ",fileType)
+        formData.append("media", {
+          uri: filePath,
+          type: fileType,
+          name: fileName,
+              },)
+         
+      formData.append("username", name,)
+      formData.append("email", email,)
+
+      console.log("form data ========== ",formData)
+    setLoading(true)
       const config = {
         method: "put",
         url: USER,
-        data: {
-          formData
-          
-        },
+        data: 
+          formData,
         headers: {
           Authorization: auth,
           "Content-Type": "multipart/form-data",
         }, 
       };
       try {
-        // setLoading(true)
         // let res = getUserPosts(auth,  userId)
         await axios(config)
           .then((response) => {
-            setUser(response.data);
-            // console.log(response.data);
+            // setUser(response.data);
+            console.log(response.data);
+            showMessage(response.data.status)
           })
           .catch((error) => {
             console.log("error 1111111111111", error);
           });
   
         // console.log("---------",res)
-        // setLoading(false)
       } catch (error) {
         console.log(error);
       }
+    }
+    const formData = new FormData()
+
+        formData.append("username", name,)
+        formData.append("email", email,)
+  
+        console.log("form data ========== ",formData)
+      setLoading(true)
+        const config = {
+          method: "put",
+          url: USER,
+          data: 
+            formData,
+          headers: {
+            Authorization: auth,
+            "Content-Type": "multipart/form-data",
+          }, 
+        };
+        try {
+          // let res = getUserPosts(auth,  userId)
+          await axios(config)
+            .then((response) => {
+              // setUser(response.data);
+              console.log(response.data);
+              showMessage(response.data.status)
+            })
+            .catch((error) => {
+              console.log("error 1111111111111", error);
+            });
+    
+          // console.log("---------",res)
+        } catch (error) {
+          console.log(error);
+        }
+    
+      setLoading(false)
     };
+
+
     useEffect(() => {
-      fetchUser();
+      // fetchUser();
     }, []);
   
   
@@ -224,6 +280,17 @@ import { useNavigation } from "@react-navigation/native";
                     <Ionicons name="person" size={45} color={theme.color} />
                   </View>
                 ) : (
+                  <> 
+                  {profile.avatar ? (<>
+              <Image
+                    source={{ uri: profile.avatar}}
+                    style={{
+                      resizeMode: "stretch",
+                      ...styles.image,
+                    }}
+                  />
+            </>) : (
+
                   <Image
                     source={require("../../../assets/images/2.jpg")}
                     style={{
@@ -231,6 +298,8 @@ import { useNavigation } from "@react-navigation/native";
                       ...styles.image,
                     }}
                   />
+            )}
+                  </>
                 )}
               </View>
             ) : (
@@ -268,12 +337,12 @@ import { useNavigation } from "@react-navigation/native";
               marginHorizontal: Default.fixPadding * 2,
             }}
           >
-            <Text style={{ ...Fonts.Medium14grey }}>{tr("name")}</Text>
+            <Text style={{ ...Fonts.Medium14grey }}>username</Text>
             <View style={{ ...styles.textInputCard }}>
               <TextInput
                 value={name}
                 onChangeText={setName}
-                placeholder={tr("enterName")}
+                placeholder={"username"}
                 placeholderTextColor={Colors.grey}
                 selectionColor={Colors.primary}
                 style={{
@@ -296,7 +365,7 @@ import { useNavigation } from "@react-navigation/native";
                 }}
               />
             </View>
-            <Text style={{ ...Fonts.Medium14grey }}>{tr("mobile")}</Text>
+            {/* <Text style={{ ...Fonts.Medium14grey }}>{tr("mobile")}</Text>
             <View style={{ ...styles.textInputCard }}>
               <TextInput
                 value={number}
@@ -311,9 +380,9 @@ import { useNavigation } from "@react-navigation/native";
                   textAlign: isRtl ? "right" : "left",
                 }}
               />
-            </View>
+            </View> */}
   
-            <Text style={{ ...Fonts.Medium14grey }}>{tr("bio")}</Text>
+            {/* <Text style={{ ...Fonts.Medium14grey }}>{tr("bio")}</Text>
             <View style={{ ...styles.textInputCard }}>
               <TextInput
                 value={bio}
@@ -330,7 +399,7 @@ import { useNavigation } from "@react-navigation/native";
                   height: height / 5,
                 }}
               />
-            </View>
+            </View> */}
           </View>
         </ScrollView>
         <View
@@ -339,15 +408,17 @@ import { useNavigation } from "@react-navigation/native";
           }}
         >
           <AwesomeButton
-            progress
-            height={50}
-            progressLoadingTime={1000}
-            onPress={(next) => {
-              setTimeout(() => {
-                next();
-                navigation.pop();
-              }, 1000);
-            }}
+            // progress
+            // height={50}
+            // progressLoadingTime={1000}
+            onPress={ onUpdate
+            //   (next) => {
+            //   setTimeout(() => {
+            //     next();
+            //     navigation.pop();
+            //   }, 1000);
+            // }
+          }
             raiseLevel={1}
             stretch={true}
             borderRadius={10}
@@ -364,6 +435,34 @@ import { useNavigation } from "@react-navigation/native";
           >
             <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
           </AwesomeButton>
+          {/* <AwesomeButton
+            progress
+            height={50}
+            progressLoadingTime={1000}
+            onPress={ onUpdate
+            //   (next) => {
+            //   setTimeout(() => {
+            //     next();
+            //     navigation.pop();
+            //   }, 1000);
+            // }
+          }
+            raiseLevel={1}
+            stretch={true}
+            borderRadius={10}
+            borderWidth={null}
+            backgroundDarker={Colors.transparent}
+            extra={
+              <LinearGradient
+                start={[0, 1]}
+                end={[1, 1]}
+                colors={[Colors.primary, Colors.extraDarkPrimary]}
+                style={{ ...StyleSheet.absoluteFillObject }}
+              />
+            }
+          >
+            <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
+          </AwesomeButton> */}
         </View>
   
         <BottomSheet

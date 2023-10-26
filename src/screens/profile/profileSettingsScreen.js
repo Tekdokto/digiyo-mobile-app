@@ -96,7 +96,7 @@ const ProfileSettingsScreen = ({ navigation }) => {
     },
     {
       key: "3",
-      title: tr("shareProfile"),
+      title: "Edit bio",
     },
     {
       key: "4",

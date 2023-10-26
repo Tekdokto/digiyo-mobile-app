@@ -92,7 +92,7 @@ useEffect(() => {
           }}
         >
           <Image
-            source={require("../../../assets/images/2.jpg")}
+            source={{uri: profile.avatar}}
             style={{
               // flex: 3,
               resizeMode: "cover",
@@ -237,7 +237,7 @@ useEffect(() => {
               <View style={{margin:8}}></View>
               <AwesomeButton 
                   height={50}
-                  onPressOut={() => navigation.push("editProfileScreen")}
+                  onPressOut={() => navigation.push("editProfileScreen", {profile, profile})}
                   raiseLevel={1}
                   // stretch={true}
                   backgroundDarker={Colors.transparent}
