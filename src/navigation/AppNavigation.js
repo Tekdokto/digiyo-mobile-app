@@ -40,6 +40,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import MessagesScreen from '../screens/messages';
 import Conversations from '../components/Conversations';
 import { useSelector } from 'react-redux';
+import UserProfilePostScreen from '../screens/userProfilePostScreen/UserProfilePostScreen';
 // import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
@@ -122,7 +123,7 @@ function AllScreenTabs() {
     <ScreenTabs.Navigator initialRouteName='HomeScreen' screenOptions={{ headerShown: false }}>
         <ScreenTabs.Screen name='HomeScreen' component={HomeTabs} />
         <ScreenTabs.Screen name='PostFull' component={FullVideoScreen} />
-        <ScreenTabs.Screen name='UserProfileScreen' component={UserProfileScreen} />
+        {/* <ScreenTabs.Screen name='UserProfileScreen' component={UserProfileScreen} /> */}
         <ScreenTabs.Screen name='MyProfileScreen' component={MyProfileScreen} />
         <ScreenTabs.Screen name='FollowersScreen' component={FollowersScreen} />
         <ScreenTabs.Screen name='FollowingScreen' component={FollowingScreen} />
@@ -135,6 +136,7 @@ function AllScreenTabs() {
         <ScreenTabs.Screen name='editProfileScreen' component={EditProfileScreen} />
         <ScreenTabs.Screen name='profileSettingsScreen' component={ProfileSettingsScreen} />
         <ScreenTabs.Screen name='otherUserProfileScreen' component={OtherUserProfileScreen} />
+        <ScreenTabs.Screen name='userProfilePostScreen' component={UserProfilePostScreen} />
       </ScreenTabs.Navigator>
   )
 }

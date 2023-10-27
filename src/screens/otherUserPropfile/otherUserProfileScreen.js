@@ -21,20 +21,18 @@ import ThemeContext from "../../theme/ThemeContext";
 import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 import { WIDTH } from "../../constants/sizes";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { FOLLOW } from "../../config/urls";
 import axios from "axios";
 import { Video } from "expo-av";
 
-
 const OtherUserProfileScreen = ({ navigation, route }) => {
-  
   const { item } = route.params;
   // console.log("item =======", item)
 
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
 
   const { t, i18n } = useTranslation();
 
@@ -63,6 +61,13 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     setSettingModal(false);
   };
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      // Reload your screen here
+    }
+  }, [isFocused]);
 
   const navigate = useNavigation();
 
@@ -95,12 +100,12 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   const fetchUser = async () => {
     const config = {
       method: "get",
-      url: FOLLOW + item.author_id ,
+      url: FOLLOW + item.author_id,
       // data: formdata,
       headers: {
         Authorization: auth,
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
-      }, 
+      },
     };
     try {
       // setLoading(true)
@@ -124,20 +129,20 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     fetchUser();
   }, []);
 
-
-
   const renderItem = ({ item }) => {
     const mediaTypes = item.media_items.map((media) => media.type);
     const mediasUrls = item.media_items.map((media) => media.url.low);
     const imagesUrls = item.media_items.map((media) => media.url);
-    console.log(mediasUrls[0])
+    console.log(mediasUrls[0]);
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("userVideoScreen", {
-            key: "1",
-            title: `${tr("unFollow")} Jane Cooper `,
-            follow: true,
+          navigation.navigate("userProfilePostScreen", {
+            postsArray: user.posts,
+            item: item,
+            // key: "1",
+            // title: `${tr("unFollow")} Jane Cooper `,
+            // follow: true,
           })
         }
         style={{
@@ -145,26 +150,25 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           marginBottom: Default.fixPadding * 2,
           marginHorizontal: Default.fixPadding,
         }}
-      > 
-      { mediaTypes == "image" ? (
-        <Image
-          source={{ uri: imagesUrls[0] }}
-          style={{
-            resizeMode: "cover",
-            width: WIDTH / 3.7,
-            height: 123,
-            borderRadius: 10,
-          }}
-        />
-
-      ) : mediaTypes == "video" ? (
-        <Video 
-        source={{uri: mediasUrls[0]}} 
-        isLooping={false}
-        shouldPlay={false}
-        />
-      ) : (
-        <Image
+      >
+        {mediaTypes == "image" ? (
+          <Image
+            source={{ uri: imagesUrls[0] }}
+            style={{
+              resizeMode: "cover",
+              width: WIDTH / 3.7,
+              height: 123,
+              borderRadius: 10,
+            }}
+          />
+        ) : mediaTypes == "video" ? (
+          <Video
+            source={{ uri: mediasUrls[0] }}
+            isLooping={false}
+            shouldPlay={false}
+          />
+        ) : (
+          <Image
             source={require("../../../assets/images/2.jpg")}
             style={{
               // flex: 3,
@@ -175,7 +179,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
               borderRadius: 80,
             }}
           />
-      ) }
+        )}
         <View
           style={{
             position: "absolute",
@@ -228,11 +232,8 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           <Ionicons name={"ellipsis-vertical"} size={25} color={theme.color} />
         </TouchableOpacity>
       </View>
-      <View style={{ backgroundColor: theme.backgroundColor }}> 
-        <View
-          style={{
-          }}
-        >
+      <View style={{ backgroundColor: theme.backgroundColor }}>
+        <View style={{}}>
           <Image
             source={require("../../../assets/images/2.jpg")}
             style={{
@@ -246,14 +247,17 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           />
 
           <View
-            style={{ 
-              alignItems: "center", 
+            style={{
+              alignItems: "center",
             }}
           >
-            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>{user.username}</Text>
+            <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
+              {user.username}
+            </Text>
             <Text
               style={{
-                ...Fonts.Medium12grey, color: theme.color,
+                ...Fonts.Medium12grey,
+                color: theme.color,
                 marginTop: Default.fixPadding * 0.3,
               }}
             >
@@ -276,7 +280,9 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                   // marginLeft: isRtl ? Default.fixPadding : 0,
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>{user.following_count}</Text>
+                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>
+                  {user.following_count}
+                </Text>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -302,12 +308,16 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                   onPress={() => navigation.push("followersScreen")}
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  <Text style={{ ...Fonts.SemiBold14white, color:theme.color }}>{user.follower_count}</Text>
+                  <Text
+                    style={{ ...Fonts.SemiBold14white, color: theme.color }}
+                  >
+                    {user.follower_count}
+                  </Text>
                   <Text
                     numberOfLines={1}
                     style={{
                       ...Fonts.SemiBold14white,
-                      color:theme.color ,
+                      color: theme.color,
                       overflow: "hidden",
                       marginTop: Default.fixPadding * 0.5,
                     }}
@@ -323,12 +333,14 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold14white, color:theme.color  }}>{user.post_count}</Text>
+                <Text style={{ ...Fonts.SemiBold14white, color: theme.color }}>
+                  {user.post_count}
+                </Text>
                 <Text
                   numberOfLines={1}
                   style={{
                     ...Fonts.SemiBold14white,
-                    color:theme.color ,
+                    color: theme.color,
                     overflow: "hidden",
                     marginTop: Default.fixPadding * 0.5,
                   }}
@@ -339,13 +351,18 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
             </View>
 
             {/*  */}
-            <View 
-            style={[{ flexDirection: "row",
-              marginHorizontal: WIDTH * 0.1,
-              marginHorizontal: Default.fixPadding * 2,
-              marginBottom: Default.fixPadding * 2,
-              marginTop: 20,}]}>
-              <AwesomeButton 
+            <View
+              style={[
+                {
+                  flexDirection: "row",
+                  marginHorizontal: WIDTH * 0.1,
+                  marginHorizontal: Default.fixPadding * 2,
+                  marginBottom: Default.fixPadding * 2,
+                  marginTop: 20,
+                },
+              ]}
+            >
+              <AwesomeButton
                 height={50}
                 width={WIDTH * 0.3}
                 onPressOut={() => navigation.push("messageUserScreen")}
@@ -353,14 +370,16 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                 borderRadius={10}
                 backgroundDarker={Colors.transparent}
                 backgroundColor={ACCENT_COLOR}
-                >
-                <View style={ styles.buttonGreen}>
-                  <Text style={{color: "white", fontSize: 20, fontWeight: "bold"}}>
+              >
+                <View style={styles.buttonGreen}>
+                  <Text
+                    style={{ color: "white", fontSize: 20, fontWeight: "bold" }}
+                  >
                     Message
                   </Text>
                 </View>
               </AwesomeButton>
-              <View style={{margin:8}}></View>
+              <View style={{ margin: 8 }}></View>
               <AwesomeButton
                 height={50}
                 width={WIDTH * 0.3}
@@ -371,26 +390,25 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                 // borderWidth={null}
                 backgroundDarker={Colors.transparent}
                 extra={
-                      <LinearGradient
-                        start={[0, 1]}
-                        end={[1, 1]}
-                        colors={[Colors.primary, Colors.extraDarkPrimary]}
-                        style={{ ...StyleSheet.absoluteFillObject, }}
-                      />
-                    }
-                  >
+                  <LinearGradient
+                    start={[0, 1]}
+                    end={[1, 1]}
+                    colors={[Colors.primary, Colors.extraDarkPrimary]}
+                    style={{ ...StyleSheet.absoluteFillObject }}
+                  />
+                }
+              >
                 <Text style={{ ...Fonts.Bold18white }}>{tr("follow")}</Text>
               </AwesomeButton>
             </View>
           </View>
         </View>
-        
+
         <View
           style={{
             flexDirection: "row",
           }}
-        > 
-        </View>
+        ></View>
       </View>
 
       <View
@@ -399,9 +417,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           marginBottom: Default.fixPadding * 1.2,
           marginHorizontal: Default.fixPadding * 2,
         }}
-      >
-        
-      </View>
+      ></View>
 
       <FlatList
         numColumns={3}

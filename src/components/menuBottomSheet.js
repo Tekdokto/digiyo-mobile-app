@@ -5,15 +5,82 @@ import { Colors, Fonts, Default } from "../constants/styles2";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
+import { DELETE_POSTS } from "../config/urls";
+import axios from "axios";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 const MenuBottomSheet = (props) => {
   const { t, i18n } = useTranslation();
 
+  const navigate = useNavigation()
+
+  console.log("ower 000000000", props.isPostOwner)
   const isRtl = i18n.dir() == "rtl";
 
   function tr(key) {
     return t(`menuBottomSheet:${key}`);
   }
+
+  const isFocused = useIsFocused();
+  
+  useEffect(() => {
+    if (isFocused) {
+      // Reload your screen here
+    }
+  }, [isFocused]);
+
+  // const userToken = useSelector(state=>state.auth.userData.token)
+  
+  // function extractAuthorization(cookieString) {
+  //   const cookies = cookieString.split(';');
+  //   let authorization = '';
+  
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i].trim();
+  //     if (cookie.startsWith('Authorization=')) {
+  //       authorization = cookie.substring('Authorization='.length);
+  //       break;
+  //     }
+  //   }
+  
+  //   return authorization;
+  // }
+  
+  // const auth = extractAuthorization(userToken)
+
+    const deletePost = async () => {
+
+      const config = {
+        method: "delete",
+        url: DELETE_POSTS+props.post_id,
+        // data: formdata,
+        // headers: {
+        //   'Authorization': auth,
+        //   "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+        // }
+      };
+      console.log(config)
+      try {
+        // setLoading(true)
+        // let res = getUserPosts(auth,  userId)
+        await axios(config).then(
+          (response) => {
+            // setPost(response.data.data)
+            console.log("dddddddddddddddeeeeeeeeelllllllllleeeeeeeete",response.data)
+          }
+      ).catch((error) => {
+        console.log("error 1111111111111",error)
+      } )
+      
+      // console.log("---------",res)
+      // setLoading(false)
+      navigate.goBack()
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
   return (
     <BottomSheet
@@ -119,6 +186,47 @@ const MenuBottomSheet = (props) => {
             {props.title}
           </Text>
         </View>
+
+
+        {/*  */}
+        {props.isPostOwner ? (
+          <>
+          <TouchableOpacity 
+            onPress={deletePost}
+          >
+            <View
+              style={{
+                flexDirection: isRtl ? "row-reverse" : "row",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 28,
+                  height: 28,
+                  borderRadius: 19,
+                  backgroundColor: Colors.white,
+                }}
+              >
+                <AntDesign name="deleteuser" size={15} color={Colors.primary} />
+              </View>
+              <Text
+                style={{
+                  ...Fonts.Medium16white,
+                  marginHorizontal: Default.fixPadding * 1.5,
+                }}
+              >
+                delete post
+              </Text>
+            </View>
+          </TouchableOpacity>
+          </>
+
+        ) : (
+          <></>
+        )}
       </View>
     </BottomSheet>
   );
