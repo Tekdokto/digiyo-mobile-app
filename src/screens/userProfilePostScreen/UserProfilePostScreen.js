@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FullPostComp from '../../components/home/FullPostComp' 
-import { FlatList, Image, View, Text, Dimensions, StatusBar} from 'react-native'
+import { FlatList, Image, View, Text, Dimensions, StatusBar, Share} from 'react-native'
 import styles from '../../constants/styles'
 import { HEIGHT } from '../../constants/sizes'
 import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
@@ -22,11 +22,11 @@ const UserProfilePostScreen = ({ navigation, route }) => {
   const { postsArray, selectedIndex, item } = route.params; // Array of posts and selected index
   
   const currentIndex = postsArray.findIndex((postItem) => postItem.post_id === item.post_id);
-    console.log("----ccc iiiiindsz-----",currentIndex)
-    console.log(postsArray) 
+    // console.log("----ccc iiiiindsz-----",currentIndex)
+    console.log("arayyyyyyyyyy ",postsArray) 
 
     const userData = useSelector(state=>state.auth.userData.authenticated_user.user_id)
-    console.log("data- - - - - ", userData)
+    // console.log("data- - - - - ", userData)
     const [visibleVideos, setVisibleVideos] = useState(
         postsArray.map(() => true)
       );
@@ -38,7 +38,39 @@ const UserProfilePostScreen = ({ navigation, route }) => {
         setVisibleVideos(newVisibleVideos)
     }, [])
 
-    console.log(visibleVideos)
+    // console.log(visibleVideos)
+
+    const [openedPostId, setOpenedPostId] = useState(null); // Track the opened post's post_id
+
+  const toggleSheet = (post_id) => {
+    if (openedPostId === post_id) {
+      // If the same post is clicked again, close the CommentsBottomSheet
+      setOpenCommentBottomSheet(false);
+      setOpenedPostId(null);
+    } else {
+      // If a different post is clicked, open the CommentsBottomSheet for that post
+      setOpenedPostId(post_id);
+      setOpenCommentBottomSheet(true);
+    }
+  };
+
+    const shareContent = async () => {
+      try {
+        const result = await Share.share({
+          message: 'Check out this awesome post!',
+          url: 'https://example.com/post/123', // Replace with your post's URL
+        });
+    
+        if (result.action === Share.ActionType.SHARED) {
+          console.log('Shared successfully');
+        } else if (result.action === Share.ActionType.DISMISSED) {
+          console.log('Share dismissed');
+        }
+      } catch (error) {
+        console.error('Sharing error:', error);
+      }
+    };
+    
 
   return (
     <>
@@ -97,12 +129,18 @@ const UserProfilePostScreen = ({ navigation, route }) => {
                             </View>
                           ) : (
                             <></> 
-                          )} */}
+                          )} */} 
                           <FullScreenLikeIcons
-                            openCommentBottomSheetHandler={() => setOpenCommentBottomSheet(true)}
+                          comments
+                            shareVideo={shareContent}
+                            openCommentBottomSheetHandler={() =>{
+                               setOpenCommentBottomSheet(true)
+                               toggleSheet(item.post_id)
+                              }}
                             openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
                           />
                            <CommentsBottomSheet
+                              post_id={openedPostId}
                               visible={openCommentBottomSheet}
                               closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
                             />
@@ -118,6 +156,11 @@ const UserProfilePostScreen = ({ navigation, route }) => {
                       );
                     }}
                     initialScrollIndex={currentIndex}
+                    getItemLayout={(data, index) => ({
+                      length: Dimensions.get('window').height,
+                      offset: Dimensions.get('window').height * index,
+                      index,
+                    })}
                 />
         </View>
          </SafeAreaView>

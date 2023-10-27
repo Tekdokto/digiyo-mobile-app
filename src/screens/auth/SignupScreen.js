@@ -1,4 +1,4 @@
-import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity, Pressable, StyleSheet, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
@@ -50,9 +50,9 @@ export default function SignupScreen() {
     const onPressSignup = async() => {
         const checkValid = isValidData()
         // console.log("first")
+        setLoading(true)
 
         if (checkValid) {
-            setLoading(true)
             let data  = {
                 username:userName,
                 email:email,
@@ -63,7 +63,7 @@ export default function SignupScreen() {
                 let res = await userSignup(data)
                 console.log("response -------", data)
                 console.log("response result -------", res)
-                setLoading(false)
+                // setLoading(false)
                 console.log(" ---------- -========", res.data)
                 console.log(" ---------- -========", res.data.email)
                 showMessage(res.status)
@@ -72,9 +72,9 @@ export default function SignupScreen() {
                 showError(error.message)
                 console.log("signup error -------", error )
                 console.log("signup error data -------", data )
-                setLoading(false)
             }
         }
+        setLoading(false)
         // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
     }
 
@@ -169,14 +169,19 @@ export default function SignupScreen() {
                         <Animated.View 
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
-
-                            <TouchableOpacity onPress={onPressSignup}
-                            style={[ ]}
-                            >
-                                <Text 
-                                style={{fontSize: 20, fontFamily: "Bold", color:"white", textAlign:"center"}}
-                                >SignUp</Text>
-                            </TouchableOpacity>
+                                {isLoading ? (
+                                    <>
+                                        <ActivityIndicator color={"white"} />
+                                    </>
+                                ) : (
+                                    <TouchableOpacity onPress={onPressSignup}
+                                    style={[ ]}
+                                    >
+                                        <Text 
+                                        style={{fontSize: 20, fontFamily: "Bold", color:"white", textAlign:"center"}}
+                                        >SignUp</Text>
+                                    </TouchableOpacity>
+                                ) } 
                         </Animated.View>
 
                         <Animated.View 

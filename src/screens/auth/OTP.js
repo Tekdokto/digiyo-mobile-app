@@ -1,4 +1,4 @@
-import { View, Pressable, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import { View, Pressable, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
@@ -33,7 +33,7 @@ export default function OTPScreen( route ) {
     
     const [timer, setTimer] = useState(59);
 
-
+    const [isLoading, setLoading] = useState(false)
 
     const input = useRef(null)
 
@@ -53,8 +53,8 @@ export default function OTPScreen( route ) {
         }
     }, [timer])
 
-    const onResendCode = () =>{
-    }
+    // const onResendCode = () =>{
+    // }
     
     const resendCode = async() => {
         setTimer(59)
@@ -79,6 +79,7 @@ export default function OTPScreen( route ) {
         console.log(otpInput)
         console.log(item) 
         console.log("tap ------ 202")
+        setLoading(true)
         let data = { 
             "otp": otpInput,
             "email": item,
@@ -90,11 +91,12 @@ export default function OTPScreen( route ) {
             // showMessage(res)
             // showError(res)
             // showMessage(res)
-            navigation.navigate("FoundersScreen")
+            navigation.navigate("FoundersScreen", {item: item})
         } catch (error) {
             console.log(error.message)
             showError(error.message)
         }
+        setLoading(false)
     }
     
 
@@ -146,12 +148,16 @@ export default function OTPScreen( route ) {
                     >
                         <Animated.View 
                             entering={FadeInDown.duration(1000).springify()} 
-                            style={{ marginHorizontal: 20, marginVertical: 10, width: WIDTH }}
+                            style={{ marginHorizontal: 30, marginVertical: 10, }}
                             >
                             <OTPTextView
-                                style={{color: theme.color}}
+                                // style={[styles.textInputContainer,{color: theme.color}]}
                                 ref={input}
-                                textInputStyle={styles.textInputContainer}
+                                textInputStyle={{borderRadius: 10, 
+                                    borderWidth: 2,  
+                                    backgroundColor: ACCENT_COLOR,
+                                    borderColor: ACCENT_COLOR, 
+                                    borderBlockColor: ACCENT_COLOR}}
                                 handleTextChange={setOtpInput}
                                 handleCellTextChange={handleCellTextChange}
                                 inputCount={6}
@@ -170,7 +176,7 @@ export default function OTPScreen( route ) {
                                  <Pressable
                                     onPress={{}} 
                                 >
-                                    <Text style={{   flexDirection: "row", color: theme.color}}>Resend code in {timer}</Text>
+                                    <Text style={{   flexDirection: "row", color: theme.color}}>Resend code in: {timer}</Text>
                                     
                                 </Pressable>
                                 :
@@ -186,14 +192,19 @@ export default function OTPScreen( route ) {
                         <Animated.View 
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
-
-                            <TouchableOpacity onPress={onVerify}
-                            style={[ ]}
-                            >
-                                <Text 
-                                style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
-                                >Continue</Text>
-                            </TouchableOpacity>
+                                {isLoading ? (
+                                    <>
+                                        <ActivityIndicator color={"white"} />
+                                    </>
+                                ) : (
+                                    <TouchableOpacity onPress={onVerify}
+                                    style={[ ]}
+                                    >
+                                        <Text 
+                                        style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
+                                        >Continue</Text>
+                                    </TouchableOpacity>
+                                ) }
                         </Animated.View>
  
                     </View>
@@ -208,7 +219,7 @@ const styles= StyleSheet.create({
     input: {
         width:WIDTH * 0.9, 
         marginVertical: 5, 
-        backgroundColor:"#00000010", 
+        backgroundColor:"#000000", 
         borderRadius:10, 
         padding: 20
     },
@@ -226,6 +237,7 @@ const styles= StyleSheet.create({
     },
     textInputContainer: {
         backgroundColor: "#ccc",
+        // width: WIDTH *0.4,
         borderBottomWidth: 0,
         borderRadius: 8,
         color: "white"

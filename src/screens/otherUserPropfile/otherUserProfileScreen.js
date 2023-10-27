@@ -9,6 +9,7 @@ import {
   Modal,
   Share,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import styles, { Colors, Default, Fonts } from "../../constants/styles2";
@@ -22,13 +23,13 @@ import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 import { WIDTH } from "../../constants/sizes";
 import { useSelector } from "react-redux";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { FOLLOW } from "../../config/urls";
+import { FOLLOW, FOLLOW_TOGGLE } from "../../config/urls";
 import axios from "axios";
 import { Video } from "expo-av";
 
 const OtherUserProfileScreen = ({ navigation, route }) => {
   const { item } = route.params;
-  // console.log("item =======", item)
+  console.log("item =======", item)
 
   const theme = useContext(ThemeContext);
 
@@ -52,6 +53,8 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [settingModal, setSettingModal] = useState(false);
   const shareProfile = () => {
@@ -96,6 +99,37 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   );
 
   // console.log(auth)
+
+  const followUser = async () => {
+    const config = {
+      method: "post",
+      url: FOLLOW_TOGGLE+"/" + item.author_id,
+      // data: formdata,
+      headers: {
+        Authorization: auth,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    console.log(config)
+    setIsLoading(true)
+    try {
+      await axios(config)
+        .then((response) => {
+          // setUser(response.data);
+          console.log("wors");
+        })
+        .catch((error) => {
+          console.log("error 1111111111111", error);
+        });
+
+      // console.log("---------",res)
+      // setLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false)
+  };
+
 
   const fetchUser = async () => {
     const config = {
@@ -234,17 +268,33 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
       </View>
       <View style={{ backgroundColor: theme.backgroundColor }}>
         <View style={{}}>
-          <Image
-            source={require("../../../assets/images/2.jpg")}
-            style={{
-              // flex: 3,
-              resizeMode: "cover",
-              alignSelf: "center",
-              width: 100,
-              height: 100,
-              borderRadius: 80,
-            }}
-          />
+          {item.author.avatar != null ? (
+            <Image
+              source={{uri: item.author.avatar}}
+              style={{
+                // flex: 3,
+                resizeMode: "cover",
+                alignSelf: "center",
+                width: 100,
+                height: 100,
+                borderRadius: 80,
+              }}
+            />
+          ) : (
+
+            <Image
+              source={require("../../../assets/images/2.jpg")}
+              style={{
+                // flex: 3,
+                resizeMode: "cover",
+                alignSelf: "center",
+                width: 100,
+                height: 100,
+                borderRadius: 80,
+              }}
+            />
+          )
+          }
 
           <View
             style={{
@@ -398,7 +448,16 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
                   />
                 }
               >
-                <Text style={{ ...Fonts.Bold18white }}>{tr("follow")}</Text>
+                {isLoading ? (
+                  <>
+                    <ActivityIndicator color={"white"} />
+                  </>
+                ) : (
+
+                  <TouchableOpacity onPress={followUser}>
+                  <Text style={{ ...Fonts.Bold18white }}>{tr("follow")}</Text>
+                  </TouchableOpacity>
+                ) }
               </AwesomeButton>
             </View>
           </View>

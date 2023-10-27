@@ -128,7 +128,7 @@ export default function ForgotPasswordScreen() {
                             style={[ ]}
                             >
                                 {loading ? (
-                                    <ActivityIndicator />
+                                    <ActivityIndicator color={"white"} />
                                 ) 
                                 :
                                 (

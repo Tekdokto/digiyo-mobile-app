@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react'
 import { Image, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import ThemeContext from '../theme/ThemeContext'
-import styles from '../constants/styles'
-import { HEIGHT, WIDTH } from '../constants/sizes' 
-import { Feather } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+// import ThemeContext from '../../../theme/ThemeContext'
+// import styles from '../../../constants/styles'
+// import { HEIGHT, WIDTH } from '../../../constants/sizes' 
+import { Feather, Ionicons } from '@expo/vector-icons'
+import { HEIGHT, WIDTH } from '../../constants/sizes'
+import ThemeContext from '../../theme/ThemeContext'
+// import { useNavigation } from '@react-navigation/native'
 
-import StartChat from '../../assets/icons/startchat.svg'
-import ChatIcon from '../../assets/icons/sendicon.svg'
-import { staticMessages } from '../Constants'
-// import { Ionicons } from '@expo/vector-icons'
+import StartChat from '../../../assets/icons/startchat.svg'
+import ChatIcon from '../../../assets/icons/sendicon.svg'
+import { staticMessages } from '../../Constants'
+
 
 const MessageUserScreen = ({ route }) => {
 
@@ -48,7 +50,7 @@ const MessageUserScreen = ({ route }) => {
       { message.length == 0 ? (
         <>
             <View style={{ backgroundColor: theme.background, alignItems: "center" }}>
-                <Image  source={ require("../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
+                <Image  source={ require("../../../assets/images/4.jpeg")} style={{ height: 100, width: 100, borderRadius: 60,}} />
                 <Text style={{ fontSize: 20, color: theme.color, fontWeight: "700", paddingTop: 10, }}>
                     df
                 </Text>

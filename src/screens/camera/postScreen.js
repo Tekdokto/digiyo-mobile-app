@@ -195,8 +195,8 @@ const onPostImage = async () => {
 
   return (
     <> 
-      <View style={{ flex: 1, position: "absolute", 
-      // top: 30,
+      <View style={{ flex: 1,  
+      top: 0,
       bottom: 0, height: HEIGHT,  width: WIDTH, 
       backgroundColor: theme.theme == "dark" ? Colors.black : Colors.white 
       }}>

@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FullPostComp from '../../components/home/FullPostComp'
-import { posts } from '../../Constants'
-import { FlatList, Image, View, Text, Dimensions, StatusBar} from 'react-native'
+import { FlatList, Image, View, Text, Dimensions, StatusBar, Share} from 'react-native'
 import styles from '../../constants/styles'
-import { HEIGHT } from '../../constants/sizes'
 import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
 import { useIsFocused } from '@react-navigation/native'
 import CommentsBottomSheet from '../../components/commentsBottomSheet'
 import MenuBottomSheet from '../../components/menuBottomSheet'
 import { useTranslation } from 'react-i18next'
-import { getAllPosts } from '../../redux/actions/auth'
-import { useSelector } from 'react-redux'
-import { showError } from '../../utils/helperFunctions'
+
+import * as Sharing from 'expo-sharing'
 
 const FullVideoScreen = ({ navigation, route }) => {
 
@@ -39,6 +36,23 @@ const FullVideoScreen = ({ navigation, route }) => {
     }, [])
 
     console.log(visibleVideos)
+    const shareContent = async () => {
+      try {
+        const result = await Share.share({ 
+          message: 'Check out this awesome post!',
+          url: 'https://example.com/post/123', // Replace with your post's URL
+        });
+    
+        if (result.action === Share.ActionType.SHARED) {
+          console.log('Shared successfully');
+        } else if (result.action === Share.ActionType.DISMISSED) {
+          console.log('Share dismissed');
+        }
+      } catch (error) {
+        console.error('Sharing error:', error);
+      }
+    };
+    
 
   return (
     <>
@@ -95,8 +109,9 @@ const FullVideoScreen = ({ navigation, route }) => {
                             </View>
                           ) : (
                             <></> 
-                          )} */}
+                          )} */} 
                           <FullScreenLikeIcons
+                          shareVideo={shareContent}
                             openCommentBottomSheetHandler={() => setOpenCommentBottomSheet(true)}
                             openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
                           />
@@ -114,6 +129,11 @@ const FullVideoScreen = ({ navigation, route }) => {
                       );
                     }}
                     initialScrollIndex={currentIndex}
+                    getItemLayout={(data, index) => ({
+                      length: Dimensions.get('window').height,
+                      offset: Dimensions.get('window').height * index,
+                      index,
+                    })}
                 />
         </View>
          </SafeAreaView>

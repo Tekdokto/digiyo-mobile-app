@@ -94,9 +94,11 @@ useEffect(() => {
 
   const CustomTabBar = ({ state, descriptors, navigation }) => {
     return (
-      <ScrollView refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      } >
+      <ScrollView style={{ height: HEIGHT *0.15}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        } 
+      >
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View
             style={{
@@ -354,9 +356,18 @@ useEffect(() => {
     );
   };
 
-  const title1 = isRtl ? tr("post") : tr("following");
+  const title1 = 
+  // isRtl ? 
+  // tr("post") 
+  // : 
+  tr("following")
+  ;
   const title2 = tr("followers");
-  const title3 = isRtl ? tr("followeing") : tr("post");
+  const title3 = 
+  // isRtl ? 
+  // tr("followeing") 
+  // : 
+  tr("post");
 
   return (
     <>
@@ -368,7 +379,12 @@ useEffect(() => {
       >
         <Tab.Screen
           name={isRtl ? "followers" : "post"}
-          component={!isRtl ? FollowersScreen : VideoTab}
+          component={
+            // !isRtl ? 
+            FollowersScreen 
+            // :
+            //  VideoTab
+            }
           options={{
             title: title1,
           }}
@@ -383,7 +399,12 @@ useEffect(() => {
         />
         <Tab.Screen
           name={isRtl ? "post" : "followers"}
-          component={!isRtl ? VideoTab : FollowersScreen}
+          component={
+            // !isRtl ? 
+            VideoTab 
+            // : 
+            // FollowersScreen
+          }
           options={{
             title: title3,
           }}

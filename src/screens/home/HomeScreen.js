@@ -67,7 +67,8 @@ const HomeScreen = () => {
                       >
                             <BottomSheets />
                       </Animated.View> */}
-                  
+                
+                
                   
                   </>
                 )

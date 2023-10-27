@@ -62,7 +62,7 @@ const FullScreenLikeIcons = (props) => {
               marginBottom: Default.fixPadding * 1.5,
             }}
           >
-            1.2K
+            {props.likes}
           </Text>
 
           <TouchableOpacity
@@ -85,7 +85,7 @@ const FullScreenLikeIcons = (props) => {
               marginBottom: Default.fixPadding * 1.5,
             }}
           >
-            900
+            {props.comments}
           </Text>
 
           <TouchableOpacity
@@ -108,7 +108,7 @@ const FullScreenLikeIcons = (props) => {
               marginBottom: Default.fixPadding * 1.5,
             }}
           >
-            58
+            {/* {props.} */}
           </Text>
 
           <TouchableOpacity

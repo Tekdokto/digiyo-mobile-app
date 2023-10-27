@@ -1,13 +1,17 @@
 // export const API_BASE_URL = "http://localhost:3000"
 export const API_BASE_URL = "https://api.digiyo.com"
+export const TEST_API_BASE_URL = "https://apitest.digiyo.com"
 
-export const getApiURL = (endpoint) => API_BASE_URL + endpoint
+export const getApiURL = (endpoint) => TEST_API_BASE_URL + endpoint
  
 export const SIGNUP_API = getApiURL('/auth/signup');
 export const LOGIN_API = getApiURL('/auth/login');
 export const RESEND_CODE = getApiURL('/auth/resend/otp/email');
 export const RESET_PASSWORD = getApiURL('/auth/reset/password');
 export const VERIFY_ACC = getApiURL('/auth/verify/account');
+
+// FOUNDERS STRIPE
+export const JOIN_FOUNDERS = getApiURL('/users/join/founders/club');
 
 export const MY_PROFILE = getApiURL('/auth/profile');
 
@@ -18,6 +22,7 @@ export const GET_POSTS_BY_ID = getApiURL('/posts/id');
 export const ALL_POST = getApiURL('/users/posts/');
 
 export const FOLLOW = getApiURL('/users/');
+export const FOLLOW_TOGGLE = getApiURL('/users/togglefollow');
 
 export const USER = getApiURL('/users');
 

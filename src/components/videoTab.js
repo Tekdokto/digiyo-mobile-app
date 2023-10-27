@@ -66,7 +66,7 @@ import { useIsFocused } from "@react-navigation/native";
     const auth = extractAuthorization(userToken)
     const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
 
-    // console.log(auth)
+    console.log("-------------", post)
 
     const userPosts = async () => {
 
@@ -100,43 +100,15 @@ import { useIsFocused } from "@react-navigation/native";
     useEffect(() => {
       userPosts()
     }, [])
-  
-
-    // const deletePost = async (post_id) => {
-
-    //   const config = {
-    //     method: "delete",
-    //     url: DELETE_POSTS+post_id,
-    //     // data: formdata,
-    //     headers: {
-    //       'Authorization': auth,
-    //       "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
-    //     }
-    //   };
-    //   try {
-    //     setLoading(true)
-    //     // let res = getUserPosts(auth,  userId)
-    //     await axios(config).then(
-    //       (response) => {
-    //         setPost(response.data.data)
-    //         console.log("dddddddddddddddeeeeeeeeelllllllllleeeeeeeete",response.data)
-    //       }
-    //   ).catch((error) => {
-    //     console.log("error 1111111111111",error)
-    //   } )
-      
-    //   // console.log("---------",res)
-    //   setLoading(false)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
-
+   
     // console.log("++++++++++++++",post)
     
     const renderItem = ({ item, index }) => {
       // const medias = item.media_items.map((media) => media.type)
-      // console.log("'''''''''''''''''''", item)
+      // const mediaTypes = item.media_items.map((media) => media.type);
+      const vidUrls = item.media_items.map((media) => media.url.low);
+      const imageUrls = item.media_items.map((media) => media.url);
+      console.log("'''''''''''''''''''", imageUrls)
       return (
         <>
           <TouchableOpacity
@@ -145,10 +117,7 @@ import { useIsFocused } from "@react-navigation/native";
             
               navigation.push("userProfilePostScreen", {
                 item: item,
-                postsArray: post,
-                // key: "1",
-                // title: tr("deleteVideo"),
-                // follow: false,
+                postsArray: post, 
               })}
             }
             style={{
@@ -159,7 +128,7 @@ import { useIsFocused } from "@react-navigation/native";
             }}
           >
             <Image
-              source={{uri: item.image}}
+              source={{uri: imageUrls[0]}}
               style={{
                 resizeMode: "stretch",
                 width: width / 3.75,
@@ -171,12 +140,14 @@ import { useIsFocused } from "@react-navigation/native";
               style={{
                 position: "absolute",
                 bottom: 0,
-                right: isRtl ? null : 0,
+                // right: isRtl ? null : 0,
               }}
             >
               <View
                 style={{
-                  flexDirection: isRtl ? "row-reverse" : "row",
+                  flexDirection: 
+                  // isRtl ? "row-reverse" : 
+                  "row",
                   alignItems: "center",
                   paddingHorizontal: Default.fixPadding * 0.4,
                 }}

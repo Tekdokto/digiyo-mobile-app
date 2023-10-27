@@ -9,15 +9,20 @@ import { PRIMARY_COLOR } from '../../constants/colors';
 import Logo from '../../../assets/icons/logo-black.svg'
 import ThemeContext from '../../theme/ThemeContext';
 import JoinFoundersPaymentScreen from '../foundersclubscreen/JoinFoundersClubPayment/joinFoundersPaymentScreen';
+import { JOIN_FOUNDERS } from '../../config/urls';
+import axios from 'axios';
 
 
-export default function FoundersScreen() {
+export default function FoundersScreen({ route }) {
+
+    const { item } = route.params
     const navigation = useNavigation();
 
     const [ open, setOpen ] = useState(false)
-
+    
     const theme = useContext(ThemeContext)
-
+    
+    
   return (
     <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

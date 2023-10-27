@@ -343,39 +343,8 @@ const CameraScreen = ({ navigation }) => {
         { videoSource || pictureSource || galleryImageSource || videoFromGallerySource != null ? 
         (
             <>
-                <View style={{flex: 1,  height:HEIGHT,backgroundColor: theme.backgroundColor, top: 0, bottom: 0 }}>
-                    {/* {videoFromGallerySource && ( 
-                        <SelectedPreview 
-                            cancel={() => setVideoFromGallerySource(null)} 
-                            handlePost={handlePost}    
-                            videoUrl={videoFromGallerySource}
-                            isVid={true}
-                        />
-                    )}
-                    {videoSource && (
-                        <SelectedPreview 
-                            cancel={() => setVideoSource(null)} 
-                            handlePost={handlePost}    
-                            videoUrl={videoSource}
-                            isVid={true}
-                        />
-                    )}
-                    {pictureSource && ( 
-                        <SelectedPreview 
-                            cancel={() => setPictureSource(null)} 
-                            handlePost={handlePost}    
-                            imageUrl={pictureSource}
-                            isVid={false}
-                        />
-                    )}
-                    {galleryImageSource && (
-                        <SelectedPreview 
-                            cancel={() => setGalleryImageSource(null)} 
-                            handlePost={handlePost}    
-                            imageUrl={galleryImageSource}
-                            isVid={false}
-                        />
-                    )} */}
+                <View style={{flex: 1, position: "absolute", height:HEIGHT,backgroundColor: theme.backgroundColor, top: 0, bottom: 0 }}>
+                    
                     { videoFromGallerySource && (
                         <PostScreen isVid={true} cancel={allNull} postUri={videoFromGallerySource} />
                     )}

@@ -19,6 +19,9 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native";
+import { HEIGHT, WIDTH } from "../../constants/sizes";
+
+import { AntDesign } from "@expo/vector-icons"
 
 const { width } = Dimensions.get("window");
 
@@ -84,7 +87,10 @@ const SearchScreen = ({ navigation }) => {
           // setSearch(response.data);
           console.log(response.data);
           setSearchRes(response.data.data);
-          console.log(response.data.data.users);
+          console.log("this posts" ,response.data.data.posts);
+          // console.log(response.data.data.users.data.posts);
+          // console.log(response.data.data.users.profileS);
+          // console.log(response.data.data.users);
         })
         .catch((error) => {
           console.log("error 1111111111111", error);
@@ -102,6 +108,11 @@ const SearchScreen = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     const firstItem = index === 0;
+    const imageUrl = item.media_items.map((data) => {
+      console.log("first", data.url)
+      return (data.url)
+    });
+    console.log(item.avatar)
     return (
       <TouchableOpacity
         onPress={() =>
@@ -121,7 +132,7 @@ const SearchScreen = ({ navigation }) => {
         }}
       >
         <Image
-          source={item.image}
+          source={{ uri: imageUrl }}
           style={{
             resizeMode: "cover",
             width: width / 2.35,
@@ -129,9 +140,9 @@ const SearchScreen = ({ navigation }) => {
             borderRadius: 10,
           }}
         />
-        <View style={{ position: "absolute" }}>
+        {/* <View style={{ position: "absolute" }}>
           <Ionicons name="play" size={24} color={Colors.white} />
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   };
@@ -343,45 +354,68 @@ const SearchScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
-      <View
+      <View 
         style={{
-          flexDirection: isRtl ? "row-reverse" : "row",
-          alignItems: "center",
-          paddingVertical: Default.fixPadding * 1.2,
-          paddingHorizontal: Default.fixPadding * 1.5,
-          marginVertical: Default.fixPadding * 1.2,
-          marginHorizontal: Default.fixPadding * 2,
-          borderRadius: 10,
-          backgroundColor: Colors.extraDarkGrey,
-          ...Default.shadow,
-        }}
-      >
-        <Pressable>
-          <Text>back</Text>
-        </Pressable>
-        <Ionicons
-          name="search-outline"
-          color={Colors.grey}
-          size={18}
+          // flex:1,
+          // width: WIDTH * 0.9,
+          height: HEIGHT * 0.1,
+          // backgroundColor: "#000",
+           flexDirection: 
+          //  isRtl ? "row-reverse" :
+            "row",
+            alignItems: "center",
+            alignContent: "center",
+            // paddingVertical: Default.fixPadding * 1.2,
+            // paddingHorizontal: Default.fixPadding * 1.5,
+            marginVertical: 0,
+            marginHorizontal: 15,
+            // borderRadius: 10,
+            // backgroundColor: Colors.extraDarkGrey,
+            // ...Default.shadow,
+          }}>
+        {/* <Pressable >
+            <AntDesign name="left" size={25} />
+          </Pressable> */}
+        <View
+          
           style={{
-            flex: 0.7,
+            flexDirection: isRtl ? "row-reverse" : "row",
+            width: WIDTH *0.8,
+            alignItems: "center",
+            paddingVertical: Default.fixPadding * 1.2,
+            paddingHorizontal: Default.fixPadding * 1.5,
+            marginVertical: Default.fixPadding * 1.2,
+            marginHorizontal: Default.fixPadding * 2,
+            borderRadius: 10,
+            backgroundColor: "#00000020",
+            // ...Default.shadow,
           }}
-        />
-        <TextInput
-          value={search}
-          autoFocus={true}
-          onChangeText={setSearch}
-          placeholder={tr("search")}
-          placeholderTextColor={Colors.grey}
-          selectionColor={Colors.primary}
-          style={{
-            ...Fonts.Regular14white,
-            color: theme.color,
-            flex: 9.3,
-            textAlign: isRtl ? "right" : "left",
-            marginHorizontal: Default.fixPadding,
-          }}
-        />
+        >
+          
+          <Ionicons
+            name="search-outline"
+            color={Colors.grey}
+            size={18}
+            style={{
+              flex: 0.7,
+            }}
+          />
+          <TextInput
+            value={search}
+            autoFocus={true}
+            onChangeText={setSearch}
+            placeholder={tr("search")}
+            placeholderTextColor={Colors.grey}
+            selectionColor={Colors.primary}
+            style={{
+              ...Fonts.Regular14white,
+              color: theme.color,
+              flex: 9.3,
+              textAlign: isRtl ? "right" : "left",
+              marginHorizontal: Default.fixPadding,
+            }}
+          />
+        </View>
       </View>
 
       <FlatList
