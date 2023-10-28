@@ -34,13 +34,18 @@ const CommentsBottomSheet = (props) => {
   }
 
   const [comment, setComment] = useState();
+  const [theRep, setTheRep] = useState();
   const [isLoading, setLoading] = useState(false);
 
   const [commentsData, setCommentsData] = useState([]);
+  const [replysData, setReplysData] = useState([]);
+
+  const [replyToCommentId, setReplyToCommentId] = useState();
+  const [reply, setReply] = useState(false);
 
   const onSelectItem = (item) => {
     const newItem = commentsData.map((val) => {
-      if (val.key === item.comment_id) {
+      if (val.comment_id === item.comment_id) {
         return { ...val, like: !val.like };
       } else {
         return val;
@@ -76,7 +81,6 @@ const CommentsBottomSheet = (props) => {
         break;
       }
     }
-
     return authorization;
   }
 
@@ -84,33 +88,28 @@ const CommentsBottomSheet = (props) => {
 
   const onComment = async (post_id) => {
     console.log(comment);
-    // console.log("comment")
-    // console.log(...commentsData, temp)
-    // InputRef.current.clear();
+    console.log("comment");
 
-    const id = props.post_id
     const config = {
-      method: "post",
-      data: {
-        "content": comment,
-      },
-      url: GET_POSTS_COMMENTS + post_id + "/comment",
-      headers: {
-        Authorization: userToken,
-        "Content-Type": "application/json",
-      },
+      // method: "post",
+      // data: {
+      //   "content": comment,
+      // },
+      // url: GET_POSTS_COMMENTS + post_id + "/comment",
+      // headers: {
+      //   Authorization: userToken,
+      //   "Content-Type": "application/json",
+      // },
     };
-    console.log(
-      "post id ---------- ",
-      config
-    );
-    
+    console.log("post id ---------- ", config);
+
     setLoading(true);
+    setComment(null);
     try {
       await axios(config)
         .then((response) => {
           console.log("filteredStatus", response.data);
-          
+
           // console.log("gone 1111111111111", response);
           setComment(null);
           let temp = {
@@ -122,7 +121,7 @@ const CommentsBottomSheet = (props) => {
             created_at: "2023-10-13T17:28:58.715Z",
             updated_at: "2023-10-13T17:28:58.715Z",
           };
-      
+
           setCommentsData([...commentsData, temp]);
         })
         .catch((error) => {
@@ -134,7 +133,73 @@ const CommentsBottomSheet = (props) => {
     setLoading(false);
   };
 
-  const onFetchComments = async (post_id) => { 
+  const onReplyComment = async (post_id, comment_id) => {
+    setReply(false);
+
+    const config = {
+      method: "post",
+      data: {
+        "content": comment,
+      },
+      url: GET_POSTS_COMMENTS + post_id + "/reply/" + comment_id,
+      headers: {
+        Authorization: userToken,
+        "Content-Type": "application/json",
+      },
+    };
+    // console.log("post id ---------- ", config);
+     
+    setReplysData([...replysData, temp]);
+
+    console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
+    setLoading(true);
+    try {
+      await axios(config)
+        .then((response) => {
+          console.log("filteredStatus", response.data);
+
+          console.log("gone 1111111111111", response.status);
+          const newReply = {
+            comment_id: GenerateUniqueID(),
+            content: theRep,
+            user_id: GenerateUniqueID(),
+            post_id: post_id, // Set post_id as the same post being replied to
+            created_at: "2023-10-13T17:28:58.715Z",
+            updated_at: "2023-10-13T17:28:58.715Z",
+            replies: []
+          };
+      
+          // Find the comment being replied to and add the reply to it
+          const updatedComments = commentsData.map((comment) => {
+            if (comment.comment_id === comment_id) {
+              return {
+                ...comment,
+                replies: comment.replies ? [...comment.replies, newReply] : [newReply],
+              };
+            }
+            return comment;
+          });
+      
+          setCommentsData(updatedComments);
+          
+        })
+        .catch((error) => {
+          console.log("error  1111111111111", error);
+        });
+    } catch (error) {
+      console.log("second error =====  ", error);
+    }
+
+    setLoading(false);
+
+    // Reset the reply text
+    setTheRep("");
+
+    // You can keep the rest of the logic you have commented out for handling network requests
+  };
+
+  // FETCH COMMENTS
+  const onFetchComments = async (post_id) => {
     const config = {
       method: "get",
       url: GET_POSTS_COMMENTS + post_id + "/comment",
@@ -150,13 +215,12 @@ const CommentsBottomSheet = (props) => {
       // setLoading(true);
       await axios(config)
         .then((response) => {
-          // console.log("filteredStatus", response.data);
+          // console.log("fetched comment", response.data);
           // setLoading(false)
           setCommentsData(response.data);
         })
-        .catch((error) => { 
-        }); 
-    } catch (error) { 
+        .catch((error) => {});
+    } catch (error) {
       // setLoading(false);
     }
   };
@@ -166,7 +230,7 @@ const CommentsBottomSheet = (props) => {
       onFetchComments(props.post_id);
     }
     // console.log(onFetchComments())
-  }, [props.visible, props.post_id]);
+  }, [props.visible, props.post_id, reply]);
 
   const renderItem = ({ item, index }) => {
     return (
@@ -215,14 +279,30 @@ const CommentsBottomSheet = (props) => {
               <Text style={{ ...Fonts.Medium12grey, color: theme.color }}>
                 {item.time}
               </Text>
-              <Text
-                style={{
-                  ...Fonts.Medium12grey,
-                  marginHorizontal: Default.fixPadding * 2.7,
+              <TouchableOpacity
+                onPress={() => {
+                  setReply(true);
+                  console.log(item.comment_id);
+                  setReplyToCommentId(item.comment_id);
                 }}
               >
-                {tr("reply")}
-              </Text>
+                <Text
+                  style={{
+                    ...Fonts.Medium12grey,
+                    marginHorizontal: Default.fixPadding * 2.7,
+                  }}
+                >
+                  {tr("reply")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginLeft: 20 }}>
+            <Text>
+              {item.replies &&
+                item.replies.map((reply, replyIndex) => (
+                  <Text key={replyIndex}>{reply.content}{'\n'}</Text>
+                ))}
+            </Text>
             </View>
           </View>
         </View>
@@ -250,10 +330,14 @@ const CommentsBottomSheet = (props) => {
       onBackButtonPress={() => {
         props.closeCommentBottomSheet();
         setComment(null);
+        setReply(false);
+        setReplyToCommentId(null);
       }}
       onBackdropPress={() => {
         props.closeCommentBottomSheet();
         setComment(null);
+        setReply(false);
+        setReplyToCommentId(null);
       }}
     >
       <View
@@ -325,9 +409,9 @@ const CommentsBottomSheet = (props) => {
                 }}
               /> */}
                 <TextInput
-                  value={comment}
-                  onChangeText={setComment}
-                  placeholder={tr("comment")}
+                  value={reply ? theRep : comment}
+                  onChangeText={reply ? setTheRep : setComment}
+                  placeholder={reply ? "Replying to: ${comment_id}" : "comment"}
                   placeholderTextColor={Colors.grey}
                   selectionColor={Colors.primary}
                   style={{
@@ -364,9 +448,20 @@ const CommentsBottomSheet = (props) => {
               <ActivityIndicator />
             </>
           ) : (
-
             <TouchableOpacity
-              onPress={ () => onComment(props.post_id)}
+              onPress={() => {
+                if (reply) {
+                  onReplyComment(
+                    props.post_id,
+                    // commentsData.map((data) => data.comment_id)
+                    replyToCommentId
+                  );
+                } else {
+                  onComment(props.post_id);
+                }
+                // reply ?
+                // :
+              }}
               style={{
                 flex: 1.5,
                 marginRight: isRtl ? 0 : Default.fixPadding * 2,
@@ -404,7 +499,7 @@ const CommentsBottomSheet = (props) => {
                 </View>
               </LinearGradient>
             </TouchableOpacity>
-          ) }
+          )}
         </View>
       </View>
     </BottomSheet>

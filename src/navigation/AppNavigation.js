@@ -5,8 +5,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext, useEffect, useState } from "react";
-import HomeScreen from "../screens/home/HomeScreen";
-import UserProfileScreen from "../screens/userprofilescreen/UserProfileScreen";
+import HomeScreen from "../screens/home/HomeScreen"; 
 // import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from "../screens/home/FullVideoScreen";
 import { Image, StyleSheet } from "react-native";
