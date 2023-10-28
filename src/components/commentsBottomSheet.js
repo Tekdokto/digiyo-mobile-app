@@ -91,15 +91,15 @@ const CommentsBottomSheet = (props) => {
     console.log("comment");
 
     const config = {
-      // method: "post",
-      // data: {
-      //   "content": comment,
-      // },
-      // url: GET_POSTS_COMMENTS + post_id + "/comment",
-      // headers: {
-      //   Authorization: userToken,
-      //   "Content-Type": "application/json",
-      // },
+      method: "post",
+      data: {
+        "content": comment,
+      },
+      url: GET_POSTS_COMMENTS + post_id + "/comment",
+      headers: {
+        Authorization: userToken,
+        "Content-Type": "application/json",
+      },
     };
     console.log("post id ---------- ", config);
 
