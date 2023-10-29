@@ -52,6 +52,7 @@ const MenuBottomSheet = (props) => {
 
     const deletePost = async () => {
 
+      console.log("log delete  =   ")
       const config = {
         method: "delete",
         url: DELETE_POSTS+props.post_id,
@@ -218,7 +219,7 @@ const MenuBottomSheet = (props) => {
                   marginHorizontal: Default.fixPadding * 1.5,
                 }}
               >
-                delete post
+                delete the post
               </Text>
             </View>
           </TouchableOpacity>

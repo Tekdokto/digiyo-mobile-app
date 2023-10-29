@@ -41,7 +41,7 @@ function Chat() {
                          />
                     </View>
                     <View>
-                        <Text style={{fontWeight: "bold"}}>{item.sender}</Text>
+                        <Text style={{fontFamily: "Bold"}}>{item.sender}</Text>
                         <Text style={{}}>{item.text}</Text>
                     </View>
                     {/* <Text>{item.timestamp}</Text> */}

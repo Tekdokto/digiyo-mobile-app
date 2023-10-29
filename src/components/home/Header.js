@@ -34,10 +34,10 @@ const HeaderComp = ({ menu, navigation}) => {
         )}
           {/* <View style={{ flexDirection: "row", backgroundColor: "#EDEBE9", paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, width: WIDTH * 0.41, justifyContent: "space-between" }}>
             <Pressable onPress={(e)=> navigate.navigate("FollowingScreen")}>
-              <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Following</Text>
+              <Text style={{  fontFamily: "Bold", fontSize: HEIGHT * 0.018 }}>Following</Text>
             </Pressable>
             <Pressable onPress={(e)=> navigate.navigate("FollowersScreen")}>
-              <Text style={{  fontWeight: "bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
+              <Text style={{  fontFamily: "Bold", fontSize: HEIGHT * 0.018 }}>Followers</Text>
             </Pressable>
           </View>
           <Pressable onPress={() => navigate.openDrawer()}>

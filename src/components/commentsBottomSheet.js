@@ -149,7 +149,7 @@ const CommentsBottomSheet = (props) => {
     };
     // console.log("post id ---------- ", config);
      
-    setReplysData([...replysData, temp]);
+    // setReplysData([...replysData, temp]);
 
     console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
     setLoading(true);

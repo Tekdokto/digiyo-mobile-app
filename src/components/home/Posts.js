@@ -16,7 +16,7 @@ import { ACCENT_COLOR } from "../../constants/colors";
 import { RefreshControl } from "react-native";
 import CommentsBottomSheet from "../commentsBottomSheet";
 
-import * as Sharing from 'expo-sharing'
+// import * as Sharing from 'expo-sharing'
 
 const Posts = ({}) => {
   const theme = useContext(ThemeContext);
@@ -92,17 +92,21 @@ const Posts = ({}) => {
     }
   };
 
-  useEffect(() => {
-    onFetchPosts();
-  }, []);
-
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
-      // Reload your screen here
+      
+      onFetchPosts();
     }
-  }, [isFocused]);
+  }, []);
+
+
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     // Reload your screen here
+  //   }
+  // }, [isFocused]);
 
   const shareContent = async () => {
     try {
@@ -120,7 +124,7 @@ const Posts = ({}) => {
       console.error('Sharing error:', error);
     }
   };
-  
+   
 
   const toggleLike = (index) => {
     const newLikeStates = [...likeStates];
@@ -150,25 +154,25 @@ const Posts = ({}) => {
     setSaves(newSaves);
   };
 
-  const onShare = async (url) => {
-    try {
-      const result = await Share.share({
-        message: "Sending " + url,
-      });
+  // const onShare = async (url) => {
+  //   try {
+  //     const result = await Share.share({
+  //       message: "Sending " + url,
+  //     });
 
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          console.log("Shared with " + result.activityType);
-        } else {
-          console.log("Shared only");
-        }
-      } else if (result.action === Share.dismissedAction) {
-        console.log("Dismissed");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //         console.log("Shared with " + result.activityType);
+  //       } else {
+  //         console.log("Shared only");
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //       console.log("Dismissed");
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   return (
     <View>
@@ -214,20 +218,24 @@ const Posts = ({}) => {
                 >
                   <View
                     key={item.post_id}
-                    style={{ marginHorizontal: WIDTH * 0.17 }}
+                    style={{}}
                   >
                     <Pressable
                       onPress={() =>
                         navigation.navigate("otherUserProfileScreen" , { item: item } )
                       }
-                      style={{ marginBottom: 10 }}
+                      style={{ marginBottom: 10,
+                          zIndex: 1 }}
                     >
                       <View
                         style={{
+                          position: "absolute",
+                          top: HEIGHT * 0.1,
+                          paddingLeft: 20,
                           marginTop: 20,
                           flexDirection: "row",
                           alignContent: "center",
-                        }}
+                        }} 
                       >
                         {item.author.avatar == null ? (
                           <FontAwesome
@@ -259,8 +267,8 @@ const Posts = ({}) => {
                             style={{
                               fontFamily: "SemiBold",
                               fontSize: 20,
-                              color: theme.color,
-                            }}
+                              color: "#fff",
+                            }} 
                           >
                             {item.author.username}
                           </Text>

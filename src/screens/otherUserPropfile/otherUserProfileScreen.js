@@ -423,7 +423,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
               >
                 <View style={styles.buttonGreen}>
                   <Text
-                    style={{ color: "white", fontSize: 20, fontWeight: "bold" }}
+                    style={{ color: "white", fontSize: 20, fontFamily: "Bold" }}
                   >
                     Message
                   </Text>

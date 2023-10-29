@@ -124,16 +124,15 @@ const styles = StyleSheet.create({
     // overflow:"hidden"
 },
   // image frame
-  mediaFrame: { 
-    borderRadius: 20, 
-    height: HEIGHT * 0.51, 
+  mediaFrame: {  
+    height: HEIGHT * 0.61, 
     width: WIDTH,
 },
-mediaFrame: { 
-  borderRadius: 20, 
-  height: HEIGHT * 0.6, 
-  width: "100%" 
-},
+// mediaFrame: { 
+//   borderRadius: 20, 
+//   height: HEIGHT * 0.6, 
+//   width: "100%" 
+// },
 iconText: {
   fontSize: HEIGHT * 0.02
 },

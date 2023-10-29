@@ -47,6 +47,7 @@ import UserProfilePostScreen from "../screens/userProfilePostScreen/UserProfileP
 import { myProifile } from "../redux/actions/auth";
 import { showError } from "../utils/helperFunctions";
 import AltProfile from "../screens/profile/altProfile";
+import { PRIMARY_COLOR } from "../constants/colors";
 // import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
@@ -261,8 +262,12 @@ const menuIcons = (route, focused) => {
   } else if (route.name == "Upload") {
     icon = focused ? (
       <UploadSvg stroke={themeColorsLight} width={size} height={size} />
-    ) : (
-      <UploadSvg stroke={themeColorsDark} width={size} height={size} />
+      ) : (
+        <View style={{backgroundColor: PRIMARY_COLOR+"20", borderRadius: 50, padding: 10, position: "absolute", bottom: -10, alignSelf: "center" }}>
+        <View style={{backgroundColor: PRIMARY_COLOR, borderRadius: 50, padding: 10,}}>
+            <UploadSvg stroke={themeColorsDark} width={size} height={size} />
+        </View>
+        </View>
     );
   } else if (route.name == "Myprofile") {
     icon = focused ? (

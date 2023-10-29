@@ -50,7 +50,7 @@ const SelectedPreview = ({ imageUrl, videoUrl, isVid, cancel, handlePost }) => {
                         top: HEIGHT *0.15,
                         alignSelf: "center",
                     }]}>
-                <Text style={{ fontWeight: "bold", fontSize: 20, color: theme.color }}>Title</Text>
+                <Text style={{ fontFamily: "Bold", fontSize: 20, color: theme.color }}>Title</Text>
                 <View 
                     >
                     <TextInput
@@ -77,7 +77,7 @@ const SelectedPreview = ({ imageUrl, videoUrl, isVid, cancel, handlePost }) => {
                         top: HEIGHT *0.15,
                         alignSelf: "center",
                     }]}>
-                <Text style={{ fontWeight: "bold", fontSize: 20, color: theme.color }}>Description</Text>
+                <Text style={{ fontFamily: "Bold", fontSize: 20, color: theme.color }}>Description</Text>
                 <View 
                     >
                     <TextInput

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 	username: {
 		color: theme.color,
 		fontSize: 18,
-		fontWeight: "bold",
+		fontFamily: "Bold",
 	},
 	onlineStatus: {
 		color: theme.color,

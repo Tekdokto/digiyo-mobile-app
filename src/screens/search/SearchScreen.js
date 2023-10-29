@@ -22,6 +22,7 @@ import { ActivityIndicator } from "react-native";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
 
 import { AntDesign } from "@expo/vector-icons"
+import { Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
 
@@ -108,6 +109,14 @@ const SearchScreen = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     const firstItem = index === 0;
+    const mediaType = item.media_items.map((data) => {
+      console.log("first", data.type)
+      return (data.type)
+    });
+    const vidUrl = item.media_items.map((data) => {
+      console.log("first", data.url.low)
+      return (data.url.low)
+    });
     const imageUrl = item.media_items.map((data) => {
       console.log("first", data.url)
       return (data.url)
@@ -131,15 +140,33 @@ const SearchScreen = ({ navigation }) => {
           marginRight: Default.fixPadding * 2,
         }}
       >
-        <Image
-          source={{ uri: imageUrl }}
-          style={{
-            resizeMode: "cover",
-            width: width / 2.35,
-            height: 115,
-            borderRadius: 10,
-          }}
-        />
+        {mediaType === "video" ? (
+          <Video
+            source={{ uri: vidUrl[0] }}
+            style={{
+              resizeMode: "cover",
+              width: width / 2.35,
+              height: 115,
+              borderRadius: 10,
+            }}
+          />
+        ) 
+        : mediaType === "image" ? (
+          <Image
+            source={{ uri: imageUrl }}
+            style={{
+              resizeMode: "cover",
+              width: width / 2.35,
+              height: 115,
+              borderRadius: 10,
+            }}
+          />
+
+        ) 
+        : (
+          <></>
+        )
+        }
         {/* <View style={{ position: "absolute" }}>
           <Ionicons name="play" size={24} color={Colors.white} />
         </View> */}
@@ -185,7 +212,7 @@ const SearchScreen = ({ navigation }) => {
           )}
         />
 
-        <FlatList
+        {/* <FlatList
           numColumns={2}
           data={searchRes.profiles.slice(0, 2)}
           renderItem={renderItem}
@@ -217,9 +244,9 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
 
-        <FlatList
+        {/* <FlatList
           numColumns={2}
           data={searchRes.teams.slice(0, 2)}
           renderItem={renderItem}
@@ -251,9 +278,9 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
 
-        <FlatList
+        {/* <FlatList
           numColumns={2}
           data={searchRes.users.slice(0, 2)}
           renderItem={renderItem}
@@ -285,7 +312,7 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
 
         {/* <FlatList
           numColumns={2}

@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		marginTop: 5,
-		fontWeight: "bold",
+		fontFamily: "Bold",
 	},
 	closeReply: {
 		position: "absolute",
