@@ -46,6 +46,7 @@ import { useSelector } from "react-redux";
 import UserProfilePostScreen from "../screens/userProfilePostScreen/UserProfilePostScreen";
 import { myProifile } from "../redux/actions/auth";
 import { showError } from "../utils/helperFunctions";
+import AltProfile from "../screens/profile/altProfile";
 // import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
@@ -129,7 +130,7 @@ function AllScreenTabs() {
     >
       <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />
       <ScreenTabs.Screen name="PostFull" component={FullVideoScreen} />
-      {/* <ScreenTabs.Screen name='UserProfileScreen' component={UserProfileScreen} /> */}
+      <ScreenTabs.Screen name='altPro' component={AltProfile} />
       <ScreenTabs.Screen name="MyProfileScreen" component={MyProfileScreen} />
       <ScreenTabs.Screen name="FollowersScreen" component={FollowersScreen} />
       <ScreenTabs.Screen name="FollowingScreen" component={FollowingScreen} />

@@ -28,16 +28,16 @@ const FollowersScreen = ({ navigation, isHeader }) => {
     return t(`followersScreen:${key}`);
   }
 
-  const backAction = () => {
-    navigation.pop();
-    return true;
-  };
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", backAction);
+  // const backAction = () => {
+    // navigation.pop();
+  //   return true;
+  // };
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress", backAction);
 
-    return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
-  }, []);
+  //   return () =>
+  //     BackHandler.removeEventListener("hardwareBackPress", backAction);
+  // }, []);
 
    
   const [followersData, setFollowersData] = useState([]);
@@ -134,7 +134,9 @@ const FollowersScreen = ({ navigation, isHeader }) => {
             paddingHorizontal: Default.fixPadding * 2,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.pop()}>
+          <TouchableOpacity onPress={{
+            // () => navigation.pop()
+            }}>
             <Ionicons
               name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
               size={25}
