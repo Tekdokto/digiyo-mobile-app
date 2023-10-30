@@ -194,10 +194,13 @@ const MyProfileScreen = () => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    onFetchProfile();
-    wait(2000).then(() => {
-      setRefreshing(false);
-    });
+    // onFetchProfile();
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 2000)
+    // wait(2000).then(() => {
+    //   setRefreshing(false);
+    // });
   }, []);
 
   const renderItem = useCallback(({}) => {

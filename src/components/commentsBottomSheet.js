@@ -37,7 +37,7 @@ const CommentsBottomSheet = (props) => {
   const [theRep, setTheRep] = useState();
   const [isLoading, setLoading] = useState(false);
 
-  const [commentsData, setCommentsData] = useState([]);
+  // const [commentsData, setCommentsData] = useState(commentsList);
   const [replysData, setReplysData] = useState([]);
 
   const [replyToCommentId, setReplyToCommentId] = useState();
@@ -86,6 +86,54 @@ const CommentsBottomSheet = (props) => {
 
   const auth = extractAuthorization(userToken);
 
+  const commentsList = [
+    {
+      comment_id: GenerateUniqueID(),
+      // "parent_id": null,
+      content: "comment",
+      user_id: GenerateUniqueID(),
+      post_id: GenerateUniqueID(),
+      created_at: "2023-10-13T17:28:58.715Z",
+      updated_at: "2023-10-13T17:28:58.715Z",
+      replies: [
+        {
+          comment_id: GenerateUniqueID(),
+          // "parent_id": null,
+          content: "the reply",
+          user_id: GenerateUniqueID(),
+          post_id: GenerateUniqueID(),
+          created_at: "2023-10-13T17:28:58.715Z",
+          updated_at: "2023-10-13T17:28:58.715Z",
+        },
+      ]
+    },
+    {
+      comment_id: GenerateUniqueID(),
+      // "parent_id": null,
+      content: "comment 2",
+      user_id: GenerateUniqueID(),
+      post_id: GenerateUniqueID(),
+      created_at: "2023-10-13T17:28:58.715Z",
+      updated_at: "2023-10-13T17:28:58.715Z",
+      replies: [
+        // {
+        //   comment_id: GenerateUniqueID(),
+        //   // "parent_id": null,
+        //   content: "the reply",
+        //   user_id: GenerateUniqueID(),
+        //   post_id: GenerateUniqueID(),
+        //   created_at: "2023-10-13T17:28:58.715Z",
+        //   updated_at: "2023-10-13T17:28:58.715Z",
+        // },
+      ]
+    },
+  ]
+
+  
+  const [commentsData, setCommentsData] = useState(commentsList);
+  const data = commentsData.map((data) => data)
+  console.log("repliesssss  ------ 2", data )
+
   const onComment = async (post_id) => {
     console.log(comment);
     console.log("comment");
@@ -133,6 +181,7 @@ const CommentsBottomSheet = (props) => {
     setLoading(false);
   };
 
+  // REPLY COMMENT
   const onReplyComment = async (post_id, comment_id) => {
     setReply(false);
 
@@ -146,10 +195,8 @@ const CommentsBottomSheet = (props) => {
         Authorization: userToken,
         "Content-Type": "application/json",
       },
-    };
-    // console.log("post id ---------- ", config);
-     
-    // setReplysData([...replysData, temp]);
+    };    
+    // setCommentsData([...data, newReply]);
 
     console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
     setLoading(true);
@@ -166,22 +213,19 @@ const CommentsBottomSheet = (props) => {
             post_id: post_id, // Set post_id as the same post being replied to
             created_at: "2023-10-13T17:28:58.715Z",
             updated_at: "2023-10-13T17:28:58.715Z",
-            replies: []
+            // replies: []
           };
-      
-          // Find the comment being replied to and add the reply to it
-          const updatedComments = commentsData.map((comment) => {
-            if (comment.comment_id === comment_id) {
-              return {
-                ...comment,
-                replies: comment.replies ? [...comment.replies, newReply] : [newReply],
-              };
-            }
-            return comment;
-          });
-      
-          setCommentsData(updatedComments);
-          
+                  const updatedComments = commentsData.map((comment) => {
+                  if (comment.comment_id === comment_id) {
+                    return {
+                      ...comment,
+                      replies: comment.replies ? [...comment.replies, newReply] : [newReply],
+                    };
+                  }
+                  return comment;
+                });
+            
+                setCommentsData(updatedComments);       
         })
         .catch((error) => {
           console.log("error  1111111111111", error);
@@ -197,6 +241,71 @@ const CommentsBottomSheet = (props) => {
 
     // You can keep the rest of the logic you have commented out for handling network requests
   };
+
+  // const onReplyComment = async (post_id, comment_id) => {
+  //   setReply(false);
+
+  //   const config = {
+  //     method: "post",
+  //     data: {
+  //       "content": comment,
+  //     },
+  //     url: GET_POSTS_COMMENTS + post_id + "/reply/" + comment_id,
+  //     headers: {
+  //       Authorization: userToken,
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   // console.log("post id ---------- ", config);
+     
+  //   // setReplysData([...replysData, temp]);
+
+  //   console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
+  //   setLoading(true);
+  //   try {
+  //     await axios(config)
+  //       .then((response) => {
+  //         console.log("filteredStatus", response.data);
+
+  //         console.log("gone 1111111111111", response.status);
+  //         const newReply = {
+  //           comment_id: GenerateUniqueID(),
+  //           content: theRep,
+  //           user_id: GenerateUniqueID(),
+  //           post_id: post_id, // Set post_id as the same post being replied to
+  //           created_at: "2023-10-13T17:28:58.715Z",
+  //           updated_at: "2023-10-13T17:28:58.715Z",
+  //           replies: []
+  //         };
+      
+  //         // Find the comment being replied to and add the reply to it
+  //         const updatedComments = commentsData.map((comment) => {
+  //           if (comment.comment_id === comment_id) {
+  //             return {
+  //               ...comment,
+  //               replies: comment.replies ? [...comment.replies, newReply] : [newReply],
+  //             };
+  //           }
+  //           return comment;
+  //         });
+      
+  //         setCommentsData(updatedComments);
+          
+  //       })
+  //       .catch((error) => {
+  //         console.log("error  1111111111111", error);
+  //       });
+  //   } catch (error) {
+  //     console.log("second error =====  ", error);
+  //   }
+
+  //   setLoading(false);
+
+  //   // Reset the reply text
+  //   setTheRep("");
+
+  //   // You can keep the rest of the logic you have commented out for handling network requests
+  // };
 
   // FETCH COMMENTS
   const onFetchComments = async (post_id) => {
@@ -411,7 +520,7 @@ const CommentsBottomSheet = (props) => {
                 <TextInput
                   value={reply ? theRep : comment}
                   onChangeText={reply ? setTheRep : setComment}
-                  placeholder={reply ? "Replying to: ${comment_id}" : "comment"}
+                  placeholder={reply ? "Reply" : "comment"}
                   placeholderTextColor={Colors.grey}
                   selectionColor={Colors.primary}
                   style={{

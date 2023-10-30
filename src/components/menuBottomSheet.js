@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { BottomSheet } from "react-native-btr";
 import { Colors, Fonts, Default } from "../constants/styles2";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -15,6 +15,8 @@ const MenuBottomSheet = (props) => {
   const { t, i18n } = useTranslation();
 
   const navigate = useNavigation()
+
+  const [loading, setIsLoading ] = useState(false)
 
   console.log("ower 000000000", props.isPostOwner)
   const isRtl = i18n.dir() == "rtl";
@@ -52,6 +54,7 @@ const MenuBottomSheet = (props) => {
 
     const deletePost = async () => {
 
+      setIsLoading(true)
       console.log("log delete  =   ")
       const config = {
         method: "delete",
@@ -76,7 +79,7 @@ const MenuBottomSheet = (props) => {
       } )
       
       // console.log("---------",res)
-      // setLoading(false)
+      setIsLoading(false)
       navigate.goBack()
       } catch (error) {
         console.log(error)
@@ -192,7 +195,7 @@ const MenuBottomSheet = (props) => {
         {/*  */}
         {props.isPostOwner ? (
           <>
-          <TouchableOpacity 
+          <Pressable
             onPress={deletePost}
           >
             <View
@@ -219,10 +222,10 @@ const MenuBottomSheet = (props) => {
                   marginHorizontal: Default.fixPadding * 1.5,
                 }}
               >
-                delete the post
+                delete post {loading ? (<ActivityIndicator color={"#FFF"} /> ) : (<></>)}
               </Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
           </>
 
         ) : (

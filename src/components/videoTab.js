@@ -18,12 +18,12 @@ import axios from "axios";
 import { ActivityIndicator } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Video } from "expo-av";
+import { ACCENT_COLOR } from "../constants/colors";
 
 const { width } = Dimensions.get("window");
 
-const VideoTab = ({  }) => {
-
-  const navigation = useNavigation()
+const VideoTab = ({}) => {
+  const navigation = useNavigation();
   const theme = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
 
@@ -41,6 +41,7 @@ const VideoTab = ({  }) => {
   useEffect(() => {
     if (isFocused) {
       // Reload your screen here
+      userPosts()
     }
   }, [isFocused]);
 
@@ -96,9 +97,9 @@ const VideoTab = ({  }) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    userPosts();
-  }, []);
+  // useEffect(() => {
+  //   userPosts();
+  // }, []);
 
   // console.log("++++++++++++++",post)
 
@@ -127,7 +128,7 @@ const VideoTab = ({  }) => {
             marginHorizontal: Default.fixPadding,
           }}
         >
-          { mediaTypes == 'video' ? (
+          {mediaTypes == "video" ? (
             <Video
               source={{ uri: vidUrls[0] }}
               style={{
@@ -136,22 +137,20 @@ const VideoTab = ({  }) => {
                 height: 123,
                 borderRadius: 10,
               }}
-              
-              />
-          ) : mediaTypes == 'image' ? (
-
-          <Image
-            source={{ uri: imageUrls[0] }}
-            style={{
-              resizeMode: "stretch",
-              width: width / 3.75,
-              height: 123,
-              borderRadius: 10,
-            }}
-          />
+            />
+          ) : mediaTypes == "image" ? (
+            <Image
+              source={{ uri: imageUrls[0] }}
+              style={{
+                resizeMode: "stretch",
+                width: width / 3.75,
+                height: 123,
+                borderRadius: 10,
+              }}
+            />
           ) : (
             <></>
-          ) }
+          )}
           <View
             style={{
               position: "absolute",
@@ -168,7 +167,7 @@ const VideoTab = ({  }) => {
                 paddingHorizontal: Default.fixPadding * 0.4,
               }}
             >
-              <Ionicons name="heart" size={18} color={"black"} />
+              <Ionicons name="heart" size={18} color={ACCENT_COLOR} />
               <Text
                 style={{
                   ...Fonts.SemiBold12white,
@@ -185,12 +184,18 @@ const VideoTab = ({  }) => {
     );
   };
   return (
-    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.backgroundColor,
+        paddingTop: 30,
+      }}
+    >
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList
-          numColumns={2}
+          numColumns={3}
           data={post}
           renderItem={renderItem}
           keyExtractor={(item) => item.post_id}
