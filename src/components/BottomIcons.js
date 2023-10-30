@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 
 // import BottomSheets from './BottomSheets'
 // import ThemeContext from '../theme/ThemeContext'
 import ShareSvg from '../../assets/icons/share.svg'
-import HeartSvg from '../../assets/icons/heart.svg'
+import HeartSvg from '../../assets/icons/heart.svg' 
 import ChatSvg from '../../assets/icons/chat-round.svg'
 import BookmarkSvg from '../../assets/icons/bookmark.svg'
 import styles from '../constants/styles'
@@ -13,18 +13,21 @@ import ThemeContext from '../theme/ThemeContext'
 const BottomIcons = ({ like, likeColor, likeName, likeLink, chat, chatLink, save, saveLink, saveColor, saveName, share, shareLink, }) => {
 
     const theme = useContext(ThemeContext)
-
+    let themeColorsLight = theme.theme == "dark" ? "white" : "#000"
+    //   let themeColorsDark = theme.theme == "dark" ? "silver" : "silver"
+    let size = 20
     
-  let themeColorsLight = theme.theme == "dark" ? "white" : "#000"
-//   let themeColorsDark = theme.theme == "dark" ? "silver" : "silver"
-  let size = 20
+        useEffect(() => {
+    
+        }, [likeColor])
+        
 
   return (
     <View style={{ flex: 1, }}>
         <View style={{ flexDirection: "row", alignItems: "center",   }}>
             <Pressable style={{ flex: 1, alignItems: "center" }} onPress={likeLink}>
-                {/* <Image source={likeName}  /> */}
-                <HeartSvg fill={likeColor} width={size} stroke={themeColorsLight} height={size} />
+                <Image source={likeName} style={{width:20, height:20, resizeMode: "contain" }} />
+                {/* <HeartSvg fill={likeColor} width={size} stroke={themeColorsLight} height={size} /> */}
                 <Text style={[ styles.iconText, { color: theme.color }]}>{like}</Text>
             </Pressable>
              

@@ -132,7 +132,7 @@ const CommentsBottomSheet = (props) => {
   
   const [commentsData, setCommentsData] = useState(commentsList);
   const data = commentsData.map((data) => data)
-  console.log("repliesssss  ------ 2", data )
+  // console.log("repliesssss  ------ 2", data )
 
   const onComment = async (post_id) => {
     console.log(comment);

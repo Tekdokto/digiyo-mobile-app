@@ -15,6 +15,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ACCENT_COLOR } from "../../constants/colors";
 import { RefreshControl } from "react-native";
 import CommentsBottomSheet from "../commentsBottomSheet";
+import { ALL_POST, CREATE_POSTS } from "../../config/urls";
+import axios from "axios";
 
 // import * as Sharing from 'expo-sharing'
 
@@ -26,7 +28,8 @@ const Posts = ({}) => {
   const user = useSelector((state) => state.auth.userData.token);
 
   const [isLoading, setLoading] = useState(false);
-  const [post, setPost] = useState(false);
+  const [post, setPost] = useState();
+  const [postId, getPostId] = useState();
   const [isVideoReady, setVideoReady] = useState(false);
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
@@ -77,29 +80,65 @@ const Posts = ({}) => {
 
   const onFetchPosts = async () => {
     let token = user.token;
-    try {
+    try { 
       setLoading(true);
       let res = await getAllPosts(token);
       setPost(res.data);
-      setLikeStates(res.data.map(() => false));
-      setVisibleVideos(res.data.map(() => true));
+      setLikeStates(res.data.map((likes) => likes.user_has_liked)); 
+      setVisibleVideos(res.data.map(() => true)); 
       setLikes(res.data.map((item) => item.totalLikes));
       setSaves(res.data.map((item) => item.totalSaves));
       setLoading(false);
-    } catch (error) {
+      getPostId(res.data.map((postId) => postId.post_id))
+    } catch (error) { 
       showError(error.message);
       setLoading(false);
     }
   };
 
+  
+  // const getPostId = post.map((post) => post.post_id)
+  // console.log("check the post",postId)
+
+  // const onGetLikes = async () => {
+  //   let token = user.token;
+
+  //   const config = {
+  //     method: "get",
+  //     url: ALL_POST + post_id,
+  //     // data: formdata,
+  //     headers: {
+  //       Authorization: token,
+  //       "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+  //     },
+  //   };
+  //   try {
+  //     setLoading(true);
+  //     // let res = getUserPosts(auth,  userId)
+  //     await axios(config)
+  //       .then((response) => { 
+  //         // setPost(response.data.data);
+  //         console.log(" are there likes ??????",response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log("likes error 1111111111111", error);
+  //       }); 
+
+  //     // console.log("---------",res)
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
-      
+      // onGetLikes()
       onFetchPosts();
     }
-  }, []);
+  }, [isFocused]);
 
 
   // useEffect(() => {
@@ -126,7 +165,9 @@ const Posts = ({}) => {
   };
    
 
-  const toggleLike = (index) => {
+  const toggleLike = async (index) => {
+    console.log("like")
+    let token = user;
     const newLikeStates = [...likeStates];
     newLikeStates[index] = !newLikeStates[index];
     setLikeStates(newLikeStates);
@@ -138,11 +179,83 @@ const Posts = ({}) => {
       newLikes[index] -= 1; // Decrease likes if not liked
     }
     setLikes(newLikes);
+    const config = {
+      method: "post",
+      url: CREATE_POSTS + "/" + postId[index] + "/like",
+      // data: formdata,
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    console.log(config) 
+    try { 
+      // setLoading(true);
+      // let res = getUserPosts(auth,  userId)
+       await axios(config)
+        .then((response) => { 
+          // setPost(response.data.data);
+          console.log(" liked ??????",response.data);
+        })
+        .catch((error) => {
+          console.log("likes error 1111111111111", error);
+        }); 
+ 
+      // console.log("---------",res)
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const toggleUnLike = async (index) => {
+    
+    let token = user;
+    console.log("unlike")
+    const newLikeStates = [...likeStates];
+    newLikeStates[index] = !newLikeStates[index];
+    setLikeStates(newLikeStates);
+
+    const newLikes = [...likes];
+    if (newLikeStates[index]) {
+      newLikes[index] += 1; // Increment likes
+    } else {
+      newLikes[index] -= 1; // Decrease likes if not liked
+    }
+    setLikes(newLikes);
+    // setLoading(true);
+    
+    const config = { 
+      method: "delete", 
+      url: CREATE_POSTS + "/" + postId[index] +"/like",
+      // data: formdata,
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    try {
+      // let res = getUserPosts(auth,  userId)
+      await axios(config)
+        .then((response) => { 
+          // setPost(response.data.data);
+          console.log(" unlikeded ??????",response.data);
+        })
+        .catch((error) => {
+          console.log("likeds error 1111111111111", error);
+        }); 
+
+      // console.log("---------",res)
+    } catch (error) {
+      console.log(error);
+    }
+    // setLoading(false);
   };
 
   const toggleSave = (index) => {
     const newSavedState = [...savedStates];
-    newSavedState[index] = !newSavedState[index];
+    newSavedState[index] = !newSavedState[index]; 
     setSavedStates(newSavedState);
 
     const newSaves = [...saved];
@@ -320,10 +433,17 @@ const Posts = ({}) => {
                     </View>
                     <View style={{ marginBottom: 20 }}>
                       <BottomIcons
-                        likeLink={() => toggleLike(index)}
-                        likeColor={likeStates[index] ? "red" : "none"}
-                        likeName={
-                          !likeStates[index]
+                        likeLink={() => {
+                          console.log("has liseds ",item)
+                          if (likeStates[index] == true) {
+                            toggleUnLike(index) 
+                          } else { 
+                            toggleLike(index)   
+                          } 
+                          }}
+                        // likeColor={item.user_has_liked == true  ? "red" : "none"}
+                        likeName={  
+                          !likeStates[index] 
                             ? require("../../../assets/icons/heart.png")
                             : require("../../../assets/icons/heart-fill.png")
                         }
