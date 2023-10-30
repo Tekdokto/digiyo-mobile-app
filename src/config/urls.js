@@ -25,6 +25,7 @@ export const FOLLOW = getApiURL('/users/');
 export const FOLLOW_TOGGLE = getApiURL('/users/togglefollow');
 
 export const USER = getApiURL('/users');
+export const BLOCK_USER = getApiURL('/users/block/');
 
 export const SEARCH = getApiURL('/search');
 
