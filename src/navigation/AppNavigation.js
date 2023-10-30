@@ -197,7 +197,7 @@ function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name="Myprofile"
+        name="MyProfileScreen"
         component={MyProfileScreen}
         // options={{
         //   tabBarIcon: ({ focused }) => (

@@ -26,7 +26,9 @@ const Posts = ({}) => {
   const navigation = useNavigation();
 
   const user = useSelector((state) => state.auth.userData.token);
+  const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
 
+  // console.log(" get id          ",useSelector((state) => state.auth.userData))
   const [isLoading, setLoading] = useState(false);
   const [post, setPost] = useState();
   const [postId, getPostId] = useState();
@@ -334,8 +336,13 @@ const Posts = ({}) => {
                     style={{}}
                   >
                     <Pressable
-                      onPress={() =>
-                        navigation.navigate("otherUserProfileScreen" , { item: item } )
+                      onPress={() => {
+                        if (item.author.user_id === userId) {  
+                          navigation.navigate("MyProfileScreen")
+                        } else {
+                          navigation.navigate("otherUserProfileScreen" , { item: item } )
+                        }
+                       }
                       }
                       style={{ marginBottom: 10,
                           zIndex: 1 }}

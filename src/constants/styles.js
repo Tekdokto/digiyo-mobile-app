@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    borderRadius: 15
+    borderRadius: 0
   },
 
   videoFull: {
@@ -123,9 +123,9 @@ const styles = StyleSheet.create({
     width: WIDTH, 
     // overflow:"hidden"
 },
-  // image frame
+  // image frame 
   mediaFrame: {  
-    height: HEIGHT * 0.61, 
+    height: HEIGHT * 0.65, 
     width: WIDTH,
 },
 // mediaFrame: { 
