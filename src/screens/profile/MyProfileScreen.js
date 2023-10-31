@@ -46,7 +46,7 @@ const Header = () => {
   useEffect(() => {
     if (isFocused) {
       // Reload your screen here
-      onFetchProfile()
+      onFetchProfile();
     }
   }, [isFocused]);
 
@@ -117,11 +117,22 @@ const Header = () => {
         </View>
 
         <View style={Container.safe}>
-          <Image
-            style={UserImage.Image}
-            resizeMode="contain"
-            source={{ uri: profile.avatar }}
-          />
+          {profile.avatar == null ? (
+            
+            <Text
+              style={UserImage.Image}
+              // resizeMode="contain"
+              // source={{ uri: profile.avatar }}
+             >{profile.username[0]}</Text>
+          ) : (
+
+            <Image
+              style={UserImage.Image}
+              resizeMode="contain"
+              source={{ uri: profile.avatar }}
+            />
+          )
+          }
           <View>
             <Text style={UserName.Text}>@{profile.username}</Text>
           </View>
@@ -192,12 +203,14 @@ const Header = () => {
 const MyProfileScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
+  const theme = useContext(ThemeContext);
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // onFetchProfile();
     setTimeout(() => {
-      setRefreshing(false)
-    }, 2000)
+      setRefreshing(false);
+    }, 2000);
     // wait(2000).then(() => {
     //   setRefreshing(false);
     // });
@@ -234,8 +247,17 @@ const MyProfileScreen = () => {
     <Tabs.Container
       renderHeader={Header}
       headerHeight={HEADER_HEIGHT} // optional
+      headerContainerStyle={{
+        backgroundColor: ACCENT_COLOR, 
+      }}
+      containerStyle={{
+        backgroundColor: theme.backgroundColor, 
+      }}
     >
-      <Tabs.Tab name="Posts">
+      <Tabs.Tab
+       name={"Posts"}
+       labelStyle={{color: "#fff"}}
+       >
         <Tabs.FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -337,7 +359,7 @@ export const UserFollowersTextDesc = StyleSheet.create({
 export const EditProfile = StyleSheet.create({
   View: {
     // width: WIDTH * 0.1,
-    marginTop: 20,
+    marginVertical: 20,
     width: "100%",
     flex: 1,
     flexDirection: "row",

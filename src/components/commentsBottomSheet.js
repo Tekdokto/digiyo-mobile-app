@@ -198,6 +198,7 @@ const CommentsBottomSheet = (props) => {
     };    
     // setCommentsData([...data, newReply]);
 
+    console.log("config daaaaaaaaaaaaaaaataaaaaaaaaa",...config)
     console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
     setLoading(true);
     try {

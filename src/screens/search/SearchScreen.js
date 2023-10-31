@@ -183,10 +183,10 @@ const SearchScreen = ({ navigation }) => {
       <TouchableOpacity
       onPress={() => {
         
-        console.log(item.avatar)
-        console.log(item)
+        // console.log(item.avatar)
+        // console.log(item)
             if (item.user_id === userId) {  
-            // navigation.navigate("MyProfileScreen")
+            navigation.navigate("MyProfileScreen")
           } else {
             navigation.navigate("otherUserProfileScreen" , { item: item, previousScreen: "SearchScreen" } )
           }

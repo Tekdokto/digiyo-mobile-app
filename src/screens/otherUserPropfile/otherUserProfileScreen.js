@@ -82,13 +82,13 @@ export const Header = (props) => {
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
       },
     };
-    console.log(config)
+    // console.log(config)
     setIsLoading(true)
     try {
       await axios(config)
         .then((response) => {
           // setUser(response.data);
-          console.log("wors");
+          // console.log("wors");
         })
         .catch((error) => {
           console.log("error 1111111111111", error);
@@ -599,7 +599,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
         }
         style={{
           flex: 1,
-          marginTop: HEIGHT * 0.6,
+          // marginTop: HEIGHT * 0.6,
           marginBottom: Default.fixPadding * 2,
           marginHorizontal: Default.fixPadding,
         }}
