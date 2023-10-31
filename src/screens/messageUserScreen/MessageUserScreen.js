@@ -11,11 +11,12 @@ import ThemeContext from '../../theme/ThemeContext'
 import StartChat from '../../../assets/icons/startchat.svg'
 import ChatIcon from '../../../assets/icons/sendicon.svg'
 import { staticMessages } from '../../Constants'
+import { useNavigation } from '@react-navigation/native'
 
 
 const MessageUserScreen = ({ route }) => {
 
-  const { item } = route.params
+  // const { item } = route.params
   
   const [message, setMessage] = useState(staticMessages)
 

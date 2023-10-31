@@ -136,11 +136,11 @@ const Posts = ({}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
+    // if (isFocused) {
       // onGetLikes()
-      onFetchPosts();
-    }
-  }, [isFocused]);
+      onFetchPosts(); 
+    // }
+  }, []);
 
 
   // useEffect(() => {

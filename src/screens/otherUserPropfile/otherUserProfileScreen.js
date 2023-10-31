@@ -3,14 +3,14 @@ import { useCallback } from 'react'
 import { Tabs } from 'react-native-collapsible-tab-view';
 import { Default, Fonts, Colors } from '../../constants/styles2';
 import { Image, Share, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ThemeContext from '../../theme/ThemeContext';
 import { useContext } from 'react';
-import { BLOCK_USER, FOLLOW } from '../../config/urls';
+import { BLOCK_USER, FOLLOW, FOLLOW_TOGGLE } from '../../config/urls';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { HEIGHT, WIDTH } from '../../constants/sizes';
@@ -236,7 +236,7 @@ export const Header = (props) => {
               }}
             >
               <Text style={{ ...Fonts.SemiBold16white, color: theme.color }}>
-                {/* {props.user.username} */}
+                @{props.user.username}
               </Text>
               <Text
                 style={{
@@ -352,21 +352,23 @@ export const Header = (props) => {
               >
                 <AwesomeButton
                   height={50}
-                  width={WIDTH * 0.3}
-                  onPressOut={() => navigation.push("messageUserScreen")}
+                  width={WIDTH * 0.35}
+                  // stretch={true}
+                  // disabled={true}
                   raiseLevel={1}
                   borderRadius={10}
+                  // borderWidth={null}
                   backgroundDarker={Colors.transparent}
                   backgroundColor={ACCENT_COLOR}
+                  
                 >
-                  <View style={styles.buttonGreen}>
-                    <Text
-                      style={{ color: "white", fontSize: 20, fontFamily: "Bold" }}
-                    >
-                      Message
-                    </Text>
-                  </View>
+                  <TouchableOpacity 
+                    onPressOut={() => navigation.push("messageUserScreen")}
+                  >
+                  <Text style={{ ...Fonts.Bold18white }}>Message</Text>
+                  </TouchableOpacity>
                 </AwesomeButton>
+                 
                 <View style={{ margin: 8 }}></View>
                 <AwesomeButton
                   height={50}
@@ -506,6 +508,10 @@ export const Header = (props) => {
 // BOTTOM SIDE POST
 const OtherUserProfileScreen = ({ navigation, route }) => {
   const { item } = route.params;
+  const previousScreen = route.params.previousScreen
+  console.log(item.user_id) 
+  // const comingFrom = useRoute()
+  // console.log("coming from",comingFrom.params?.previousScreen)
   // const navigation = useNavigation()
 
   const [user, setUser] = useState([]);
@@ -532,9 +538,10 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   const auth = extractAuthorization(userToken);
     
     const fetchUser = async () => {
+      let the_id = previousScreen == "SearchScreen" ? item.user_id : item.author_id
       const config = {
         method: "get",
-        url: FOLLOW + item.author_id,
+        url: FOLLOW + the_id,
         // data: formdata,
         headers: {
           Authorization: auth,

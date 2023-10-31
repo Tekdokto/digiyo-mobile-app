@@ -62,9 +62,12 @@ const SearchScreen = ({ navigation }) => {
   const userToken = useSelector((state) => state.auth.userData.token);
 
   const auth = extractAuthorization(userToken);
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  // const userId = useSelector(
+  //   (state) => state.auth.userData.authenticated_user.user_id
+  // );
+
+  const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
+
 
   // console.log(auth)
 
@@ -165,6 +168,62 @@ const SearchScreen = ({ navigation }) => {
         ) 
         : (
           <></>
+        )
+        }
+        {/* <View style={{ position: "absolute" }}>
+          <Ionicons name="play" size={24} color={Colors.white} />
+        </View> */}
+      </TouchableOpacity>
+    );
+  };
+  const renderUsersItem = ({ item, index }) => {
+    // const firstItem = index === 0;
+   
+    return (
+      <TouchableOpacity
+      onPress={() => {
+        
+        console.log(item.avatar)
+        console.log(item)
+            if (item.user_id === userId) {  
+            // navigation.navigate("MyProfileScreen")
+          } else {
+            navigation.navigate("otherUserProfileScreen" , { item: item, previousScreen: "SearchScreen" } )
+          }
+        }
+        }
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: Default.fixPadding * 2,
+          marginLeft: 
+          // firstItem ? Default.fixPadding * 2 :
+           0,
+          marginRight: Default.fixPadding * 2,
+        }}
+      >
+        {item.avatar == null ? (
+          <Image
+            source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
+            style={{
+              resizeMode: "cover",
+              width: width / 2.35,
+              height: 115,
+              borderRadius: 10,
+            }}
+          />
+        ) 
+        :  (
+          <Image
+            source={{ uri: item.avatar }}
+            style={{
+              resizeMode: "cover",
+              width: width / 2.35,
+              height: 115,
+              borderRadius: 10,
+            }}
+          />
         )
         }
         {/* <View style={{ position: "absolute" }}>
@@ -280,10 +339,10 @@ const SearchScreen = ({ navigation }) => {
           )}
         /> */}
 
-        {/* <FlatList
+        <FlatList
           numColumns={2}
           data={searchRes.users.slice(0, 2)}
-          renderItem={renderItem}
+          renderItem={renderUsersItem}
           keyExtractor={(item) => item.key}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
@@ -312,7 +371,7 @@ const SearchScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           )}
-        /> */}
+        />
 
         {/* <FlatList
           numColumns={2}
