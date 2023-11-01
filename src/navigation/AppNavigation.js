@@ -216,7 +216,7 @@ function HomeTabs() {
         component={MyProfileScreen}
         // options={{
         //   tabBarIcon: ({ focused }) => (
-        //     <Image source={focused ? require('../../assets/images/2.jpg') : require('../../assets/images/2.jpg')} style={{ borderRadius:40, width:40, height:40 }} />
+        //     <Image source={focused ? require('../../assets/images/2.jpeg') : require('../../assets/images/2.jpeg')} style={{ borderRadius:40, width:40, height:40 }} />
         //   ),
         // }}
       />
@@ -304,7 +304,7 @@ const menuIcons = (route, focused) => {
       <>
         {profile.avatar == null ? (
           <Image
-            source={require("../../assets/images/2.jpg")}
+            source={require("../../assets/images/2.jpeg")}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
         ) : (
@@ -318,7 +318,7 @@ const menuIcons = (route, focused) => {
       <>
         {profile.avatar == null ? (
           <Image
-            source={require("../../assets/images/2.jpg")}
+            source={require("../../assets/images/2.jpeg")}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
         ) : (

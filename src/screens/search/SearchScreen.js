@@ -203,9 +203,7 @@ const SearchScreen = ({ navigation }) => {
       >
         {item.avatar == null ? (
           <Image
-            source={{
-              uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png",
-            }}
+            source={ require("../../../assets/images/2.jpeg")}
             style={{
               resizeMode: "cover",
               width: width / 2.35,

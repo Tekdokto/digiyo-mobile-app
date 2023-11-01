@@ -118,24 +118,24 @@ const Header = () => {
         </View>
 
         <View style={Container.safe}>
-          {/* {profile.avatar == null ? (
+          {profile.avatar == null ? (
              
             <Image
               style={UserImage.Image}
               resizeMode="contain"
-              source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
+              source={require("../../../assets/images/2.jpeg")}
             /> 
-          ) : ( */}
+          ) : (
 
             <Image
               style={UserImage.Image}
               resizeMode="contain"
               source={{ uri: profile.avatar }}
             />
-          {/* )
-          } */}
+           )
+          } 
           <View>
-            <Text style={UserName.Text}>@{profile.username}</Text>
+            <Text style={[UserName.Text, {color:theme.color} ]}>@{profile.username}</Text>
           </View>
           <View style={UserFollowers.View}>
             <View style={UserFollowersText.View}>

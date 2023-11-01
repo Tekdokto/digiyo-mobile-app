@@ -27,7 +27,7 @@ export const posts = [
         lastName: "",
         email: "",
         post: "lorem. sdihi ojoje wa;c;j reijbda, abdhj ,ahbuuw jsv sjdh sdd isduhiudv",
-        profilePic: require("../assets/images/2.jpg"),
+        profilePic: require("../assets/images/2.jpeg"),
          content: {
       type: "video", // "image" for images, "video" for videos
       source: require('../assets/images/fam.mp4'),

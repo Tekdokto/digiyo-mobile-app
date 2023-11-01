@@ -261,7 +261,7 @@ import { Pressable } from "react-native";
             </>) : (
 
                   <Image
-                    source={require("../../../assets/images/2.jpg")}
+                    source={require("../../../assets/images/2.jpeg")}
                     style={{
                       resizeMode: "stretch",
                       ...styles.image,

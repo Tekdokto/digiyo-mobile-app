@@ -274,7 +274,7 @@ import {
             />
           ) : (
             <Image
-              source={require("../../../assets/images/2.jpg")}
+              source={require("../../../assets/images/2.jpeg")}
               style={{
                 // flex: 3,
                 resizeMode: "cover",
@@ -354,7 +354,7 @@ import {
             ) : (
   
               <Image
-                source={require("../../../assets/images/2.jpg")}
+                source={require("../../../assets/images/2.jpeg")}
                 style={{
                   // flex: 3,
                   resizeMode: "cover",

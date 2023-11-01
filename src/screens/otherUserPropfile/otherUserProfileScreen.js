@@ -22,6 +22,7 @@ import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Video } from 'expo-av';
 import { Modal } from 'react-native';
+import MyStatusBar from '../../components/MyStatusBar';
 
 export const Header = (props) => {
   // const { item } = route.params;
@@ -102,6 +103,8 @@ export const Header = (props) => {
     setIsLoading(false)
   };
 
+  console.log(props)
+
 
   const blockUser = async () => {
 
@@ -175,7 +178,8 @@ export const Header = (props) => {
 
   return (
     <>
-      <View>
+    <MyStatusBar />
+      <View style={{backgroundColor: theme.theme != "dark" ? "white" : "black"}}>
       <View
           style={{
             flexDirection: 
@@ -185,6 +189,7 @@ export const Header = (props) => {
             alignItems: "center",
             paddingVertical: Default.fixPadding * 1.2,
             paddingHorizontal: Default.fixPadding * 2,
+            // backgroundColor: theme.theme != "dark" ? "white" : "black"
           }}
         >
           <TouchableOpacity onPress={() => navigation.pop()}>
@@ -200,7 +205,7 @@ export const Header = (props) => {
             <Ionicons name={"ellipsis-vertical"} size={25} color={theme.color} />
           </TouchableOpacity>
         </View>
-        <View style={{ backgroundColor: theme.backgroundColor }}>
+        <View style={{ backgroundColor: theme.theme != "dark" ? "white" : "black" }}>
           <View style={{}}>
             {props.user.avatar != null ? (
               <Image
@@ -217,7 +222,7 @@ export const Header = (props) => {
             ) : (
   
               <Image
-                source={require("../../../assets/images/2.jpg")}
+                source={require("../../../assets/images/2.jpeg")}
                 style={{
                   // flex: 3,
                   resizeMode: "cover",
@@ -484,7 +489,7 @@ export const Header = (props) => {
                   }}
                 >
                   <Ionicons name="ellipse" size={10} color={Colors.white} />
-                  <TouchableOpacity onPress={unblockUser}>
+                  <TouchableOpacity onPress={blockUser}>
                     <Text
                       style={{
                         ...Fonts.SemiBold16white,
@@ -514,6 +519,8 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   // console.log("coming from",comingFrom.params?.previousScreen)
   // const navigation = useNavigation()
 
+  const theme = useContext(ThemeContext)
+
   const [user, setUser] = useState([]);
 
   const isFocused = useIsFocused();
@@ -538,7 +545,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   const auth = extractAuthorization(userToken);
     
     const fetchUser = async () => {
-      let the_id = previousScreen == "SearchScreen" || "SearchSeeAllUsersScreen" ? item.user_id : item.author_id
+      let the_id = previousScreen == "SearchScreen" || "SearchSeeAllUsersScreen" ? item.author.user_id : item.author_id
       const config = {
         method: "get",
         url: FOLLOW + the_id,
@@ -548,6 +555,9 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           "Content-Type": "application/json", // This will set the correct 'Content-Type' header
         },
       };
+
+      // console.log(config)
+      // console.log("user id",item.author.user_id)
       try {
         // setLoading(true)
         // let res = getUserPosts(auth,  userId)
@@ -622,7 +632,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
           />
         ) : (
           <Image
-            source={require("../../../assets/images/2.jpg")}
+            source={require("../../../assets/images/2.jpeg")}
             style={{
               // flex: 3,
               resizeMode: "cover",
@@ -672,6 +682,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
       renderHeader={headerItem}
       headerHeight={HEIGHT* 0.4}
       headerContainerStyle={{top: 0}}
+      containerStyle={{backgroundColor: theme.theme != "dark" ? "white" : "black"}}
     >
       <Tabs.Tab name='Posts'>
         <Tabs.FlatList 

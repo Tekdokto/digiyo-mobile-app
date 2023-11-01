@@ -194,7 +194,7 @@ const CameraScreen = ({ navigation }) => {
   //     time: new Date().getTime(), // You can use a timestamp
   //     username: "newguy", // Replace with the actual username
   //     post: description,
-  //     profilePic: require("../../../assets/images/2.jpg"),
+  //     profilePic: require("../../../assets/images/2.jpeg"),
   //     content: {
   //       type: "image",
   //       source: { uri: pictureSource },
