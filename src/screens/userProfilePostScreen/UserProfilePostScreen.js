@@ -11,6 +11,7 @@ import MenuBottomSheet from '../../components/menuBottomSheet'
 import { useTranslation } from 'react-i18next' 
 import { useSelector } from 'react-redux'
 import { showError } from '../../utils/helperFunctions'
+import { CREATE_POSTS } from '../../config/urls'
 
 const UserProfilePostScreen = ({ navigation, route }) => {
 
@@ -24,6 +25,17 @@ const UserProfilePostScreen = ({ navigation, route }) => {
   const currentIndex = postsArray.findIndex((postItem) => postItem.post_id === item.post_id);
     // console.log("----ccc iiiiindsz-----",currentIndex)
     console.log("arayyyyyyyyyy ",postsArray) 
+
+    const [postId, getPostId] = useState();
+  
+  let likeStatus = postsArray.map((likes) => likes.user_has_liked); 
+  let theLikes = postsArray.map((likes) => likes.totalLikes);
+  
+    const [likeStates, setLikeStates] = useState(likeStatus);
+  // const [savedStates, setSavedStates] = useState([]);
+  const [likes, setLikes] = useState(theLikes);
+  // const [saved, setSaves] = useState([]);
+  // getPostId(postsArray.map((postId) => postId.post_id))
 
     const userData = useSelector(state=>state.auth.userData.authenticated_user.user_id)
     // console.log("data- - - - - ", userData)
@@ -70,6 +82,97 @@ const UserProfilePostScreen = ({ navigation, route }) => {
         console.error('Sharing error:', error);
       }
     };
+
+    
+  const user = useSelector((state) => state.auth.userData.token);
+    
+  const toggleLike = async (index) => {
+    console.log("like") 
+    console.log("like");
+  let token = user;
+  const newLikeStates = [...likeStates];
+  newLikeStates[index] = !newLikeStates[index];
+  setLikeStates(newLikeStates);
+
+  const newLikes = [...likes];
+  if (newLikeStates[index]) {
+    newLikes[index] += 1; // Increment likes
+  } else {
+    newLikes[index] -= 1; // Decrement likes if already liked
+  }
+  setLikes(newLikes);
+    const config = {
+      method: "post",
+      url: CREATE_POSTS + "/" + postId[index] + "/like",
+      // data: formdata,
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    console.log(config) 
+    try { 
+      // setLoading(true);
+      // let res = getUserPosts(auth,  userId)
+       await axios(config)
+        .then((response) => { 
+          // setPost(response.data.data);
+          console.log(" liked ??????",response.data);
+        })
+        .catch((error) => {
+          console.log("likes error 1111111111111", error);
+        }); 
+ 
+      // console.log("---------",res)
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const toggleUnLike = async (index) => {
+    
+    let token = user;
+  const newLikeStates = [...likeStates];
+  newLikeStates[index] = !newLikeStates[index];
+  setLikeStates(newLikeStates);
+
+  const newLikes = [...likes];
+  if (newLikeStates[index]) {
+    newLikes[index] += 1; // Increment likes
+  } else {
+    newLikes[index] -= 1; // Decrement likes if not liked
+  }
+  setLikes(newLikes);
+    // setLoading(true);
+    
+    const config = { 
+      method: "delete", 
+      url: CREATE_POSTS + "/" + postId[index] +"/like",
+      // data: formdata,
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    try {
+      // let res = getUserPosts(auth,  userId)
+      await axios(config)
+        .then((response) => { 
+          // setPost(response.data.data);
+          console.log(" unlikeded ??????",response.data);
+        })
+        .catch((error) => {
+          console.log("likeds error 1111111111111", error);
+        }); 
+
+      // console.log("---------",res)
+    } catch (error) {
+      console.log(error);
+    }
+    // setLoading(false);
+  };
     
 
   return (
@@ -131,6 +234,17 @@ const UserProfilePostScreen = ({ navigation, route }) => {
                             <></> 
                           )} */} 
                           <FullScreenLikeIcons
+                          color={!likeStates[index] ? "white" : "red" }
+                          toggle={() => {
+                            console.log("has liseds ",item)
+                            if (likeStates[index] == true) {
+                              toggleUnLike(index) 
+                            } else { 
+                              toggleLike(index)
+                            } 
+                            } 
+                          }
+                          likes={likes[index]}
                           comments
                             shareVideo={shareContent}
                             openCommentBottomSheetHandler={() =>{

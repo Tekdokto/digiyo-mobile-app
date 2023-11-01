@@ -43,6 +43,10 @@ const FullScreenLikeIcons = (props) => {
             backgroundColor: Colors.transparentWhite,
           }}
         >
+          <TouchableOpacity
+            onPress={props.toggle}
+          >
+
           <View
             style={{
               justifyContent: "center",
@@ -53,7 +57,7 @@ const FullScreenLikeIcons = (props) => {
               backgroundColor: Colors.darkGrey,
             }}
           >
-            <FontAwesome name="thumbs-up" size={20} color={Colors.white} />
+            <FontAwesome name={'heart'} size={20} color={props.color} />
           </View>
           <Text
             style={{
@@ -64,6 +68,7 @@ const FullScreenLikeIcons = (props) => {
           >
             {props.likes}
           </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => props.openCommentBottomSheetHandler()}
