@@ -15,8 +15,8 @@ export const colors = [
     "#F5EEFF",
   ];
   
-  export const PRIMARY_COLOR = "#FD035A";
-  export const ACCENT_COLOR = "#d9d9d9";
+  export const PRIMARY_COLOR = "#07CAF8";
+  export const ACCENT_COLOR = "#d9d9d9"; 
   export const BACKGROUND_COLOR = "#F8F9FF";
   export const BORDER_COLOR = "#C1C6E5";
   export const BACKDROP_COLOR = "rgba(0, 0, 0, 0.3)";

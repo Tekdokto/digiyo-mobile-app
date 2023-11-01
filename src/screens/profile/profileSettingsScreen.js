@@ -28,8 +28,12 @@ import { useNavigation } from "@react-navigation/native";
 // import MyStatusBar from "../components/myStatusBar";
 
 const { dispatch } = store
-const ProfileSettingsScreen = ({ navigation }) => {
+const ProfileSettingsScreen = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
+
+  const { profile } = route.params
+
+  // console.log("route des",profile)
 
   const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
 
@@ -91,13 +95,13 @@ const ProfileSettingsScreen = ({ navigation }) => {
     },
     {
       key: "2",
-      title: tr("language"),
-      navigateTo: "languageScreen",
+      title: "Edit Bio",
+      navigateTo: "editProfileBioScreen",
     },
-    {
-      key: "3",
-      title: "Edit bio",
-    },
+    // {
+    //   key: "3",
+    //   title: "Edit bio",
+    // },
     {
       key: "4",
       title: tr("blockList"),
@@ -136,7 +140,7 @@ const ProfileSettingsScreen = ({ navigation }) => {
             } else if (index === profileSettingList.length - 2) {
               return setOpenRateModal(true);
             } else {
-              navigation.navigate(item.navigateTo);
+              navigation.navigate(item.navigateTo, {profile: profile});
             }
           }}
           style={{

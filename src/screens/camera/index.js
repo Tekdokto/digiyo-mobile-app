@@ -187,48 +187,48 @@ const CameraScreen = ({ navigation }) => {
 
   // save post
 
-  const handlePost = async () => {
-    // Create a new post object with the description and the previewImageUri
-    const newPost = {
-      id: posts.length + 1, // You should generate a unique ID
-      time: new Date().getTime(), // You can use a timestamp
-      username: "newguy", // Replace with the actual username
-      post: description,
-      profilePic: require("../../../assets/images/2.jpg"),
-      content: {
-        type: "image",
-        source: { uri: pictureSource },
-      },
-      likes: 0,
-      comments: 0,
-      saved: 0,
-      shared: 0,
-      followers: 0,
-      following: 0,
-    };
+  // const handlePost = async () => {
+  //   // Create a new post object with the description and the previewImageUri
+  //   const newPost = {
+  //     id: posts.length + 1, // You should generate a unique ID
+  //     time: new Date().getTime(), // You can use a timestamp
+  //     username: "newguy", // Replace with the actual username
+  //     post: description,
+  //     profilePic: require("../../../assets/images/2.jpg"),
+  //     content: {
+  //       type: "image",
+  //       source: { uri: pictureSource },
+  //     },
+  //     likes: 0,
+  //     comments: 0,
+  //     saved: 0,
+  //     shared: 0,
+  //     followers: 0,
+  //     following: 0,
+  //   };
 
-    // Add the new post to your posts data
-    // const updatedPosts = [...posts, newPost];
+  //   // Add the new post to your posts data
+  //   // const updatedPosts = [...posts, newPost];
 
-    // You can update your posts state or context here
-    setNewPost(newPost);
+  //   // You can update your posts state or context here
+  //   setNewPost(newPost);
 
-    // Reset the description and previewImageUri state
-    setDescription("");
-    // setPreviewImageUri(pictureSource);
-    console.log("worddddddddddddddddsssssssssss");
-    console.log(newPost);
+  //   // Reset the description and previewImageUri state
+  //   setDescription("");
+  //   // setPreviewImageUri(pictureSource);
+  //   console.log("worddddddddddddddddsssssssssss");
+  //   console.log(newPost);
 
-    // You can navigate to the home screen or perform any other actions
-    if (newPost) {
-      await navigation.replace("HomeScreen", { item: newPost });
-      console.log("worssssssss---------");
-    } else {
-      console.log("error");
-    }
+  //   // You can navigate to the home screen or perform any other actions
+  //   if (newPost) {
+  //     await navigation.replace("HomeScreen", { item: newPost });
+  //     console.log("worssssssss---------");
+  //   } else {
+  //     console.log("error");
+  //   }
 
-    // navigation.navigate('HomeScreen');
-  };
+  //   // navigation.navigate('HomeScreen');
+  // };
 
   return (
     <>
@@ -378,13 +378,19 @@ const CameraScreen = ({ navigation }) => {
                   postUri={videoSource}
                 />
               )}
-              {galleryImageSource ||
-                (pictureSource && (
+              {pictureSource && (
                   <PostScreen
                     cancel={allNull}
-                    imgUrl={pictureSource || galleryImageSource}
+                    imgUrl={pictureSource}
                   />
-                ))}
+                )}
+
+              {galleryImageSource  && (
+                  <PostScreen
+                    cancel={allNull}
+                    imgUrl={galleryImageSource}
+                  />
+                )}
               {/* <PostScreen cancel={allNull}  /> */}
             </View>
           </>

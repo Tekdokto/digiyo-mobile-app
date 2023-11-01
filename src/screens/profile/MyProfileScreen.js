@@ -24,6 +24,7 @@ import { Default } from "../../constants/styles2";
 import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 import TextComp from "../../components/TextComp";
 import { Share } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 const HEADER_HEIGHT = 250;
 
@@ -55,18 +56,18 @@ const Header = () => {
   const onFetchProfile = async () => {
     let token = user.token;
     console.log("token ---------- ", token);
+    setLoading(true);
     try {
-      setLoading(true);
       let res = await myProifile(token);
       console.log("response -------", res);
       console.log("profile result -------", res.authenticated_user);
       setProfile(res.authenticated_user);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       showError(error.message);
       console.log("profile error -------", error);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -110,29 +111,29 @@ const Header = () => {
           <View></View>
 
           <TouchableOpacity
-            onPress={() => navigation.push("profileSettingsScreen")}
+            onPress={() => navigation.push("profileSettingsScreen", {profile: profile})}
           >
             <Ionicons name="ellipsis-vertical" size={20} color={theme.color} />
           </TouchableOpacity>
         </View>
 
         <View style={Container.safe}>
-          {profile.avatar == null ? (
-            
-            <Text
+          {/* {profile.avatar == null ? (
+             
+            <Image
               style={UserImage.Image}
-              // resizeMode="contain"
-              // source={{ uri: profile.avatar }}
-             >{profile.username[0]}</Text>
-          ) : (
+              resizeMode="contain"
+              source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
+            /> 
+          ) : ( */}
 
             <Image
               style={UserImage.Image}
               resizeMode="contain"
               source={{ uri: profile.avatar }}
             />
-          )
-          }
+          {/* )
+          } */}
           <View>
             <Text style={UserName.Text}>@{profile.username}</Text>
           </View>

@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
 
-import { AntDesign } from "@expo/vector-icons"
+import { AntDesign } from "@expo/vector-icons";
 import { Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
@@ -66,8 +66,9 @@ const SearchScreen = ({ navigation }) => {
   //   (state) => state.auth.userData.authenticated_user.user_id
   // );
 
-  const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
-
+  const userId = useSelector(
+    (state) => state.auth.userData.authenticated_user.user_id
+  );
 
   // console.log(auth)
 
@@ -91,7 +92,7 @@ const SearchScreen = ({ navigation }) => {
           // setSearch(response.data);
           console.log(response.data);
           setSearchRes(response.data.data);
-          console.log("this posts" ,response.data.data.posts);
+          console.log("this posts", response.data.data.posts);
           // console.log(response.data.data.users.data.posts);
           // console.log(response.data.data.users.profileS);
           // console.log(response.data.data.users);
@@ -110,21 +111,21 @@ const SearchScreen = ({ navigation }) => {
     onSearch();
   }, [search]);
 
-  const renderItem = ({ item, index }) => {
-    const firstItem = index === 0;
+  const renderPostItem = ({ item, index }) => {
+    // const firstItem = index === 0;
     const mediaType = item.media_items.map((data) => {
-      console.log("first", data.type)
-      return (data.type)
+      console.log("first", data.type);
+      return data.type;
     });
     const vidUrl = item.media_items.map((data) => {
-      console.log("first", data.url.low)
-      return (data.url.low)
+      console.log("first", data.url.low);
+      return data.url.low;
     });
     const imageUrl = item.media_items.map((data) => {
-      console.log("first", data.url)
-      return (data.url)
+      console.log("first", data.url);
+      return data.url;
     });
-    console.log(item.avatar)
+    console.log(item.avatar);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -139,7 +140,7 @@ const SearchScreen = ({ navigation }) => {
           justifyContent: "center",
           alignItems: "center",
           marginBottom: Default.fixPadding * 2,
-          marginLeft: firstItem ? Default.fixPadding * 2 : 0,
+          marginLeft: Default.fixPadding * 2,
           marginRight: Default.fixPadding * 2,
         }}
       >
@@ -153,8 +154,7 @@ const SearchScreen = ({ navigation }) => {
               borderRadius: 10,
             }}
           />
-        ) 
-        : mediaType === "image" ? (
+        ) : mediaType === "image" ? (
           <Image
             source={{ uri: imageUrl }}
             style={{
@@ -164,12 +164,9 @@ const SearchScreen = ({ navigation }) => {
               borderRadius: 10,
             }}
           />
-
-        ) 
-        : (
+        ) : (
           <></>
-        )
-        }
+        )}
         {/* <View style={{ position: "absolute" }}>
           <Ionicons name="play" size={24} color={Colors.white} />
         </View> */}
@@ -178,34 +175,37 @@ const SearchScreen = ({ navigation }) => {
   };
   const renderUsersItem = ({ item, index }) => {
     // const firstItem = index === 0;
-   
+
     return (
       <TouchableOpacity
-      onPress={() => {
-        
-        // console.log(item.avatar)
-        // console.log(item)
-            if (item.user_id === userId) {  
-            navigation.navigate("MyProfileScreen")
+        onPress={() => {
+          // console.log(item.avatar)
+          // console.log(item)
+          if (item.user_id === userId) {
+            navigation.navigate("MyProfileScreen");
           } else {
-            navigation.navigate("otherUserProfileScreen" , { item: item, previousScreen: "SearchScreen" } )
+            navigation.navigate("otherUserProfileScreen", {
+              item: item,
+              previousScreen: "SearchScreen",
+            });
           }
-        }
-        }
+        }}
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
           marginBottom: Default.fixPadding * 2,
-          marginLeft: 
-          // firstItem ? Default.fixPadding * 2 :
-           0,
+          marginLeft:
+            // firstItem ? Default.fixPadding * 2 :
+            0,
           marginRight: Default.fixPadding * 2,
         }}
       >
         {item.avatar == null ? (
           <Image
-            source={{ uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" }}
+            source={{
+              uri: "https://www.nicepng.com/png/full/128-1280406_user-icon-png.png",
+            }}
             style={{
               resizeMode: "cover",
               width: width / 2.35,
@@ -213,8 +213,7 @@ const SearchScreen = ({ navigation }) => {
               borderRadius: 10,
             }}
           />
-        ) 
-        :  (
+        ) : (
           <Image
             source={{ uri: item.avatar }}
             style={{
@@ -224,8 +223,7 @@ const SearchScreen = ({ navigation }) => {
               borderRadius: 10,
             }}
           />
-        )
-        }
+        )}
         {/* <View style={{ position: "absolute" }}>
           <Ionicons name="play" size={24} color={Colors.white} />
         </View> */}
@@ -239,7 +237,7 @@ const SearchScreen = ({ navigation }) => {
         <FlatList
           numColumns={2}
           data={searchRes.posts.slice(0, 2)}
-          renderItem={renderItem}
+          renderItem={renderPostItem}
           keyExtractor={(item) => item.key}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
@@ -257,9 +255,9 @@ const SearchScreen = ({ navigation }) => {
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("seeAllPosts", {
-                    headerTitle: tr("birthday"),
-                    post: item,
+                  navigation.push("searchSeeAllPostScreen", {
+                    headerTitle: "posts",
+                    post: searchRes.post,
                   })
                 }
               >
@@ -359,9 +357,9 @@ const SearchScreen = ({ navigation }) => {
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("seeAllUsers", {
-                    headerTitle: tr("popular"),
-                    users: item,
+                  navigation.push("searchSeeAllUsersScreen", {
+                    headerTitle: "Users",
+                    post: searchRes.users,
                   })
                 }
               >
@@ -440,33 +438,33 @@ const SearchScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
-      <View 
+      <View
         style={{
           // flex:1,
           // width: WIDTH * 0.9,
           height: HEIGHT * 0.1,
           // backgroundColor: "#000",
-           flexDirection: 
-          //  isRtl ? "row-reverse" :
+          flexDirection:
+            //  isRtl ? "row-reverse" :
             "row",
-            alignItems: "center",
-            alignContent: "center",
-            // paddingVertical: Default.fixPadding * 1.2,
-            // paddingHorizontal: Default.fixPadding * 1.5,
-            marginVertical: 0,
-            marginHorizontal: 15,
-            // borderRadius: 10,
-            // backgroundColor: Colors.extraDarkGrey,
-            // ...Default.shadow,
-          }}>
+          alignItems: "center",
+          alignContent: "center",
+          // paddingVertical: Default.fixPadding * 1.2,
+          // paddingHorizontal: Default.fixPadding * 1.5,
+          marginVertical: 0,
+          marginHorizontal: 15,
+          // borderRadius: 10,
+          // backgroundColor: Colors.extraDarkGrey,
+          // ...Default.shadow,
+        }}
+      >
         {/* <Pressable >
             <AntDesign name="left" size={25} />
           </Pressable> */}
         <View
-          
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
-            width: WIDTH *0.8,
+            width: WIDTH * 0.8,
             alignItems: "center",
             paddingVertical: Default.fixPadding * 1.2,
             paddingHorizontal: Default.fixPadding * 1.5,
@@ -477,7 +475,6 @@ const SearchScreen = ({ navigation }) => {
             // ...Default.shadow,
           }}
         >
-          
           <Ionicons
             name="search-outline"
             color={Colors.grey}

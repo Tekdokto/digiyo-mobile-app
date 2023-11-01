@@ -8,19 +8,23 @@ import {
   BackHandler,
 } from "react-native";
 import React, { useEffect } from "react";
-import { Colors, Fonts, Default } from "../constants/styles";
+import { Colors, Fonts, Default } from "../../constants/styles2";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { ms } from "react-native-size-matters/extend";
+// import { ms } from "react-native-size-matters/extend";
 import { useTranslation } from "react-i18next";
-import MyStatusBar from "../components/myStatusBar";
+import MyStatusBar from "../../components/MyStatusBar";
+import { useContext } from "react";
+import ThemeContext from "../../theme/ThemeContext";
+import { WIDTH } from "../../constants/sizes";
 
-const { width } = Dimensions.get("window");
+// const { width } = Dimensions.get("window");
 
-const SearchSeeAllScreen = ({ navigation, route }) => {
+const SearchSeeAllPostScreen = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
 
+  const theme = useContext(ThemeContext)
   function tr(key) {
     return t(`searchSeeAllScreen:${key}`);
   }
@@ -36,81 +40,84 @@ const SearchSeeAllScreen = ({ navigation, route }) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
   const { headerTitle } = route.params;
+  const { post } = route.params;
+  
+  console.log(" paaaaaaaaaaaaaaaarrrrrrrrrrrr",post )
 
-  const dataList = [
-    {
-      key: "1",
-      image: require("../assets/images/img1.png"),
-    },
-    {
-      key: "2",
-      image: require("../assets/images/img2.png"),
-    },
-    {
-      key: "3",
-      image: require("../assets/images/img3.png"),
-    },
-    {
-      key: "4",
-      image: require("../assets/images/img4.png"),
-    },
-    {
-      key: "5",
-      image: require("../assets/images/img5.png"),
-    },
-    {
-      key: "6",
-      image: require("../assets/images/img6.png"),
-    },
-    {
-      key: "7",
-      image: require("../assets/images/img7.png"),
-    },
-    {
-      key: "8",
-      image: require("../assets/images/img8.png"),
-    },
-    {
-      key: "9",
-      image: require("../assets/images/img9.png"),
-    },
-    {
-      key: "10",
-      image: require("../assets/images/img10.png"),
-    },
-    {
-      key: "11",
-      image: require("../assets/images/img11.png"),
-    },
-    {
-      key: "12",
-      image: require("../assets/images/img12.png"),
-    },
-    {
-      key: "13",
-      image: require("../assets/images/img13.png"),
-    },
-    {
-      key: "14",
-      image: require("../assets/images/img14.png"),
-    },
-    {
-      key: "15",
-      image: require("../assets/images/img15.png"),
-    },
-    {
-      key: "16",
-      image: require("../assets/images/pic1.png"),
-    },
-    {
-      key: "17",
-      image: require("../assets/images/pic2.png"),
-    },
-    {
-      key: "18",
-      image: require("../assets/images/img6.png"),
-    },
-  ];
+  // const dataList = [
+  //   {
+  //     key: "1",
+  //     image: require("../assets/images/img1.png"),
+  //   },
+  //   {
+  //     key: "2",
+  //     image: require("../assets/images/img2.png"),
+  //   },
+  //   {
+  //     key: "3",
+  //     image: require("../assets/images/img3.png"),
+  //   },
+  //   {
+  //     key: "4",
+  //     image: require("../assets/images/img4.png"),
+  //   },
+  //   {
+  //     key: "5",
+  //     image: require("../assets/images/img5.png"),
+  //   },
+  //   {
+  //     key: "6",
+  //     image: require("../assets/images/img6.png"),
+  //   },
+  //   {
+  //     key: "7",
+  //     image: require("../assets/images/img7.png"),
+  //   },
+  //   {
+  //     key: "8",
+  //     image: require("../assets/images/img8.png"),
+  //   },
+  //   {
+  //     key: "9",
+  //     image: require("../assets/images/img9.png"),
+  //   },
+  //   {
+  //     key: "10",
+  //     image: require("../assets/images/img10.png"),
+  //   },
+  //   {
+  //     key: "11",
+  //     image: require("../assets/images/img11.png"),
+  //   },
+  //   {
+  //     key: "12",
+  //     image: require("../assets/images/img12.png"),
+  //   },
+  //   {
+  //     key: "13",
+  //     image: require("../assets/images/img13.png"),
+  //   },
+  //   {
+  //     key: "14",
+  //     image: require("../assets/images/img14.png"),
+  //   },
+  //   {
+  //     key: "15",
+  //     image: require("../assets/images/img15.png"),
+  //   },
+  //   {
+  //     key: "16",
+  //     image: require("../assets/images/pic1.png"),
+  //   },
+  //   {
+  //     key: "17",
+  //     image: require("../assets/images/pic2.png"),
+  //   },
+  //   {
+  //     key: "18",
+  //     image: require("../assets/images/img6.png"),
+  //   },
+  // ];
 
   const renderItem = ({ item, index }) => {
     const firstItem = index === 0 || index === 1;
@@ -134,14 +141,14 @@ const SearchSeeAllScreen = ({ navigation, route }) => {
         }}
       >
         <Image
-          source={item.image}
+          source={{uri: item.image}}
           style={{
             resizeMode: "stretch",
-            width: width / 2.35,
-            height: ms(115),
+            width: WIDTH / 2.35,
+            height: 115,
             borderRadius: 10,
           }}
-        />
+        /> 
         <View style={{ position: "absolute" }}>
           <Ionicons name="play" size={24} color={Colors.white} />
         </View>
@@ -150,7 +157,7 @@ const SearchSeeAllScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.black }}>
+    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <MyStatusBar />
       <View
         style={{
@@ -180,9 +187,9 @@ const SearchSeeAllScreen = ({ navigation, route }) => {
 
       <FlatList
         numColumns={2}
-        data={dataList}
+        data={post}
         renderItem={renderItem}
-        keyExtractor={(item) => item.key}
+        // keyExtractor={(item) => item.key}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: Default.fixPadding }}
       />
@@ -190,4 +197,4 @@ const SearchSeeAllScreen = ({ navigation, route }) => {
   );
 };
 
-export default SearchSeeAllScreen;
+export default SearchSeeAllPostScreen;

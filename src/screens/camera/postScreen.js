@@ -48,14 +48,15 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
   }
 
   const backAction = () => {
-    navigation.pop();
+    // navigation.pop();
+    cancel
     return true;
   };
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", backAction);
+    BackHandler.addEventListener("hardwareBackPress", cancel);
 
     return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
+      BackHandler.removeEventListener("hardwareBackPress", cancel);
   }, []);
 
   const [title, setTitle] = useState();
@@ -188,9 +189,10 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
 
   return (
     <>
+    <MyStatusBar />
       <View
         style={{
-          flex: 1,
+          // flex: 1,
           top: 0,
           bottom: 0,
           height: HEIGHT,
@@ -229,7 +231,7 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
           }}
         ></View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
           <View
             style={{
               flexDirection: isRtl ? "row-reverse" : "row",
@@ -448,7 +450,7 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
               </AwesomeButton>
             )}
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </View>
     </>
   );

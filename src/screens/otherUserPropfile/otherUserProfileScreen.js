@@ -538,7 +538,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   const auth = extractAuthorization(userToken);
     
     const fetchUser = async () => {
-      let the_id = previousScreen == "SearchScreen" ? item.user_id : item.author_id
+      let the_id = previousScreen == "SearchScreen" || "SearchSeeAllUsersScreen" ? item.user_id : item.author_id
       const config = {
         method: "get",
         url: FOLLOW + the_id,

@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext, useEffect, useState } from "react";
-import HomeScreen from "../screens/home/HomeScreen"; 
+import HomeScreen from "../screens/home/HomeScreen";
 // import { FontAwesome, Feather, Ionicons } from '@expo/vector-icons'
 import FullVideoScreen from "../screens/home/FullVideoScreen";
 import { Image, StyleSheet } from "react-native";
@@ -48,6 +48,9 @@ import { myProifile } from "../redux/actions/auth";
 import { showError } from "../utils/helperFunctions";
 import AltProfile from "../screens/profile/altProfile";
 import { PRIMARY_COLOR } from "../constants/colors";
+import EditProfileBioScreen from "../screens/profile/EditProfileBioScreen";
+import SearchSeeAllUsersScreen from "../screens/search/searchSeeAllUsersScreen";
+import SearchSeeAllPostScreen from "../screens/search/searchSeeAllPostScreen";
 // import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
@@ -131,7 +134,7 @@ function AllScreenTabs() {
     >
       <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />
       <ScreenTabs.Screen name="PostFull" component={FullVideoScreen} />
-      <ScreenTabs.Screen name='altPro' component={AltProfile} />
+      <ScreenTabs.Screen name="altPro" component={AltProfile} />
       <ScreenTabs.Screen name="MyProfileScreen" component={MyProfileScreen} />
       <ScreenTabs.Screen name="FollowersScreen" component={FollowersScreen} />
       <ScreenTabs.Screen name="FollowingScreen" component={FollowingScreen} />
@@ -145,12 +148,24 @@ function AllScreenTabs() {
       <ScreenTabs.Screen name="Inbox" component={Inbox} />
       <ScreenTabs.Screen name="SearchScreen" component={SearchScreen} />
       <ScreenTabs.Screen
+        name="searchSeeAllUsersScreen"
+        component={SearchSeeAllUsersScreen}
+      />
+      <ScreenTabs.Screen
+        name="searchSeeAllPostScreen"
+        component={SearchSeeAllPostScreen}
+      />
+      <ScreenTabs.Screen
         name="editProfileScreen"
         component={EditProfileScreen}
       />
       <ScreenTabs.Screen
         name="profileSettingsScreen"
         component={ProfileSettingsScreen}
+      />
+      <ScreenTabs.Screen
+        name="editProfileBioScreen"
+        component={EditProfileBioScreen}
       />
       <ScreenTabs.Screen
         name="otherUserProfileScreen"
@@ -241,7 +256,7 @@ const menuIcons = (route, focused) => {
   // console.log("fiiiiiiiiiilllllllllleeeeeeeeeeeee",profile)
   let icon;
   let themeColorsLight = theme.theme == "dark" ? "white" : "black";
-  let themeColorsDark = theme.theme == "dark" ? "silver" : "silver";
+  let themeColorsDark = theme.theme == "dark" ? "#727272" : "#727272";
   let size = 30;
   if (route.name == "Home") {
     icon = focused ? (
@@ -261,48 +276,57 @@ const menuIcons = (route, focused) => {
     );
   } else if (route.name == "Upload") {
     icon = focused ? (
-      <UploadSvg stroke={themeColorsLight} width={size} height={size} />
-      ) : (
-        <View style={{backgroundColor: PRIMARY_COLOR+"20", borderRadius: 50, padding: 10, position: "absolute", bottom: -10, alignSelf: "center" }}>
-        <View style={{backgroundColor: PRIMARY_COLOR, borderRadius: 50, padding: 10,}}>
-            <UploadSvg stroke={themeColorsDark} width={size} height={size} />
+      <UploadSvg stroke={"white"} width={size} height={size} />
+    ) : (
+      <View
+        style={{
+          backgroundColor: PRIMARY_COLOR + "20",
+          borderRadius: 50,
+          padding: 10,
+          position: "absolute",
+          bottom: -10,
+          alignSelf: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: PRIMARY_COLOR,
+            borderRadius: 50,
+            padding: 10,
+          }}
+        >
+          <UploadSvg stroke={"white"} width={size} height={size} />
         </View>
-        </View>
+      </View>
     );
   } else if (route.name == "Myprofile") {
     icon = focused ? (
       <>
         {profile.avatar == null ? (
-
           <Image
             source={require("../../assets/images/2.jpg")}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
         ) : (
-
           <Image
-            source={{uri: profile.avatar}}
+            source={{ uri: profile.avatar }}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
-        )
-        }
+        )}
       </>
     ) : (
       <>
         {profile.avatar == null ? (
-
           <Image
             source={require("../../assets/images/2.jpg")}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
         ) : (
-
           <Image
-            source={{uri: profile.avatar }}
+            source={{ uri: profile.avatar }}
             style={{ borderRadius: 40, width: 30, height: 30 }}
           />
-        )
-        }
+        )}
       </>
     );
   }
