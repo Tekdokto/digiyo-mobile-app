@@ -12,9 +12,10 @@ import FollowingAndFollowersCard from "../../components/followingAndFollowersCar
 import { useTranslation } from "react-i18next";
 import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
-import { FOLLOW } from "../../config/urls";
+import { FOLLOW, FOLLOW_TOGGLE } from "../../config/urls";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const FollowingScreen = ({ navigation, isHeader }) => {
   const theme = useContext(ThemeContext);
@@ -22,6 +23,10 @@ const FollowingScreen = ({ navigation, isHeader }) => {
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
+
+  const navigate = useNavigation()
+
+  const [isLoading, setIsLoading ] = useState()
 
   function tr(key) {
     return t(`followingScreen:${key}`);
@@ -80,7 +85,7 @@ const FollowingScreen = ({ navigation, isHeader }) => {
       await axios(config)
         .then((response) => {
           setFollowingData(response.data);
-          console.log(response.data);
+          console.log("followinggggggg  ",response.data);
         })
         .catch((error) => {
           console.log("error 1111111111111", error);
@@ -98,7 +103,7 @@ const FollowingScreen = ({ navigation, isHeader }) => {
 
   const onSelectItem = (item) => {
     const newItem = followingData.map((val) => {
-      if (val.key === item.key) {
+      if (val.user_id === item.user_id) {
         return { ...val, follow: !val.follow };
       } else {
         return val;
@@ -107,50 +112,92 @@ const FollowingScreen = ({ navigation, isHeader }) => {
     setFollowingData(newItem);
   };
 
+  
+  const followUser = async (id) => {
+    const config = {
+      method: "post",
+      url: FOLLOW_TOGGLE+"/" + id ,
+      // + item.author_id,
+      // data: formdata,
+      headers: {
+        Authorization: auth,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    console.log(config)
+    setIsLoading(true)
+    try {
+      await axios(config)
+        .then((response) => {
+          // setUser(response.data);
+          console.log("works");
+        })
+        .catch((error) => {
+          console.log("error 1111111111111", error);
+        });
+
+      // console.log("---------",res)
+      // setLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false)
+  };
+
+
   const renderItem = ({ item }) => {
     return (
       <FollowingAndFollowersCard
-        image={item.image}
-        name={item.name}
-        followers={item.followers}
+        image={item.avatar}
+        name={item.username}
+        // followers={item.followers}
         follow={item.follow}
-        onClickHandler={() => onSelectItem(item)}
+        onClickHandler={() => {
+          onSelectItem(item)
+          followUser(item.user_id)
+        }}
+        navTo={() => navigate.navigate("otherUserProfileScreen", {
+          item: item,
+          previousScreen: "profileScreen",
+        }) }
       />
     );
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-      <MyStatusBar />
       {isHeader == true ? (
-        <View
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            alignItems: "center",
-            paddingTop: Default.fixPadding * 1.2,
-            paddingBottom: Default.fixPadding,
-            paddingHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          <TouchableOpacity onPress={{
-            // () => navigation.pop()
-            }}>
-            <Ionicons
-              name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
-              size={25}
-              color={theme.color}
-            />
-          </TouchableOpacity>
-          <Text
+        <>
+        <MyStatusBar />
+          <View
             style={{
-              ...Fonts.SemiBold18white,
-              color: theme.color,
-              marginHorizontal: Default.fixPadding * 1.2,
+              flexDirection: isRtl ? "row-reverse" : "row",
+              alignItems: "center",
+              paddingTop: Default.fixPadding * 1.2,
+              paddingBottom: Default.fixPadding,
+              paddingHorizontal: Default.fixPadding * 2,
             }}
           >
-            {tr("following")}
-          </Text>
-        </View>
+            <TouchableOpacity onPress={{
+              // () => navigation.pop()
+              }}>
+              <Ionicons
+                name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
+                size={25}
+                color={theme.color}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                ...Fonts.SemiBold18white,
+                color: theme.color,
+                marginHorizontal: Default.fixPadding * 1.2,
+              }}
+            >
+              {tr("following")}
+            </Text>
+          </View>
+        </>
       ) : (
         <></>
       )}

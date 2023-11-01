@@ -124,7 +124,7 @@ const FollowersScreen = ({ navigation, isHeader }) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-      <MyStatusBar />
+      {/* <MyStatusBar /> */}
       {isHeader == true ? (
         <View
           style={{

@@ -37,7 +37,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+          "microphonePermission": "Allow Digiyo to access your microphone."
         }
       ],
       [
@@ -49,15 +49,15 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "photosPermission": "Allow Digiyo to access your photos.",
+          "savePhotosPermission": "Allow Digiyo to save photos.",
           "isAccessMediaLocationEnabled": true
         }
       ],
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+          "cameraPermission": "Allow Digiyo to access your camera."
         }
       ],
       [

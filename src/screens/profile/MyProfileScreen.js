@@ -44,14 +44,7 @@ const Header = () => {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    if (isFocused) {
-      // Reload your screen here
-      onFetchProfile();
-    }
-  }, [isFocused]);
-
-  //
+ 
 
   const onFetchProfile = async () => {
     let token = user.token;
@@ -70,9 +63,18 @@ const Header = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    onFetchProfile();
-  }, []);
+  console.log("count       ",profile.follower_count)
+  // useEffect(() => {
+  //   onFetchProfile();
+  // }, []);
+   useEffect(() => {
+    if (isFocused) {
+      // Reload your screen here
+      onFetchProfile();
+    }
+  }, [isFocused]);
+
+  //
 
   const shareContent = async () => {
     try {
@@ -142,7 +144,7 @@ const Header = () => {
               <Text
                 style={[UserFollowersTextNumber.Text, { color: theme.color }]}
               >
-                {profile.following_count}
+                {profile.follower_count}
               </Text>
               <Text
                 style={[UserFollowersTextDesc.Text, { color: theme.color }]}
@@ -154,7 +156,7 @@ const Header = () => {
               <Text
                 style={[UserFollowersTextNumber.Text, { color: theme.color }]}
               >
-                {profile.followers_count ?? 0}
+                {profile.following_count ?? 0}
               </Text>
               <Text
                 style={[UserFollowersTextDesc.Text, { color: theme.color }]}

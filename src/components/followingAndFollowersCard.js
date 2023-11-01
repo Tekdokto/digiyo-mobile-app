@@ -32,27 +32,45 @@ const FollowingAndFollowersCard = (props) => {
           alignItems: "center",
         }}
       >
-        <Image
-          source={props.image}
-          style={{
-            resizeMode: "cover",
-            width: 50,
-            height: 50,
-            borderRadius: 10,
-          }}
-        />
-        <View style={{ marginHorizontal: Default.fixPadding }}>
-          <Text
-            numberOfLines={1}
-            style={{ ...Fonts.SemiBold14white, color: theme.color, overflow: "hidden" }}
-          >
-            {props.name}
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={{ ...Fonts.Medium12grey, overflow: "hidden" }}
-          >{`${tr("followers")} ${props.followers}`}</Text>
-        </View>
+        {props.image == null ? (
+
+          <Image
+            source={require("../../assets/images/2.jpeg")}
+            style={{
+              resizeMode: "cover",
+              width: 50,
+              height: 50,
+              borderRadius: 10,
+            }}
+          />
+        ) : (
+
+          <Image
+            source={{url: props.image}}
+            style={{
+              resizeMode: "cover",
+              width: 50,
+              height: 50,
+              borderRadius: 10,
+            }}
+          />
+        )}
+        <TouchableOpacity onPress={() => props.navTo()} >
+          <View style={{ marginHorizontal: Default.fixPadding }}>
+            <Text
+              numberOfLines={1}
+              style={{ ...Fonts.SemiBold14white, color: theme.color, overflow: "hidden" }}
+            >
+              {props.name}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={{ ...Fonts.Medium12grey, overflow: "hidden" }}
+            >
+              {/* {`${tr("followers")} ${props.followers}`} */}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View

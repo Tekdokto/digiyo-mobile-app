@@ -108,7 +108,7 @@ const VideoTab = ({}) => {
     const mediaTypes = item.media_items.map((media) => media.type);
     const vidUrls = item.media_items.map((media) => media.url.low);
     const imageUrls = item.media_items.map((media) => media.url);
-    console.log("'''''''''''''''''''", imageUrls);
+    // console.log("'''''''''''''''''''", imageUrls);
     return (
       <>
         <TouchableOpacity
