@@ -104,7 +104,7 @@ const BlockListCard = (props) => {
                   paddingHorizontal: Default.fixPadding * 2.2,
                 }}
               >
-                {tr("follow")}
+                Block
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -127,7 +127,7 @@ const BlockListCard = (props) => {
                 paddingHorizontal: Default.fixPadding * 1.2,
               }}
             >
-              {tr("following")}
+              Unblock
             </Text>
           </TouchableOpacity>
         )}

@@ -32,7 +32,7 @@ export default function LoginScreen() {
                 email:email, 
                 password:password
             }
-            console.log("empty =-=-= emsopidosn ", data)
+            // console.log("empty =-=-= emsopidosn ", data)
             if (data.password != "" && data.email != "" ) {
                 
                 try {

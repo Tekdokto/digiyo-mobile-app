@@ -22,7 +22,7 @@ import { ACCENT_COLOR } from "../constants/colors";
 
 const { width } = Dimensions.get("window");
 
-const VideoTab = ({}) => {
+const VideoTab = (props) => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
@@ -70,9 +70,12 @@ const VideoTab = ({}) => {
   console.log("-------------", post);
 
   const userPosts = async () => {
+
+    const id = props.userId ?? userId
+
     const config = {
       method: "get",
-      url: ALL_POST + userId,
+      url: ALL_POST + id,
       // data: formdata,
       headers: {
         Authorization: auth,

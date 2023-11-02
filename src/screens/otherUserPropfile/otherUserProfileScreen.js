@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ThemeContext from "../../theme/ThemeContext";
 import { useContext } from "react";
-import { BLOCK_USER, FOLLOW, FOLLOW_TOGGLE } from "../../config/urls";
+import { BLOCK_USER, FOLLOW, FOLLOWING, FOLLOW_TOGGLE } from "../../config/urls";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
@@ -38,6 +38,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import FollowersScreen from "../FollowUnfollow/FollowersScreen";
 import FollowingScreen from "../FollowUnfollow/FollowingScreen";
 import { FlatList } from "react-native";
+import VideoTab from "../../components/videoTab";
+import { showMessage } from "react-native-flash-message";
 
 export const Header = (props) => {
   // const { item } = route.params;
@@ -49,9 +51,24 @@ export const Header = (props) => {
 
   const [settingModal, setSettingModal] = useState(false);
 
+  // const [followCount, setFollowCount] = useState(props.user.follower_count);
+  const [followCountState, setFollowCountState] = useState(isFollowing);
+  const [blockState, setBlockState] = useState(isBlocking);
+   
+  const [theBlocks, setBlocks] = useState([]); 
+
+  const isFocused = useIsFocused();
+
+  
   const { t, i18n } = useTranslation();
 
   const isRtl = i18next.dir() == "rtl";
+  
+    const [followersData, setFollowersData] = useState([]);
+  // Assuming you have followersData (an array) and the_id defined elsewhere
+  
+  const isFollowing = followersData.some((follower) => follower.user_id === props.user.user_id);
+  const isBlocking = theBlocks.some((blocks) => blocks.user_id === props.user.user_id);
 
   function tr(key) {
     return t(`otherUserProfileScreen:${key}`);
@@ -82,13 +99,56 @@ export const Header = (props) => {
   const userToken = useSelector((state) => state.auth.userData.token);
 
   const auth = extractAuthorization(userToken);
+ 
   const userId = useSelector(
     (state) => state.auth.userData.authenticated_user.user_id
   );
 
-  console.log("first", props);
+  // console.log("first", props);
+
+// isFollowing will be true if the user is following, or false if not
+
+
+  // console.log("is following this    ",isFollowing)
+
+  const fetchFollowers = async () => {
+    const id = userId;
+    const config = {
+      method: "get",
+      url: FOLLOWING,
+      // data: formdata,
+      headers: {
+        Authorization: auth,
+        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+      },
+    };
+    try {
+      // setLoading(true)
+      // let res = getUserPosts(auth,  userId)
+      await axios(config)
+        .then((response) => {
+          setFollowersData(response.data);
+          console.log( "my followings      ",response.data);
+        })
+        .catch((error) => {
+          console.log("followinf error 1111111111111", error);
+        });
+
+      // console.log("---------",res)
+      // setLoading(false)
+    } catch (error) { 
+      console.log(error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchFollowers();
+  }, [isFollowing, followCountState, blockState]);
+
 
   const followUser = async () => {
+    
     const config = {
       method: "post",
       url: FOLLOW_TOGGLE + "/" + props.user.user_id,
@@ -99,13 +159,14 @@ export const Header = (props) => {
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
       },
     };
-    console.log(config);
+    // console.log(config);
     setIsLoading(true);
     try {
       await axios(config)
         .then((response) => {
           // setUser(response.data);
           console.log("works");
+          showMessage("success")
         })
         .catch((error) => {
           console.log("error 1111111111111", error);
@@ -116,10 +177,11 @@ export const Header = (props) => {
     } catch (error) {
       console.log(error);
     }
+    setFollowCountState(!isFollowing)
     setIsLoading(false);
   };
 
-  console.log(props);
+  // console.log(props);
 
   const blockUser = async () => {
     console.log("BLOCKK");
@@ -142,53 +204,50 @@ export const Header = (props) => {
       await axios(config)
         .then((response) => {
           // setUser(response.data);
-          console.log(" user blockked".response);
+          console.log(" user blockked", response);
         })
         .catch((error) => {
           console.log("blockkk error 1111111111111", error);
         });
 
-      // console.log("---------",res)
-      // setLoading(false)
     } catch (error) {
       console.log(error);
     }
-
+    setBlockState(!isBlocking)
     setIsBlockLoading(false);
   };
 
-  // console.log("are there stuff in here",props.user)
-
-  const unblockUser = async () => {
-    console.log("UNBLOCKK");
-    const config = {
-      method: "delete",
-      url: BLOCK_USER + props.user.user_id,
-      // data: formdata,
-      headers: {
-        Authorization: auth,
-        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
-      },
-    };
-    setIsBlockLoading(true);
+ 
+  const onFetchBlocked = async () => {
+    let token = user;
+    console.log("token ---------- ", token);
+    setLoading(true);
     try {
-      // let res = getUserPosts(auth,  userId)
-      await axios(config)
-        .then((response) => {
-          // setUser(response.data);
-          console.log(" user blockked".response);
-        })
-        .catch((error) => {
-          console.log("blockkk error 1111111111111", error);
-        });
-
-      // console.log("---------",res)
+      let res = await getBlockedUsers(token);
+      console.log("response -------", res);
+      console.log("blocked  result -------", res);
+      setBlocks(res);
+      // setLoading(false);
     } catch (error) {
-      console.log(error);
+      showError(error.message);
+      console.log("profile error -------", error);
     }
-    setIsBlockLoading(false);
+    setLoading(false);
   };
+ 
+  // useEffect(() => {
+  //   onFetchProfile();
+  // }, []);
+  useEffect(() => {
+    if (isFocused) {
+      // Reload your screen here
+      onFetchBlocked();
+    }
+  }, [isFocused]);
 
+
+
+  
   return (
     <>
       <MyStatusBar />
@@ -296,7 +355,7 @@ export const Header = (props) => {
                   <Text
                     style={{ ...Fonts.SemiBold14white, color: theme.color }}
                   >
-                    {props.user.following_count}
+                    {props.user.follower_count}
                   </Text>
                   <Text
                     numberOfLines={1}
@@ -400,7 +459,7 @@ export const Header = (props) => {
                 <View style={{ margin: 8 }}></View>
                 <AwesomeButton
                   height={50}
-                  width={WIDTH * 0.3}
+                  width={WIDTH * 0.35}
                   // stretch={true}
                   // disabled={true}
                   raiseLevel={1}
@@ -422,9 +481,17 @@ export const Header = (props) => {
                     </>
                   ) : (
                     <TouchableOpacity onPress={followUser}>
-                      <Text style={{ ...Fonts.Bold18white }}>
-                        {tr("follow")}
-                      </Text>
+                      {followCountState ? (
+                        <Text style={{ ...Fonts.Bold18white }}>
+                          unfollow
+                        </Text>
+
+                      ) : (
+
+                        <Text style={{ ...Fonts.Bold18white }}>
+                          Follow
+                        </Text>
+                      )}
                     </TouchableOpacity>
                   )}
                 </AwesomeButton>
@@ -514,14 +581,26 @@ export const Header = (props) => {
               >
                 <Ionicons name="ellipse" size={10} color={Colors.white} />
                 <TouchableOpacity onPress={blockUser}>
+                    {blockState ? (
                   <Text
                     style={{
                       ...Fonts.SemiBold16white,
                       marginHorizontal: Default.fixPadding,
                     }}
                   >
-                    {tr("block")} {props.user.username}
+                      Block {props.user.username}
+                      </Text>
+                    ) : (
+                  <Text
+                    style={{
+                      ...Fonts.SemiBold16white,
+                      marginHorizontal: Default.fixPadding,
+                    }}
+                  >
+                      Unblock {props.user.username}
+
                   </Text>
+                    )}
                 </TouchableOpacity>
               </View>
             </View>
@@ -542,7 +621,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   const theUserId = route.params.item;
 
   // console.log("here n ow", theUserId, previousScreen);
-  console.log("here n ow", theSearchId, previousScreen);
+  // console.log("here n ow", theSearchId, previousScreen);
   // const comingFrom = useRoute()
   // console.log("coming from",comingFrom.params?.previousScreen)
   // const navigation = useNavigation()
@@ -626,104 +705,111 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     return <Header user={user} />;
   };
 
-  const renderItemPosts = ({ item }) => {
-    const mediaTypes = item.media_items.map((media) => media.type);
-    const mediasUrls = item.media_items.map((media) => media.url.low);
-    const imagesUrls = item.media_items.map((media) => media.url);
-    // console.log(item);
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("userProfilePostScreen", {
-            postsArray: user.posts,
-            item: item,
-          })
-        }
-        style={{
-          flex: 1,
-          // marginTop: HEIGHT * 0.6,
-          marginBottom: Default.fixPadding * 2,
-          marginHorizontal: Default.fixPadding,
-        }}
-      >
-        {mediaTypes == "image" ? (
-          <Image
-            source={{ uri: imagesUrls[0] }}
-            style={{
-              resizeMode: "cover",
-              width: WIDTH / 3.7,
-              height: 123,
-              borderRadius: 10,
-            }}
-          />
-        ) : mediaTypes == "video" ? (
-          <Video
-            source={{ uri: mediasUrls[0] }}
-            isLooping={false}
-            shouldPlay={false}
-          />
-        ) : (
-          <Image
-            source={require("../../../assets/images/2.jpeg")}
-            style={{
-              // flex: 3,
-              resizeMode: "cover",
-              alignSelf: "center",
-              width: 100,
-              height: 100,
-              borderRadius: 80,
-            }}
-          />
-        )}
-        <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right:
-              // isRtl ? null :
-              0,
-          }}
-        >
-          <View
-            style={{
-              flexDirection:
-                // isRtl ? "row-reverse" :
-                "row",
-              alignItems: "center",
-              paddingHorizontal: Default.fixPadding * 0.4,
-            }}
-          >
-            <Ionicons name="play" size={18} color={Colors.white} />
-            <Text
-              style={{
-                ...Fonts.SemiBold12white,
-                marginHorizontal: Default.fixPadding * 0.2,
-              }}
-            >
-              {item.other}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  // const renderItemPosts = ({ item }) => {
+  //   const mediaTypes = item.media_items.map((media) => media.type);
+  //   const mediasUrls = item.media_items.map((media) => media.url.low);
+  //   const imagesUrls = item.media_items.map((media) => media.url);
+  //   console.log('----------',imagesUrls[0]);
+  //   console.log('----------',mediasUrls[0]);
+  //   return (
+     
+  //       <TouchableOpacity
+  //           onPress={() =>
+  //             navigation.navigate("userProfilePostScreen", {
+  //               postsArray: user.posts,
+  //               item: item,
+  //             })
+  //           }
+  //           style={{
+  //             flex: 1,
+  //             // marginTop: HEIGHT * 0.6,
+  //             marginBottom: Default.fixPadding * 2,
+  //             marginHorizontal: Default.fixPadding,
+  //           }}
+  //         >
+  //           {mediaTypes == "image" ? (
+  //             <Image
+  //               source={{ uri: imagesUrls[0] }}
+  //               style={{
+  //                 resizeMode: "cover",
+  //                 width: WIDTH / 3.7,
+  //                 height: 123,
+  //                 borderRadius: 10,
+  //               }}
+  //             />
+  //           ) : mediaTypes == "video" ? (
+  //             <Video
+  //               source={{ uri: mediasUrls[0] }}
+  //               isLooping={false}
+  //               shouldPlay={false}
+  //             />
+  //           ) : (
+  //             <Image
+  //               source={require("../../../assets/images/2.jpeg")}
+  //               style={{
+  //                 // flex: 3,
+  //                 resizeMode: "cover",
+  //                 alignSelf: "center",
+  //                 width: 100,
+  //                 height: 100,
+  //                 borderRadius: 80,
+  //               }}
+  //             />
+  //           )}
+  //           <View
+  //             style={{
+  //               position: "absolute",
+  //               bottom: 0,
+  //               right:
+  //                 // isRtl ? null :
+  //                 0,
+  //             }}
+  //           >
+  //             <View
+  //               style={{
+  //                 flexDirection:
+  //                   // isRtl ? "row-reverse" :
+  //                   "row",
+  //                 alignItems: "center",
+  //                 paddingHorizontal: Default.fixPadding * 0.4,
+  //               }}
+  //             >
+  //               <Ionicons name="play" size={18} color={Colors.white} />
+  //             </View>
+  //           </View>
+  //               <Text
+  //                 style={{
+  //                   color: "white",
+  //                   // ...Fonts.SemiBold12white,
+  //                   marginHorizontal: Default.fixPadding * 0.2,
+  //                 }}
+  //               >
+  //                  word
+  //               </Text>
+  //         </TouchableOpacity>
+      
+      
+  //   );
+  // };
 
-  const [selectedTab, setSelectedTab] = useState("Posts");
+  const userId = useSelector(
+    (state) => state.auth.userData.authenticated_user.user_id
+    );
+    
+    const [selectedTab, setSelectedTab] = useState("Posts");
 
   const renderTabContent = () => {
     if (selectedTab === "Posts") {
       console.log("render posts itemmmmmmmmmmm",user.posts)
       return (
-        <FlatList
-          data={user.posts}
-          keyExtractor={(item) => item.post_id.toString()}
-          renderItem={renderItemPosts}
+        <VideoTab 
+          userId={the_id}
         />
       );
     } else if (selectedTab === "Followers") {
-      return <FollowersScreen isHeader={false} />;
+      return <FollowersScreen isHeader={false} userId={the_id} />;
     } else if (selectedTab === "Following") {
-      return <FollowingScreen />;
+      return <FollowingScreen isHeader={false} userId={the_id} />;
     }
   };
 

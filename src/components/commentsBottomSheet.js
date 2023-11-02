@@ -86,55 +86,56 @@ const CommentsBottomSheet = (props) => {
 
   const auth = extractAuthorization(userToken);
 
-  const commentsList = [
-    {
-      comment_id: GenerateUniqueID(),
-      // "parent_id": null,
-      content: "comment",
-      user_id: GenerateUniqueID(),
-      post_id: GenerateUniqueID(),
-      created_at: "2023-10-13T17:28:58.715Z",
-      updated_at: "2023-10-13T17:28:58.715Z",
-      replies: [
-        {
-          comment_id: GenerateUniqueID(),
-          // "parent_id": null,
-          content: "the reply",
-          user_id: GenerateUniqueID(),
-          post_id: GenerateUniqueID(),
-          created_at: "2023-10-13T17:28:58.715Z",
-          updated_at: "2023-10-13T17:28:58.715Z",
-        },
-      ]
-    },
-    {
-      comment_id: GenerateUniqueID(),
-      // "parent_id": null,
-      content: "comment 2",
-      user_id: GenerateUniqueID(),
-      post_id: GenerateUniqueID(),
-      created_at: "2023-10-13T17:28:58.715Z",
-      updated_at: "2023-10-13T17:28:58.715Z",
-      replies: [
-        // {
-        //   comment_id: GenerateUniqueID(),
-        //   // "parent_id": null,
-        //   content: "the reply",
-        //   user_id: GenerateUniqueID(),
-        //   post_id: GenerateUniqueID(),
-        //   created_at: "2023-10-13T17:28:58.715Z",
-        //   updated_at: "2023-10-13T17:28:58.715Z",
-        // },
-      ]
-    },
-  ]
+  // const commentsList = [
+  //   {
+  //     comment_id: GenerateUniqueID(),
+  //     // "parent_id": null,
+  //     content: "comment",
+  //     user_id: GenerateUniqueID(),
+  //     post_id: GenerateUniqueID(),
+  //     created_at: "2023-10-13T17:28:58.715Z",
+  //     updated_at: "2023-10-13T17:28:58.715Z",
+  //     replies: [
+  //       {
+  //         comment_id: GenerateUniqueID(),
+  //         // "parent_id": null,
+  //         content: "the reply",
+  //         user_id: GenerateUniqueID(),
+  //         post_id: GenerateUniqueID(),
+  //         created_at: "2023-10-13T17:28:58.715Z",
+  //         updated_at: "2023-10-13T17:28:58.715Z",
+  //       },
+  //     ]
+  //   },
+  //   {
+  //     comment_id: GenerateUniqueID(),
+  //     // "parent_id": null,
+  //     content: "comment 2",
+  //     user_id: GenerateUniqueID(),
+  //     post_id: GenerateUniqueID(),
+  //     created_at: "2023-10-13T17:28:58.715Z",
+  //     updated_at: "2023-10-13T17:28:58.715Z",
+  //     replies: [
+  //       // {
+  //       //   comment_id: GenerateUniqueID(),
+  //       //   // "parent_id": null,
+  //       //   content: "the reply",
+  //       //   user_id: GenerateUniqueID(),
+  //       //   post_id: GenerateUniqueID(),
+  //       //   created_at: "2023-10-13T17:28:58.715Z",
+  //       //   updated_at: "2023-10-13T17:28:58.715Z",
+  //       // },
+  //     ]
+  //   },
+  // ]
 
   
-  const [commentsData, setCommentsData] = useState(commentsList);
+  const [commentsData, setCommentsData] = useState([]);
+  // const [commentsData, setCommentsData] = useState(commentsList);
   const data = commentsData.map((data) => data)
   // console.log("repliesssss  ------ 2", data )
 
-  const onComment = async (post_id) => {
+  const onComment = async (post_id) => { 
     console.log(comment);
     console.log("comment");
 

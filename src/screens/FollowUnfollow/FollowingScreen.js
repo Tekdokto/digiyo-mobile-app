@@ -17,7 +17,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-const FollowingScreen = ({ navigation, isHeader }) => {
+const FollowingScreen = (props,{ navigation, isHeader }) => {
   const theme = useContext(ThemeContext);
 
   const { t, i18n } = useTranslation();
@@ -70,9 +70,10 @@ const FollowingScreen = ({ navigation, isHeader }) => {
   // console.log(auth)
 
   const fetchFollowers = async () => {
+    const id = props.userId ?? userId
     const config = {
       method: "get",
-      url: FOLLOW + userId + "/followings",
+      url: FOLLOW + id + "/followings",
       // data: formdata,
       headers: {
         Authorization: auth,

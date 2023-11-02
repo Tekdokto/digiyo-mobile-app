@@ -187,8 +187,8 @@ const FullVideoScreen = ({ navigation, route }) => {
                       const mediasUrls = mediaItems.map((media) => media.url.low ); // Ensure a default value for the URL
                       const imagesUrls = mediaItems.map((media) => media.url || ''); // Ensure a default value for the URL
                       const newVid = mediasUrls
-                      console.log("current vid", newVid) 
-                      console.log("current img", imagesUrls[0])  
+                      // console.log("current vid", newVid) 
+                      // console.log("current img", imagesUrls[0])  
                       return ( 
                         <View style={{}}>
                           {mediaTypes.includes('image') ? (
@@ -225,7 +225,7 @@ const FullVideoScreen = ({ navigation, route }) => {
                           <FullScreenLikeIcons 
                           color={!likeStates[index] ? "white" : "red" }
                           toggle={() => {
-                            console.log("has liseds ",item)
+                            // console.log("has liseds ",item)
                             if (likeStates[index] == true) {
                               toggleUnLike(index) 
                             } else { 
@@ -239,6 +239,7 @@ const FullVideoScreen = ({ navigation, route }) => {
                             openMenuBottomSheetHandler={() => setOpenMenuBottomSheet(true)}
                           />
                            <CommentsBottomSheet
+                           post_id={item.post_id}
                               visible={openCommentBottomSheet}
                               closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
                             />

@@ -59,8 +59,8 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
       BackHandler.removeEventListener("hardwareBackPress", cancel);
   }, []);
 
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // const [saveGallery, setSaveGallery] = useState(true);
@@ -100,91 +100,104 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
 
   // video
   const onPostVideo = async () => {
-    const formdata = new FormData();
-    formdata.append("caption", title);
-    formdata.append("content", description);
-    formdata.append("media", {
-      uri: filePath, // Replace with the URI of your file
-      type: fileType, // Adjust the type according to your file type
-      name: fileName, // Provide a file name
-    });
 
-    const config = {
-      method: "post",
-      url: CREATE_POSTS,
-      data: formdata,
-      headers: {
-        Authorization: auth,
-        "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
-      },
-    };
+    if (title == '' || description == '') {
+      showError("Fields cannot be empty")
+    } else {
+      const formdata = new FormData();
+      formdata.append("caption", title);
+      formdata.append("content", description);
+      formdata.append("media", {
+        uri: filePath, // Replace with the URI of your file
+        type: fileType, // Adjust the type according to your file type
+        name: fileName, // Provide a file name
+      });
 
-    // console.log("--------------- types ........", formdata)
+      const config = {
+        method: "post",
+        url: CREATE_POSTS,
+        data: formdata,
+        headers: {
+          Authorization: auth,
+          "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+        },
+      };
 
-    try {
-      setIsLoading(true);
-      await axios(config)
-        .then((response) => {
-          // console.log("filteredStatus", response.data);
-          // setLoading(false)
-          showMessage(response.data.status);
-          if (response.data.status == "success") {
-            navigate.replace("HomeScreen");
-          }
-        })
-        .catch((error) => {
-          console.log("error 1111111111111", auth);
-          console.log("error 1111111111111", error);
-        });
-      setIsLoading(false);
-    } catch (error) {
-      console.log("second error =====  ", error);
-      setIsLoading(false);
+      // console.log("--------------- types ........", formdata)
+
+      try {
+        setIsLoading(true);
+        await axios(config)
+          .then((response) => {
+            // console.log("filteredStatus", response.data);
+            // setLoading(false)
+            showMessage(response.data.status);
+            if (response.data.status == "success") {
+              navigate.replace("HomeScreen");
+            }
+          })
+          .catch((error) => {
+            console.log("error 1111111111111", auth);
+            console.log("error 1111111111111", error);
+          });
+        setIsLoading(false);
+      } catch (error) {
+        console.log("second error =====  ", error);
+        setIsLoading(false);
+      }
     }
+    
   };
 
   // image
   const onPostImage = async () => {
-    const formdata = new FormData();
-    formdata.append("caption", title);
-    formdata.append("content", description);
-    formdata.append("media", {
-      uri: filePath, // Replace with the URI of your file
-      type: fileType, // Adjust the type according to your file type
-      name: fileName, // Provide a file name
-    });
 
-    const config = {
-      method: "post",
-      url: CREATE_POSTS,
-      data: formdata,
-      headers: {
-        Authorization: auth,
-        "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
-      },
-    };
+    if (title == '' || description == '') {
+      showError("Fields cannot be empty")
+    } else {
 
-    // console.log("--------------- types ........", formdata)
-    try {
-      setIsLoading(true);
-      await axios(config)
-        .then((response) => {
-          // console.log("filteredStatus", response.data);
-          showMessage(response.data.status);
-          if (response.data.status == "success") {
-            navigate.replace("HomeScreen");
-          }
-        })
-        .catch((error) => {
-          console.log("error 1111111111111", auth);
-          console.log("error 1111111111111", error);
-        });
-      setIsLoading(false);
-      showError(error);
-    } catch (error) {
-      console.log("second error =====  ", error);
-      setIsLoading(false);
+      const formdata = new FormData();
+      formdata.append("caption", title);
+      formdata.append("content", description);
+      formdata.append("media", {
+        uri: filePath, // Replace with the URI of your file
+        type: fileType, // Adjust the type according to your file type
+        name: fileName, // Provide a file name
+      });
+  
+      const config = {
+        method: "post",
+        url: CREATE_POSTS,
+        data: formdata,
+        headers: {
+          Authorization: auth,
+          "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
+        },
+      };
+  
+      // console.log("--------------- types ........", formdata)
+      try {
+        setIsLoading(true);
+        await axios(config)
+          .then((response) => {
+            // console.log("filteredStatus", response.data);
+            showMessage(response.data.status);
+            if (response.data.status == "success") {
+              navigate.replace("HomeScreen");
+            }
+          })
+          .catch((error) => {
+            console.log("error 1111111111111", auth);
+            console.log("error 1111111111111", error);
+          });
+        setIsLoading(false);
+        showError(error);
+      } catch (error) {
+        console.log("second error =====  ", error);
+        setIsLoading(false);
+      }
     }
+    
   };
 
   return (

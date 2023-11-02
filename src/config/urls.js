@@ -23,13 +23,13 @@ export const ALL_POST = getApiURL('/users/posts/');
 
 export const FOLLOW = getApiURL('/users/');
 export const FOLLOWERS = getApiURL('/users/my/followers');
-export const FOLLOWING = getApiURL('/users/my/following');
+export const FOLLOWING = getApiURL('/users/my/followings');
 export const FOLLOW_TOGGLE = getApiURL('/users/togglefollow');
 
 export const USER = getApiURL('/users');
 export const BIO = getApiURL('/users/profile');
 
-export const BLOCK_USER = getApiURL('/users/block/');
+export const BLOCK_USER = getApiURL('/users/toggleblock/');
 export const ALL_BLOCKED_LIST = getApiURL('/users/my/blocks');
 
 export const SEARCH = getApiURL('/search');

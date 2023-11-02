@@ -16,9 +16,8 @@ import { FOLLOW } from "../../config/urls";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const FollowersScreen = ({ navigation, isHeader }) => {
-
-  const theme = useContext(ThemeContext)
+const FollowersScreen = (props, { navigation, isHeader }) => {
+  const theme = useContext(ThemeContext);
 
   const { t, i18n } = useTranslation();
 
@@ -29,7 +28,7 @@ const FollowersScreen = ({ navigation, isHeader }) => {
   }
 
   // const backAction = () => {
-    // navigation.pop();
+  // navigation.pop();
   //   return true;
   // };
   // useEffect(() => {
@@ -39,64 +38,64 @@ const FollowersScreen = ({ navigation, isHeader }) => {
   //     BackHandler.removeEventListener("hardwareBackPress", backAction);
   // }, []);
 
-   
   const [followersData, setFollowersData] = useState([]);
 
   function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(';');
-    let authorization = '';
-  
+    const cookies = cookieString.split(";");
+    let authorization = "";
+
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-      if (cookie.startsWith('Authorization=')) {
-        authorization = cookie.substring('Authorization='.length);
+      if (cookie.startsWith("Authorization=")) {
+        authorization = cookie.substring("Authorization=".length);
         break;
       }
     }
-  
+
     return authorization;
   }
-  
-  const userToken = useSelector(state=>state.auth.userData.token)
-  
-  const auth = extractAuthorization(userToken)
-  const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
+
+  const userToken = useSelector((state) => state.auth.userData.token);
+
+  const auth = extractAuthorization(userToken);
+  const userId = useSelector(
+    (state) => state.auth.userData.authenticated_user.user_id
+  );
 
   // console.log(auth)
 
   const fetchFollowers = async () => {
-
+    const id = props.userId ?? userId;
     const config = {
       method: "get",
-      url: FOLLOW+userId+"/followers",
+      url: FOLLOW + id + "/followers",
       // data: formdata,
       headers: {
-        'Authorization': auth,
+        Authorization: auth,
         "Content-Type": "multipart/form-data", // This will set the correct 'Content-Type' header
-      }
+      },
     };
     try {
       // setLoading(true)
       // let res = getUserPosts(auth,  userId)
-      await axios(config).then(
-        (response) => {
-          setFollowersData(response.data)
-          console.log(response.data)
-        }
-    ).catch((error) => {
-      console.log("error 1111111111111",error)
-    } )
-    
-    // console.log("---------",res)
-    // setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    fetchFollowers()
-  }, [])
+      await axios(config)
+        .then((response) => {
+          setFollowersData(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("error 1111111111111", error);
+        });
 
+      // console.log("---------",res)
+      // setLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchFollowers();
+  }, []);
 
   const onSelectItem = (item) => {
     const newItem = followersData.map((val) => {
@@ -134,9 +133,13 @@ const FollowersScreen = ({ navigation, isHeader }) => {
             paddingHorizontal: Default.fixPadding * 2,
           }}
         >
-          <TouchableOpacity onPress={{
-            // () => navigation.pop()
-            }}>
+          <TouchableOpacity
+            onPress={
+              {
+                // () => navigation.pop()
+              }
+            }
+          >
             <Ionicons
               name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
               size={25}
@@ -152,7 +155,6 @@ const FollowersScreen = ({ navigation, isHeader }) => {
             {tr("followers")}
           </Text>
         </View>
-
       ) : (
         <></>
       )}

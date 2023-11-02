@@ -18,7 +18,7 @@ const MenuBottomSheet = (props) => {
 
   const [loading, setIsLoading ] = useState(false)
 
-  console.log("ower 000000000", props.isPostOwner)
+  // console.log("ower 000000000", props.isPostOwner)
   const isRtl = i18n.dir() == "rtl";
 
   function tr(key) {

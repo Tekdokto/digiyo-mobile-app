@@ -39,7 +39,7 @@ const BlockListScreen = ({ navigation, isHeader }) => {
         let res = await getBlockedUsers(token);
         console.log("response -------", res);
         console.log("blocked  result -------", res);
-        setProfile(res.authenticated_user);
+        setProfile(res);
         // setLoading(false);
       } catch (error) {
         showError(error.message);
@@ -60,14 +60,15 @@ const BlockListScreen = ({ navigation, isHeader }) => {
   
     
   const onSelectItem = (item) => {
-    const newItem = followersData.map((val) => {
-      if (val.key === item.key) {
+    const newItem = profile.map((val) => {
+        console.log('valen         ',item)
+      if (val.user_id === item.user_id) {
         return { ...val, follow: !val.follow };
       } else {
         return val;
       }
     });
-    setFollowersData(newItem);
+    setProfile(newItem);
   };
 
   const renderItem = ({ item }) => {
@@ -76,7 +77,7 @@ const BlockListScreen = ({ navigation, isHeader }) => {
         <BlockListCard
           image={item.image}
           name={item.username}
-          followers={item.followers}
+        //   followers={item.followers}
           follow={item.follow}
           onClickHandler={() => onSelectItem(item)}
         />
@@ -121,7 +122,7 @@ const BlockListScreen = ({ navigation, isHeader }) => {
         </>
       ) : (
         <>
-            {profile ? (
+            {profile != [] ? (
             <>
                 <FlatList
                     data={profile}

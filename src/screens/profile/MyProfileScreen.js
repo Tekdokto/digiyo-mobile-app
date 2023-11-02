@@ -217,7 +217,7 @@ const MyProfileScreen = () => {
 
   const renderTabContent = () => {
     if (selectedTab === "Posts") {
-      return <VideoTab />;
+      return <VideoTab  />;
     } else if (selectedTab === "Followers") {
       return <FollowersScreen isHeader={false} />;
     } else if (selectedTab === "Following") {
