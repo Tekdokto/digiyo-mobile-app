@@ -1,5 +1,11 @@
 import React, { useCallback } from "react";
-import { View, StyleSheet, ListRenderItem } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ListRenderItem,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import { Tabs } from "react-native-collapsible-tab-view";
 import VideoTab from "../../components/videoTab";
 import { WIDTH } from "../../constants/sizes";
@@ -44,8 +50,6 @@ const Header = () => {
 
   const isFocused = useIsFocused();
 
- 
-
   const onFetchProfile = async () => {
     let token = user.token;
     console.log("token ---------- ", token);
@@ -63,11 +67,11 @@ const Header = () => {
     setLoading(false);
   };
 
-  console.log("count       ",profile.follower_count)
+  console.log("count       ", profile.follower_count);
   // useEffect(() => {
   //   onFetchProfile();
   // }, []);
-   useEffect(() => {
+  useEffect(() => {
     if (isFocused) {
       // Reload your screen here
       onFetchProfile();
@@ -113,7 +117,9 @@ const Header = () => {
           <View></View>
 
           <TouchableOpacity
-            onPress={() => navigation.push("profileSettingsScreen", {profile: profile})}
+            onPress={() =>
+              navigation.push("profileSettingsScreen", { profile: profile })
+            }
           >
             <Ionicons name="ellipsis-vertical" size={20} color={theme.color} />
           </TouchableOpacity>
@@ -121,23 +127,22 @@ const Header = () => {
 
         <View style={Container.safe}>
           {profile.avatar == null ? (
-             
             <Image
               style={UserImage.Image}
               resizeMode="contain"
               source={require("../../../assets/images/2.jpeg")}
-            /> 
+            />
           ) : (
-
             <Image
               style={UserImage.Image}
               resizeMode="contain"
               source={{ uri: profile.avatar }}
             />
-           )
-          } 
+          )}
           <View>
-            <Text style={[UserName.Text, {color:theme.color} ]}>@{profile.username}</Text>
+            <Text style={[UserName.Text, { color: theme.color }]}>
+              @{profile.username}
+            </Text>
           </View>
           <View style={UserFollowers.View}>
             <View style={UserFollowersText.View}>
@@ -204,93 +209,86 @@ const Header = () => {
 };
 
 const MyProfileScreen = () => {
-  const [refreshing, setRefreshing] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("Posts");
 
   const theme = useContext(ThemeContext);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    // onFetchProfile();
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-    // wait(2000).then(() => {
-    //   setRefreshing(false);
-    // });
-  }, []);
+  const data = [1, 2, 3, 4, 5]; // Sample data for FlatLists
 
-  const renderItem = useCallback(({}) => {
-    return (
-      // <View style={[styles.box, index % 2 === 0 ? styles.boxB : styles.boxA]} />
-      <View>
-        <VideoTab />
-      </View>
-    );
-  }, []);
-
-  const renderFollowers = useCallback(({}) => {
-    return (
-      // <View style={[styles.box, index % 2 === 0 ? styles.boxB : styles.boxA]} />
-      <View>
-        <FollowersScreen />
-      </View>
-    );
-  }, []);
-
-  const renderFollowing = useCallback(({}) => {
-    return (
-      // <View style={[styles.box, index % 2 === 0 ? styles.boxB : styles.boxA]} />
-      <View>
-        <FollowingScreen />
-      </View>
-    );
-  }, []);
+  const renderTabContent = () => {
+    if (selectedTab === "Posts") {
+      return <VideoTab />;
+    } else if (selectedTab === "Followers") {
+      return <FollowersScreen isHeader={false} />;
+    } else if (selectedTab === "Following") {
+      return <FollowingScreen />;
+    }
+  };
 
   return (
-    <Tabs.Container
-      renderHeader={Header}
-      headerHeight={HEADER_HEIGHT} // optional
-      headerContainerStyle={{
-        backgroundColor: ACCENT_COLOR, 
-      }}
-      containerStyle={{
-        backgroundColor: theme.backgroundColor, 
-      }}
-    >
-      <Tabs.Tab
-       name={"Posts"}
-       labelStyle={{color: "#fff"}}
-       >
-        <Tabs.FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={identity}
-        />
-      </Tabs.Tab>
-      <Tabs.Tab name="Followers">
-        <Tabs.FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={DATA}
-          renderItem={renderFollowers}
-          keyExtractor={identity}
-        />
-      </Tabs.Tab>
-      <Tabs.Tab name="Following">
-        <Tabs.FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={DATA}
-          renderItem={renderFollowing}
-          keyExtractor={identity}
-        />
-      </Tabs.Tab>
-    </Tabs.Container>
+    <>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: theme.theme != "dark" ? "white" : "black",
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Header />
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity onPress={() => setSelectedTab("Posts")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Posts" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Posts
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Followers" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Followers" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Followers
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedTab("Following")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Following" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Following" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Following
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Render the content of the selected tab */}
+          {renderTabContent()}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

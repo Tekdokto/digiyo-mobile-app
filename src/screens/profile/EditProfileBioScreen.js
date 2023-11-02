@@ -25,27 +25,32 @@ import SnackbarToast from "../../components/snackbarToast";
 import ThemeContext from "../../theme/ThemeContext";
 import { BIO, USER } from "../../config/urls";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { showMessage } from "react-native-flash-message";
 
 import mime from 'react-native-mime-types'
 import { ActivityIndicator } from "react-native-paper";
 import { Pressable } from "react-native";
+import { myProifile } from "../../redux/actions/auth";
+import { showError } from "../../utils/helperFunctions";
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
   
   const EditProfileBioScreen = ({ navigation, route }) => {
 
-    const { profile } = route.params.profile
-    console.log("profile -------------",profile)
+    // const { profile } = route.params.profile
+    
+    // console.log("profile -------------",profile)
 
     const theme = useContext(ThemeContext)
 
     const { t, i18n } = useTranslation();
   
     const isRtl = i18n.dir() == "rtl";
+
+    const isFocused = useIsFocused();
   
     function tr(key) {
       return t(`editProfileScreen:${key}`);
@@ -63,17 +68,19 @@ import { Pressable } from "react-native";
   
     const [isLoading, setLoading] = useState(false);
 
-    const [fName, setFName] = useState(profile.fname);
-    const [lName, setLName] = useState(profile.lname); 
-    const [bio, setBio] = useState(profile.bio);
-    const [country, setCountry] = useState(profile.country);
-    const [state, setState] = useState(profile.state);
-    const [city, setCity] = useState(profile.city);
-    const [height, setHeight] = useState(profile.height);
-    const [weight, setWeight] = useState(profile.weight);
-    const [size, setSize] = useState(profile.size);
-    const [guardian, setGuardian] = useState(profile.guardian);
-    const [dob, setDob] = useState(profile.dob);
+    const [profile, setProfile] = useState([]);
+
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState(''); 
+    const [bio, setBio] = useState('');
+    const [country, setCountry] = useState('');
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [size, setSize] = useState('');
+    const [guardian, setGuardian] = useState('');
+    const [dob, setDob] = useState('');
     // const [number, setNumber] = useState("1234567890");
     // const [bio, setBio] = useState(
     //   "Lorem ipsum dolor sit amen, consectetur advising elite. Velit sed malesuada urna ut elitpellentesque.  "
@@ -107,7 +114,7 @@ import { Pressable } from "react-native";
     const [cameraNotGranted, setCameraNotGranted] = useState(false);
     const onDismissCameraNotGranted = () => setCameraNotGranted(false);
   
-    const [camera, setShowCamera] = useState(false);
+    // const [camera, setShowCamera] = useState(false);
   
     const cameraHandler = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -146,9 +153,8 @@ import { Pressable } from "react-native";
 
     // console.log(auth)
     
-    console.log(" mages srewww ========== ",pickedImage)
     const onUpdate = async () => { 
-   
+      console.log("first")
       setLoading(true)
         const config = {
           method: "put",
@@ -191,6 +197,44 @@ import { Pressable } from "react-native";
       setLoading(false)
     };
 
+    const user = useSelector((state) => state.auth.userData.token);
+    
+  const onFetchProfile = async () => {
+    let token = user;
+    console.log("token ---------- ", token);
+    setLoading(true);
+    try {
+      let res = await myProifile(token);
+      // console.log("response -------", res.profile);
+      console.log("profile result -------", res.authenticated_user.profile);
+      setProfile(res.authenticated_user.profile);
+      setFName(res.authenticated_user.profile.fname);
+      setLName(res.authenticated_user.profile.lname); 
+      setBio(res.authenticated_user.profile.bio);
+      setCountry(res.authenticated_user.profile.country);
+      setState(res.authenticated_user.profile.state);
+      setCity(res.authenticated_user.profile.city);
+      setHeight(res.authenticated_user.profile.height);
+      setWeight(res.authenticated_user.profile.weight);
+      setSize(res.authenticated_user.profile.size);
+      setGuardian(res.authenticated_user.profile.guardian);
+      setDob(res.authenticated_user.profile.dob);
+      // setLoading(false);
+    } catch (error) {
+      showError(error.message);
+      console.log("profile error -------", error);
+    }
+    setLoading(false);
+  };
+ 
+  
+  useEffect(() => {
+    if (isFocused) {
+      // Reload your screen here
+      onFetchProfile();
+    }
+  }, [isFocused]);
+
 
     useEffect(() => {
       // fetchUser();
@@ -228,73 +272,19 @@ import { Pressable } from "react-native";
         </View>
   
         <ScrollView showsVerticalScrollIndicator={false}>
+           
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: Default.fixPadding * 1.3,
-            }}
-          >
-            {!pickedImage ? (
-              <View>
-                {removeImage ? (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: Colors.lightGrey,
-                      ...styles.image,
-                    }}
-                  >
-                    <Ionicons name="person" size={45} color={theme.color} />
-                  </View>
-                ) : (
-                  <> 
-                  {/* {profile.avatar ? (<>
-              <Image
-                    source={{ uri: profile.avatar}}
-                    style={{
-                      resizeMode: "stretch",
-                      ...styles.image,
-                    }}
-                  />
-            </>) : (
-
-                  <Image
-                    source={require("../../../assets/images/2.jpeg")}
-                    style={{
-                      resizeMode: "stretch",
-                      ...styles.image,
-                    }}
-                  />
-            )} */}
-                  </>
-                )}
-              </View>
-            ) : (
-              <Image
-                source={{ uri: pickedImage }}
-                style={{
-                  alignSelf: "center",
-                  ...styles.image,
-                }}
-              />
-            )}
-          </View>
-   
-  
-          <View
-            style={{
-              marginTop: Default.fixPadding * 1.2,
+              marginTop: 15,
               marginHorizontal: Default.fixPadding * 2,
             }}
           >
-            <Text style={{ ...Fonts.Medium14grey }}>first name</Text>
+            <Text style={{ ...Fonts.Medium14grey }}>First name</Text>
             <View style={{ ...styles.textInputCard }}>
               <TextInput
                 value={fName}
                 onChangeText={setFName}
-                placeholder={"first name"}
+                placeholder={"First name"}
                 placeholderTextColor={Colors.grey}
                 selectionColor={Colors.primary}
                 style={{
@@ -303,12 +293,12 @@ import { Pressable } from "react-native";
                 }}
               />
             </View>
-            <Text style={{ ...Fonts.Medium14grey }}>last name</Text>
+            <Text style={{ ...Fonts.Medium14grey }}>Last name</Text>
             <View style={{ ...styles.textInputCard }}>
               <TextInput
                 value={lName}
                 onChangeText={setLName}
-                placeholder={"last name"}
+                placeholder={"Last name"}
                 placeholderTextColor={Colors.grey}
                 selectionColor={Colors.primary}
                 style={{
@@ -317,21 +307,30 @@ import { Pressable } from "react-native";
                 }}
               />
             </View>
-            <Text style={{ ...Fonts.Medium14grey }}>bio</Text>
-            <View style={{ ...styles.textInputCard }}>
+            
+            <Text style={{ ...Fonts.Medium14grey }}>Bio</Text>
+            <View style={{ 
+              marginTop: Default.fixPadding * 0.8,
+              paddingVertical: Default.fixPadding * 1.2,
+              paddingHorizontal: Default.fixPadding,
+              marginBottom: Default.fixPadding * 2,
+              borderRadius: 8,
+              backgroundColor: Colors.extraDarkGrey,
+              // ...Default.shadow,
+             }}>
               <TextInput
+              multiline={true}
+              numberOfLines={8}
                 value={bio}
-                multiline={true}
-                numberOfLines={7}
-                textAlignVertical="top"
                 onChangeText={setBio}
-                placeholder={tr("enterBio")}
+                placeholder={"country"}
                 placeholderTextColor={Colors.grey}
                 selectionColor={Colors.primary}
                 style={{
-                  ...Fonts.Medium16white,
-                  textAlign: isRtl ? "right" : "left",
-                  height: height / 5,
+                  alignContent: "flex-start",
+                  color: "white",
+                  textAlign: "left",
+                  fontFamily: "SemiBold"
                 }}
               />
             </View>
@@ -475,13 +474,7 @@ import { Pressable } from "react-native";
             // progress
             // height={50}
             // progressLoadingTime={1000}
-            onPress={ onUpdate
-            //   (next) => {
-            //   setTimeout(() => {
-            //     next();
-            //     navigation.pop();
-            //   }, 1000);
-            // }
+            onPress={() => onUpdate()
           }
             raiseLevel={1}
             stretch={true}
@@ -503,16 +496,16 @@ import { Pressable } from "react-native";
             </>
           ) : (
             <> */}
-              <Pressable> 
+              {/* <Pressable>  */}
                 <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
-              </Pressable>
+              {/* </Pressable> */}
             {/* </>
           )} */}
           </AwesomeButton>
           
         </View>
   
-        <BottomSheet
+        {/* <BottomSheet
           visible={uploadImage}
           onBackButtonPress={toggleCloseUploadImage}
           onBackdropPress={toggleCloseUploadImage}
@@ -610,13 +603,13 @@ import { Pressable } from "react-native";
             onDismiss={onDismissCameraNotGranted}
             title={tr("deny")}
           />
-        </BottomSheet>
+        </BottomSheet> */}
   
-        <SnackbarToast
+        {/* <SnackbarToast
           visible={removeImageToast}
           onDismiss={onDismissRemoveImage}
           title={tr("removeImage")}
-        />
+        /> */}
       </View>
     );
   };
@@ -634,7 +627,7 @@ import { Pressable } from "react-native";
       borderTopLeftRadius: 40,
       borderTopRightRadius: 40,
       backgroundColor: Colors.black,
-      ...Default.shadow,
+      // ...Default.shadow,
     },
     circle: {
       justifyContent: "center",
@@ -661,7 +654,7 @@ import { Pressable } from "react-native";
       marginBottom: Default.fixPadding * 2,
       borderRadius: 8,
       backgroundColor: Colors.extraDarkGrey,
-      ...Default.shadow,
+      // ...Default.shadow,
     },
   });
   

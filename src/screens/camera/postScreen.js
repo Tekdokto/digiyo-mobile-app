@@ -295,7 +295,7 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
                   borderRadius: 8,
                   marginBottom: 20,
                   backgroundColor: Colors.lightGrey,
-                  ...Default.shadow,
+                  // ...Default.shadow,
                 }}
               >
                 <TextInput
@@ -320,7 +320,7 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
                   height: 140,
                   borderRadius: 8,
                   backgroundColor: Colors.lightGrey,
-                  ...Default.shadow,
+                  // ...Default.shadow,
                 }}
               >
                 <TextInput

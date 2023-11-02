@@ -1,5 +1,5 @@
 // import { useSelector } from 'react-redux';
-import { ALL_POSTS, CREATE_POSTS, DELETE_POSTS, GET_POSTS_BY_ID, ALL_POST, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC } from '../../config/urls';
+import { ALL_POSTS, CREATE_POSTS, DELETE_POSTS, GET_POSTS_BY_ID, ALL_POST, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC, BLOCK_USER, ALL_BLOCKED_LIST } from '../../config/urls';
 import { storeData } from '../../utils/helperFunctions';
 import { apiDelete, apiGet, apiPost, apiPut } from '../../utils/utils';
 import { saveUserData } from '../reducers/auth';
@@ -126,6 +126,15 @@ export const deletePost = (userToken) => {
 
 export const getUserPosts = (id, userToken) => {
   return apiGet(ALL_POST+id,
+    {headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+    },}
+    )
+};
+
+export const getBlockedUsers = (id, userToken) => {
+  return apiGet(ALL_BLOCKED_LIST,
     {headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${userToken}`

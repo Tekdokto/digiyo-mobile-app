@@ -51,6 +51,7 @@ import { PRIMARY_COLOR } from "../constants/colors";
 import EditProfileBioScreen from "../screens/profile/EditProfileBioScreen";
 import SearchSeeAllUsersScreen from "../screens/search/searchSeeAllUsersScreen";
 import SearchSeeAllPostScreen from "../screens/search/searchSeeAllPostScreen";
+import BlockListScreen from "../screens/profile/BlockedList";
 // import { useSelector } from 'react-redux';
 
 // const Stack = createNativeStackNavigator();
@@ -174,6 +175,10 @@ function AllScreenTabs() {
       <ScreenTabs.Screen
         name="userProfilePostScreen"
         component={UserProfilePostScreen}
+      />
+      <ScreenTabs.Screen
+        name="blockListScreen"
+        component={BlockListScreen}
       />
     </ScreenTabs.Navigator>
   );

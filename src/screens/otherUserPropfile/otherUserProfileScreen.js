@@ -27,13 +27,17 @@ import { useTranslation } from "react-i18next";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
 import AwesomeButton from "react-native-really-awesome-button";
 import { ActivityIndicator } from "react-native";
-import { ACCENT_COLOR } from "../../constants/colors";
+import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 import styles from "../../constants/styles";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import { Video } from "expo-av";
 import { Modal } from "react-native";
 import MyStatusBar from "../../components/MyStatusBar";
+import { ScrollView } from "react-native-gesture-handler";
+import FollowersScreen from "../FollowUnfollow/FollowersScreen";
+import FollowingScreen from "../FollowUnfollow/FollowingScreen";
+import { FlatList } from "react-native";
 
 export const Header = (props) => {
   // const { item } = route.params;
@@ -704,33 +708,89 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     );
   };
 
-  return (
-    <Tabs.Container
-      renderHeader={headerItem}
-      headerHeight={HEIGHT * 0.4}
-      headerContainerStyle={{ top: 0 }}
-      containerStyle={{
-        backgroundColor: theme.theme != "dark" ? "white" : "black",
-      }}
-    >
-      <Tabs.Tab name="Posts">
-        <Tabs.FlatList
-          numColumns={3}
+  const [selectedTab, setSelectedTab] = useState("Posts");
+
+  const renderTabContent = () => {
+    if (selectedTab === "Posts") {
+      console.log("render posts itemmmmmmmmmmm",user.posts)
+      return (
+        <FlatList
           data={user.posts}
+          keyExtractor={(item) => item.post_id.toString()}
           renderItem={renderItemPosts}
-          keyExtractor={(item) => item.post_id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingTop: Default.fixPadding * 1.3,
-            paddingHorizontal: Default.fixPadding,
-            width: WIDTH,
-            // alignContent:"flex-start",
-            // alignItems: "flex-start",
-            // alignItems: "flex-start"
-          }}
         />
-      </Tabs.Tab>
-    </Tabs.Container>
+      );
+    } else if (selectedTab === "Followers") {
+      return <FollowersScreen isHeader={false} />;
+    } else if (selectedTab === "Following") {
+      return <FollowingScreen />;
+    }
+  };
+
+  return (
+    <>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: theme.theme != "dark" ? "white" : "black",
+        }}
+      >
+        <View style={{ }}>
+          <Header user={user} />
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity onPress={() => setSelectedTab("Posts")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Posts" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Posts
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Followers" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Followers" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Followers
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedTab("Following")}>
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  color: selectedTab === "Following" ? "blue" : "black",
+                  backgroundColor:
+                    selectedTab === "Following" ? PRIMARY_COLOR : "#ffffff00",
+                  paddingVertical: 10,
+                }}
+              >
+                Following
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Render the content of the selected tab */}
+          {renderTabContent()}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

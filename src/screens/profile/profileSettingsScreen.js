@@ -136,8 +136,10 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={() => {
             if (index == 2) {
-              return shareMessage();
-            } else if (index === profileSettingList.length - 2) {
+              // return shareMessage();
+              navigation.navigate(item.navigateTo, {profile: profile});
+            } else
+             if (index === profileSettingList.length - 2) {
               return setOpenRateModal(true);
             } else {
               navigation.navigate(item.navigateTo, {profile: profile});
