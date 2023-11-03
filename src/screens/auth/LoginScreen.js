@@ -16,12 +16,13 @@ import { showError } from '../../utils/helperFunctions';
 import TextComp from '../../components/TextComp';
 import { AuthContext } from '../../context/AuthContext';
 import { showMessage } from 'react-native-flash-message';
+import { ToastAndroid } from 'react-native';
 
 
 export default function LoginScreen() {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext)
-    const { login } = useContext(AuthContext)
+    const { login, isError, isSuccessful } = useContext(AuthContext)
 
     const [email, setUserName] = useState('')  
     const [password, setPassword] = useState('')
@@ -54,6 +55,10 @@ export default function LoginScreen() {
     // }
     // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
     }
+
+    const showToast = (word) => {
+        ToastAndroid.show(word, ToastAndroid.LONG);
+      };
 
   return (
     <KeyboardAvoidingView 
@@ -132,8 +137,15 @@ export default function LoginScreen() {
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
                             <TouchableOpacity onPress={() => {
-                                onPressLogin()
-                                login(email, password)
+                                // onPressLogin()
+                                    if (email === '' || password === '') { 
+                                        showToast("fields cannot be empty")
+                                    } else {
+                                        // if (isError) {
+                                        //     showToast(isError)
+                                        // }
+                                        login(email, password)
+                                    }
                                 }
                             }
                             // <TouchableOpacity onPress={onPressLogin}

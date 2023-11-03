@@ -8,10 +8,14 @@ import { useTranslation } from "react-i18next";
 import { DELETE_POSTS } from "../config/urls";
 import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
+
 
 const MenuBottomSheet = (props) => {
+
+  const { userInfo, userTokens } = useContext(AuthContext);
+
   const { t, i18n } = useTranslation();
 
   const navigate = useNavigation()
@@ -33,24 +37,7 @@ const MenuBottomSheet = (props) => {
     }
   }, [isFocused]);
 
-  // const userToken = useSelector(state=>state.auth.userData.token)
-  
-  // function extractAuthorization(cookieString) {
-  //   const cookies = cookieString.split(';');
-  //   let authorization = '';
-  
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i].trim();
-  //     if (cookie.startsWith('Authorization=')) {
-  //       authorization = cookie.substring('Authorization='.length);
-  //       break;
-  //     }
-  //   }
-  
-  //   return authorization;
-  // }
-  
-  // const auth = extractAuthorization(userToken)
+  const auth = userTokens
 
     const deletePost = async () => {
 
@@ -59,11 +46,11 @@ const MenuBottomSheet = (props) => {
       const config = {
         method: "delete",
         url: DELETE_POSTS+props.post_id,
-        // data: formdata,
-        // headers: {
-        //   'Authorization': auth,
-        //   "Content-Type": "application/json", // This will set the correct 'Content-Type' header
-        // }
+        data: formdata,
+        headers: {
+          'Authorization': auth,
+          "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+        }
       };
       console.log(config)
       try {

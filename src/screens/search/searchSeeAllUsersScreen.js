@@ -17,7 +17,7 @@ import { useContext } from "react";
 import ThemeContext from "../../theme/ThemeContext";
 import { WIDTH } from "../../constants/sizes";
 import TextComp from "../../components/TextComp";
-import { useSelector } from "react-redux";
+import { AuthContext } from "../../context/AuthContext";
 
 // const { width } = Dimensions.get("window");
 
@@ -27,6 +27,9 @@ const SearchSeeAllUsersScreen = ({ navigation, route }) => {
   const isRtl = i18n.dir() == "rtl";
 
   const theme = useContext(ThemeContext)
+
+  const { userInfo, userTokens } = useContext(AuthContext); 
+
   function tr(key) {
     return t(`searchSeeAllScreen:${key}`);
   }
@@ -46,9 +49,7 @@ const SearchSeeAllUsersScreen = ({ navigation, route }) => {
   
   // console.log(" paaaaaaaaaaaaaaaarrrrrrrrrrrr",post )
 
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const userId = userInfo.authenticated_user.user_id;
 
   const renderItem = ({ item, index }) => {
     // const firstItem = index === 0 || index === 1;

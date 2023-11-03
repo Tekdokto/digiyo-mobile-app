@@ -52,8 +52,7 @@ import EditProfileBioScreen from "../screens/profile/EditProfileBioScreen";
 import SearchSeeAllUsersScreen from "../screens/search/searchSeeAllUsersScreen";
 import SearchSeeAllPostScreen from "../screens/search/searchSeeAllPostScreen";
 import BlockListScreen from "../screens/profile/BlockedList";
-// import { useSelector } from 'react-redux';
-
+ 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const ScreenTabs = createNativeStackNavigator();

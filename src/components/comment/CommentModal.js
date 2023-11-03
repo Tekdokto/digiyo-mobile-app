@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import { useSelector } from 'react-redux'
 import styles from './styles'
 import { Ionicons } from '@expo/vector-icons'
 // import { addComment, clearCommentListener, commentListner } from '../../../services/posts'
@@ -10,7 +9,7 @@ import CommentItem from './CommentItem'
 const CommentModal = ({ post }) => {
     const [comment, setComment] = useState('')
     // const [commentList, setCommentList] = useState('')
-    const currentUser = useSelector(state => state.auth.currentUser)
+    // const currentUser = useSelector(state => state.auth.currentUser)
 
     useEffect(() => {
         // commentListner(post.id, setCommentList)
@@ -37,9 +36,9 @@ const CommentModal = ({ post }) => {
                 keyExtractor={(item) => item.id}
             />
             <View style={styles.containerInput}>
-                <Image
+                {/* <Image
                     style={generalStyles.avatarSmall}
-                    source={{ uri: currentUser.photoURL }} />
+                    source={{ uri: currentUser.photoURL }} /> */}
                 <TextInput
                     value={comment}
                     onChangeText={setComment}

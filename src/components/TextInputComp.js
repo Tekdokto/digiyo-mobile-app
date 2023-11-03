@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 // import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
 // import fontFamily from '../styles/fontFamily';
 // import colors from '../styles/colors';
-import { useSelector } from 'react-redux';
 import fontFamily from '../constants/fontFamily';
 
 // create a component
@@ -20,8 +19,6 @@ const TextInputComp = ({
     // placeholderTextColor = colors.whiteColorOpacity70,
     ...props
 }) => {
-
-    // const { lang } = useSelector(state => state?.appSetting)
 
     return (
         <View style={{

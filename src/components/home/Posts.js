@@ -9,7 +9,6 @@ import ThemeContext from "../../theme/ThemeContext";
 import ReadMore from "@fawazahmed/react-native-read-more";
 import { getAllPosts } from "../../redux/actions/auth";
 import { showError } from "../../utils/helperFunctions";
-import { useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ACCENT_COLOR } from "../../constants/colors";
@@ -17,18 +16,20 @@ import { RefreshControl } from "react-native";
 import CommentsBottomSheet from "../commentsBottomSheet";
 import { ALL_POST, CREATE_POSTS } from "../../config/urls";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 // import * as Sharing from 'expo-sharing'
 
 const Posts = ({}) => {
+
   const theme = useContext(ThemeContext);
+
+  const { userInfo, userTokens } = useContext(AuthContext);
 
   const navigation = useNavigation();
 
-  const user = useSelector((state) => state.auth.userData.token);
-  // const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
-
-  // console.log(" get id          ",useSelector((state) => state.auth.userData))
+  const user = userTokens
+ 
   const [isLoading, setLoading] = useState(false);
   const [post, setPost] = useState();
   const [postId, getPostId] = useState();

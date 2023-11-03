@@ -8,12 +8,16 @@ import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
 import { useIsFocused } from '@react-navigation/native'
 import CommentsBottomSheet from '../../components/commentsBottomSheet'
 import MenuBottomSheet from '../../components/menuBottomSheet'
-import { useTranslation } from 'react-i18next' 
-import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'  
 import { showError } from '../../utils/helperFunctions'
 import { CREATE_POSTS } from '../../config/urls'
+import { AuthContext } from '../../context/AuthContext'
+import { useContext } from 'react'
+
 
 const UserProfilePostScreen = ({ navigation, route }) => {
+
+  const { userInfo, userTokens } = useContext(AuthContext);
 
   const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
   const [openMenuBottomSheet, setOpenMenuBottomSheet] = useState(false);
@@ -37,7 +41,7 @@ const UserProfilePostScreen = ({ navigation, route }) => {
   // const [saved, setSaves] = useState([]);
   // getPostId(postsArray.map((postId) => postId.post_id))
 
-    const userData = useSelector(state=>state.auth.userData.authenticated_user.user_id)
+    const userData = userInfo.authenticated_user.user_id
     // console.log("data- - - - - ", userData)
     const [visibleVideos, setVisibleVideos] = useState(
         postsArray.map(() => true)
@@ -84,7 +88,7 @@ const UserProfilePostScreen = ({ navigation, route }) => {
     };
 
     
-  const user = useSelector((state) => state.auth.userData.token);
+  const user = userTokens
     
   const toggleLike = async (index) => {
     console.log("like") 

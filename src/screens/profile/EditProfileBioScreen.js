@@ -18,13 +18,11 @@ import {
   import { LinearGradient } from "expo-linear-gradient";
   import AwesomeButton from "react-native-really-awesome-button";
   import { useTranslation } from "react-i18next";
-import CameraModule from "../../components/cameraModule";
 import { Colors, Default, Fonts  } from "../../constants/styles2";
 import MyStatusBar from "../../components/MyStatusBar";
 import SnackbarToast from "../../components/snackbarToast";
 import ThemeContext from "../../theme/ThemeContext";
 import { BIO, USER } from "../../config/urls";
-import { useSelector } from "react-redux";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { showMessage } from "react-native-flash-message";
@@ -34,6 +32,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { Pressable } from "react-native";
 import { myProifile } from "../../redux/actions/auth";
 import { showError } from "../../utils/helperFunctions";
+import { AuthContext } from "../../context/AuthContext";
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
@@ -45,6 +44,8 @@ import { showError } from "../../utils/helperFunctions";
     // console.log("profile -------------",profile)
 
     const theme = useContext(ThemeContext)
+
+    const { userInfo, userTokens } = useContext(AuthContext);
 
     const { t, i18n } = useTranslation();
   
@@ -144,12 +145,11 @@ import { showError } from "../../utils/helperFunctions";
       return authorization;
     }
   
-    const userToken = useSelector((state) => state.auth.userData.token);
+    const userToken = userTokens
   
     const auth = extractAuthorization(userToken);
-    const userId = useSelector(
-      (state) => state.auth.userData.authenticated_user.user_id
-    );
+    const userId = userInfo.authenticated_user.user_id;
+
 
     // console.log(auth)
     
@@ -197,7 +197,7 @@ import { showError } from "../../utils/helperFunctions";
       setLoading(false)
     };
 
-    const user = useSelector((state) => state.auth.userData.token);
+    const user = userTokens
     
   const onFetchProfile = async () => {
     let token = user;

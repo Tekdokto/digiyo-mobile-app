@@ -23,13 +23,13 @@ import { Colors, Default, Fonts  } from "../../constants/styles2";
 import MyStatusBar from "../../components/MyStatusBar";
 import SnackbarToast from "../../components/snackbarToast";
 import ThemeContext from "../../theme/ThemeContext";
-import { USER } from "../../config/urls";
-import { useSelector } from "react-redux";
+import { USER } from "../../config/urls"; 
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { showMessage } from "react-native-flash-message";
 
 import mime from 'react-native-mime-types'
+import { AuthContext } from "../../context/AuthContext";
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
@@ -40,6 +40,8 @@ import mime from 'react-native-mime-types'
     // console.log("profile -------------",profile)
 
     const theme = useContext(ThemeContext)
+
+    const { userInfo, userTokens } = useContext(AuthContext);
 
     const { t, i18n } = useTranslation();
   
@@ -111,27 +113,11 @@ import mime from 'react-native-mime-types'
 
     // console.log(item);
   
-    function extractAuthorization(cookieString) {
-      const cookies = cookieString.split(";");
-      let authorization = "";
+    const userToken = userTokens;
   
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith("Authorization=")) {
-          authorization = cookie.substring("Authorization=".length);
-          break;
-        }
-      }
-  
-      return authorization;
-    }
-  
-    const userToken = useSelector((state) => state.auth.userData.token);
-  
-    const auth = extractAuthorization(userToken);
-    const userId = useSelector(
-      (state) => state.auth.userData.authenticated_user.user_id
-    );
+    const auth = userToken
+    const userId = userInfo.authenticated_user.user_id;
+
 
     // console.log(auth)
     

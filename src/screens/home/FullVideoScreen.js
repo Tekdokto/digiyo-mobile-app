@@ -12,9 +12,12 @@ import { useTranslation } from 'react-i18next'
 import * as Sharing from 'expo-sharing'
 import axios from 'axios'
 import { CREATE_POSTS } from '../../config/urls'
-import { useSelector } from 'react-redux'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 const FullVideoScreen = ({ navigation, route }) => {
+
+  const { userInfo, userTokens } = useContext(AuthContext);
 
   const [openCommentBottomSheet, setOpenCommentBottomSheet] = useState(false);
   const [openMenuBottomSheet, setOpenMenuBottomSheet] = useState(false);
@@ -56,7 +59,7 @@ const FullVideoScreen = ({ navigation, route }) => {
     // setSaves(postsArray.map((item) => item.totalSaves));
     
 
-  const user = useSelector((state) => state.auth.userData.token);
+  const user = userTokens
     
   const toggleLike = async (index) => {
     console.log("like") 

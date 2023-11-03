@@ -17,13 +17,15 @@ import { useTranslation } from "react-i18next";
 import ThemeContext from "../theme/ThemeContext";
 import axios from "axios";
 import { GET_POSTS_COMMENTS } from "../config/urls";
-import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native";
 
 const { height } = Dimensions.get("window");
 
 const CommentsBottomSheet = (props) => {
+
+  const { userInfo, userTokens } = useContext(AuthContext);
+
   const theme = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
 
@@ -68,23 +70,8 @@ const CommentsBottomSheet = (props) => {
     }
   }, [isFocused]);
 
-  const userToken = useSelector((state) => state.auth.userData.token);
-
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
-    return authorization;
-  }
-
-  const auth = extractAuthorization(userToken);
+  const userToken = userTokens
+  const auth = userToken
 
   // const commentsList = [
   //   {

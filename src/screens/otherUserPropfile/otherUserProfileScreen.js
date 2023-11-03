@@ -17,7 +17,6 @@ import {
 } from "@react-navigation/native";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ThemeContext from "../../theme/ThemeContext";
 import { useContext } from "react";
@@ -40,10 +39,14 @@ import FollowingScreen from "../FollowUnfollow/FollowingScreen";
 import { FlatList } from "react-native";
 import VideoTab from "../../components/videoTab";
 import { showMessage } from "react-native-flash-message";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Header = (props) => {
   // const { item } = route.params;
   const theme = useContext(ThemeContext);
+
+  const { userInfo, userTokens } = useContext(AuthContext);
+
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -83,28 +86,12 @@ export const Header = (props) => {
     setSettingModal(false);
   };
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
 
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
+  const userToken = userTokens
 
-    return authorization;
-  }
-
-  const userToken = useSelector((state) => state.auth.userData.token);
-
-  const auth = extractAuthorization(userToken);
+  const auth = userToken
  
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const userId = userInfo.authenticated_user.user_id;
 
   // console.log("first", props);
 
@@ -621,28 +608,16 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
 
   const theme = useContext(ThemeContext);
 
+  const { userInfo, userTokens } = useContext(AuthContext);
+
+
   const [user, setUser] = useState([]);
 
   const isFocused = useIsFocused();
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
+  const userToken = userTokens
 
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
-
-    return authorization;
-  }
-
-  const userToken = useSelector((state) => state.auth.userData.token);
-
-  const auth = extractAuthorization(userToken);
+  const auth = userToken
 
   let the_id =
     previousScreen == "SearchScreen"
@@ -785,9 +760,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
   //   );
   // };
 
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-    );
+  const userId = userInfo.authenticated_user.user_id
     
     const [selectedTab, setSelectedTab] = useState("Posts");
 

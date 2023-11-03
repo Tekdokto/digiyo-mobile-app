@@ -11,7 +11,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import { Default, Colors, Fonts } from "../constants/styles2";
 import ThemeContext from "../theme/ThemeContext";
-import { useSelector } from "react-redux";
 // import { getUserPosts } from "../redux/actions/auth";
 import { DELETE_POSTS, ALL_POST } from "../config/urls";
 import axios from "axios";
@@ -19,6 +18,7 @@ import { ActivityIndicator } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { Video } from "expo-av";
 import { ACCENT_COLOR } from "../constants/colors";
+import { AuthContext } from "../context/AuthContext";
 
 const { width } = Dimensions.get("window");
 
@@ -26,6 +26,8 @@ const VideoTab = (props) => {
   const navigation = useNavigation();
   const theme = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
+
+  const { userInfo, userTokens } = useContext(AuthContext);
 
   const [isLoading, setLoading] = useState(false);
   const [post, setPost] = useState();
@@ -45,27 +47,11 @@ const VideoTab = (props) => {
     }
   }, [isFocused]);
 
-  const userToken = useSelector((state) => state.auth.userData.token);
+  const userToken = userTokens
+ 
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
-
-    return authorization;
-  }
-
-  const auth = extractAuthorization(userToken);
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const auth = userToken
+  const userId = userInfo.authenticated_user.user_id
 
   console.log("-------------", post);
 

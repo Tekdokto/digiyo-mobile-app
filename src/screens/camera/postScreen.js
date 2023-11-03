@@ -21,7 +21,6 @@ import { WIDTH, HEIGHT } from "../../constants/sizes";
 import ThemeContext from "../../theme/ThemeContext";
 import { Video } from "expo-av";
 import { createPosts } from "../../redux/actions/auth";
-import { useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native-paper";
 import axios from "axios";
 
@@ -31,10 +30,14 @@ import { CREATE_POSTS } from "../../config/urls";
 import { showError } from "../../utils/helperFunctions";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../context/AuthContext";
 
 const { width } = Dimensions.get("window");
 
 const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
+  
+  const { userInfo, userTokens } = useContext(AuthContext);
+
   const theme = useContext(ThemeContext);
 
   const navigate = useNavigation();
@@ -69,24 +72,9 @@ const PostScreen = ({ navigation, cancel, postUri, imgUrl, isVid }) => {
   // const [sharePost, setSharePost] = useState(true);
   // const switchSharePost = () => setSharePost((sharePost) => !sharePost);
 
-  const userToken = useSelector((state) => state.auth.userData.token);
+  const userToken = userTokens
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
-
-    return authorization;
-  }
-
-  const auth = extractAuthorization(userToken);
+  const auth = userToken;
 
   const filePath = postUri ?? imgUrl;
 

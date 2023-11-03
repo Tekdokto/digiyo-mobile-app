@@ -4,7 +4,6 @@ import { useIsFocused } from '@react-navigation/native';
 import { showError } from '../../utils/helperFunctions';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import ThemeContext from '../../theme/ThemeContext';
 import { useEffect } from 'react';
 import { getBlockedUsers } from '../../redux/actions/auth';
@@ -18,10 +17,13 @@ import { Ionicons } from '@expo/vector-icons'
 import TextComp from '../../components/TextComp';
 import { ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { AuthContext } from '../../context/AuthContext';
 
 const BlockListScreen = ({ navigation, isHeader }) => {
 
-    const user = useSelector((state) => state.auth.userData.token);
+  const { userInfo, userTokens } = useContext(AuthContext);
+
+    const user = userTokens;
     console.log("userData", user)
   
     const theme = useContext(ThemeContext);

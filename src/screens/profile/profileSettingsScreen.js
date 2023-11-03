@@ -23,7 +23,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HEIGHT } from "../../constants/sizes";
 import { saveUserData } from "../../redux/reducers/auth";
 import store from "../../redux/store";
-import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/AuthContext";
 // import MyStatusBar from "../components/myStatusBar";
@@ -37,8 +36,6 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
   const { logout } = useContext(AuthContext)
 
   // console.log("route des",profile)
-
-  // const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
 
   const navigate = useNavigation()
 

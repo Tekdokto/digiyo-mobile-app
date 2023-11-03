@@ -13,21 +13,24 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
 import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
-import { Pressable } from "react-native";
 import { SEARCH } from "../../config/urls";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native";
 import { HEIGHT, WIDTH } from "../../constants/sizes";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Video } from "expo-av";
+import { AuthContext } from "../../context/AuthContext";
 
 const { width } = Dimensions.get("window");
 
 const SearchScreen = ({ navigation }) => {
+
   const theme = useContext(ThemeContext);
+
+  const { userInfo, userTokens } = useContext(AuthContext);
+
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
@@ -44,31 +47,11 @@ const SearchScreen = ({ navigation }) => {
 
   // console.log(item);
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
+  const userToken = userTokens;
 
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
+  const auth = userToken
 
-    return authorization;
-  }
-
-  const userToken = useSelector((state) => state.auth.userData.token);
-
-  const auth = extractAuthorization(userToken);
-  // const userId = useSelector(
-  //   (state) => state.auth.userData.authenticated_user.user_id
-  // );
-
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const userId = userInfo.authenticated_user.user_id;
 
   // console.log(auth)
 

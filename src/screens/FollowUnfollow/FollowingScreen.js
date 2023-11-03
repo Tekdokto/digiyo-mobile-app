@@ -14,11 +14,15 @@ import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
 import { FOLLOW, FOLLOW_TOGGLE } from "../../config/urls";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../context/AuthContext";
+
 
 const FollowingScreen = (props,{ navigation, isHeader }) => {
+
   const theme = useContext(ThemeContext);
+
+  const { userInfo, userTokens } = useContext(AuthContext);
 
   const { t, i18n } = useTranslation();
 
@@ -45,27 +49,10 @@ const FollowingScreen = (props,{ navigation, isHeader }) => {
 
   const [followingData, setFollowingData] = useState([]);
 
-  function extractAuthorization(cookieString) {
-    const cookies = cookieString.split(";");
-    let authorization = "";
+  const userToken = userTokens;
 
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("Authorization=")) {
-        authorization = cookie.substring("Authorization=".length);
-        break;
-      }
-    }
-
-    return authorization;
-  }
-
-  const userToken = useSelector((state) => state.auth.userData.token);
-
-  const auth = extractAuthorization(userToken);
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const auth = userToken
+  const userId = userInfo.authenticated_user.user_id;
 
   // console.log(auth)
 

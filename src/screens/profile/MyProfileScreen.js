@@ -16,8 +16,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useContext } from "react"; 
 import { myProifile } from "../../redux/actions/auth";
 import ThemeContext from "../../theme/ThemeContext";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -31,6 +30,7 @@ import { ACCENT_COLOR, PRIMARY_COLOR } from "../../constants/colors";
 import TextComp from "../../components/TextComp";
 import { Share } from "react-native";
 import { ActivityIndicator } from "react-native";
+import { AuthContext } from "../../context/AuthContext";
 
 const HEADER_HEIGHT = 250;
 
@@ -40,10 +40,15 @@ const identity = (v) => v + "";
 const Header = () => {
   const navigation = useNavigation();
 
-  const user = useSelector((state) => state.auth.userData);
   // console.log("userData", userData)
-
+  
   const theme = useContext(ThemeContext);
+  
+  const { userInfo, userTokens } = useContext(AuthContext);
+
+  const user = userTokens;
+  
+  console.log("userInfo", userInfo)
 
   const [isLoading, setLoading] = useState(false);
   const [profile, setProfile] = useState(false);
@@ -51,7 +56,7 @@ const Header = () => {
   const isFocused = useIsFocused();
 
   const onFetchProfile = async () => {
-    let token = user.token;
+    let token = user;
     console.log("token ---------- ", token);
     setLoading(true);
     try {
@@ -285,7 +290,7 @@ const MyProfileScreen = () => {
           </View>
 
           {/* Render the content of the selected tab */}
-          {/* {renderTabContent()} */}
+          {renderTabContent()}
         </View>
       </ScrollView>
     </>

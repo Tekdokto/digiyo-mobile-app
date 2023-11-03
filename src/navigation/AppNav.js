@@ -38,7 +38,6 @@ import {
   import OtherUserProfileScreen from "../screens/otherUserPropfile/otherUserProfileScreen"; 
   import MessagesScreen from "../screens/messages";
   import Conversations from "../components/Conversations";
-//   import { useSelector } from "react-redux";
   import UserProfilePostScreen from "../screens/userProfilePostScreen/UserProfilePostScreen";
   import { myProifile } from "../redux/actions/auth";
   import { showError } from "../utils/helperFunctions";
@@ -50,7 +49,6 @@ import {
   import BlockListScreen from "../screens/profile/BlockedList";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator } from "react-native";
-  // import { useSelector } from 'react-redux';
   
   // const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -138,7 +136,7 @@ function AuthScreens() {
   function AllScreenTabs() {
     return (
       <ScreenTabs.Navigator
-        initialRouteName="MyProfileScreen"
+        initialRouteName="HomeScreen"
         screenOptions={{ headerShown: false }}
       >
         <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />
@@ -239,8 +237,6 @@ function AuthScreens() {
   
   const menuIcons = (route, focused) => {
     const theme = useContext(ThemeContext);
-  
-    // const user = useSelector((state) => state.auth.userData.token);
   
     const [isLoading, setLoading] = useState(false);
     const [profile, setProfile] = useState(false);

@@ -90,9 +90,8 @@ import {
     const userToken = useSelector((state) => state.auth.userData.token);
   
     const auth = extractAuthorization(userToken);
-    const userId = useSelector(
-      (state) => state.auth.userData.authenticated_user.user_id
-    );
+    const userId = userInfo.authenticated_user.user_id;
+
   
     // console.log(auth)
   
@@ -1166,9 +1165,7 @@ export const Header = (props) => {
   const userToken = useSelector((state) => state.auth.userData.token);
 
   const auth = extractAuthorization(userToken);
-  const userId = useSelector(
-    (state) => state.auth.userData.authenticated_user.user_id
-  );
+  const userId = userInfo.authenticated_user.user_id;
 
   console.log("first", props);
 
