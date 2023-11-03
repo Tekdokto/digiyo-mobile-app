@@ -28,6 +28,18 @@ export const userLogin = (data) => {
   // dispatch(saveUserData(data));
 };
  
+export const fetchUserProfile = (token) => {
+  return async (dispatch) => {
+    try {
+      const res = await myProifile(token);
+      dispatch({ type: 'FETCH_USER_PROFILE', payload: res.authenticated_user });
+    } catch (error) {
+      console.log("Profile fetch error:", error);
+    }
+  };
+};
+
+
 export const userSignup = (data) => {
   return apiPost(SIGNUP_API, data,
     {headers: {

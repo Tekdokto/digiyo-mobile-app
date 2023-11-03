@@ -14,11 +14,14 @@ import { userLogin } from '../../redux/actions/auth';
 import TextInputComp from '../../components/TextInputComp';
 import { showError } from '../../utils/helperFunctions';
 import TextComp from '../../components/TextComp';
+import { AuthContext } from '../../context/AuthContext';
+import { showMessage } from 'react-native-flash-message';
 
 
 export default function LoginScreen() {
     const navigation = useNavigation();
     const theme = useContext(ThemeContext)
+    const { login } = useContext(AuthContext)
 
     const [email, setUserName] = useState('')  
     const [password, setPassword] = useState('')
@@ -26,37 +29,30 @@ export default function LoginScreen() {
     const [loading, setLoading] = useState(false)
     
     const onPressLogin = async() => { 
-        
-            setLoading(true)
-            let data  = {
-                email:email, 
-                password:password
-            }
-            // console.log("empty =-=-= emsopidosn ", data)
-            if (data.password != "" && data.email != "" ) {
-                
-                try {
-                    let res = await userLogin(data)
-                    // console.log("response -------", data)
-                    // console.log("response result -------", res)
-                    setLoading(false)
-                    // console.log(" ---------- -========", res.data)
-                    // console.log(" ---------- -========", res.data.email)
-                    // showMessage(res.status)
-                    // navigation.replace("HomeScreen", { item: res.data.email})
-                } catch (error) {
-                    showError(error.message)
-                    // console.log("signup error -------", error )
-                    // console.log("signup error data -------", data )
-                    setLoading(false)
-                }
-            }
-            else {
-                showError("fields must not be empty")
-                setLoading(false)
-             }
-        // }
-        // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+        // setLoading(true)
+        let data  = {
+            email:email, 
+            password:password
+        }
+        // console.log("empty =-=-= emsopidosn ", data)
+        if (data.password == "" && data.email == "" ) {
+            // try {
+            //     let res = await userLogin(data)
+            //     setLoading(false)
+            //     // console.log(" ---------- -========", res.data)
+            //     showMessage("successful")
+            // } catch (error) {
+            //     showError(error.message)
+            //     // console.log("signup error -------", error )
+            //     setLoading(false)
+            // }
+            showError("fields must not be empty")
+        }
+        // else {
+        //     // setLoading(false)
+        //     }
+    // }
+    // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
     }
 
   return (
@@ -135,7 +131,12 @@ export default function LoginScreen() {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={onPressLogin}
+                            <TouchableOpacity onPress={() => {
+                                onPressLogin()
+                                login(email, password)
+                                }
+                            }
+                            // <TouchableOpacity onPress={onPressLogin}
                             style={[ ]}
                             >
                                 {loading ? (

@@ -40,7 +40,7 @@ const identity = (v) => v + "";
 const Header = () => {
   const navigation = useNavigation();
 
-  const user = useSelector((state) => state.auth.userData.token);
+  const user = useSelector((state) => state.auth.userData);
   // console.log("userData", userData)
 
   const theme = useContext(ThemeContext);
@@ -285,7 +285,7 @@ const MyProfileScreen = () => {
           </View>
 
           {/* Render the content of the selected tab */}
-          {renderTabContent()}
+          {/* {renderTabContent()} */}
         </View>
       </ScrollView>
     </>

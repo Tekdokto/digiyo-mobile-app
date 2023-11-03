@@ -67,9 +67,11 @@ export const Header = (props) => {
     const [followersData, setFollowersData] = useState([]);
   // Assuming you have followersData (an array) and the_id defined elsewhere
   
-  const isFollowing = followersData.some((follower) => follower.user_id === props.user.user_id);
+  const [isFollowing, setisFollowing] = useState(followersData.some((follower) => follower.user_id === props.user.user_id))
   const isBlocking = theBlocks.some((blocks) => blocks.user_id === props.user.user_id);
 
+  console.log("isFollowing", isFollowing)
+  console.log("isblisBlocking",isBlocking)
   function tr(key) {
     return t(`otherUserProfileScreen:${key}`);
   }
@@ -177,7 +179,7 @@ export const Header = (props) => {
     } catch (error) {
       console.log(error);
     }
-    setFollowCountState(!isFollowing)
+    setisFollowing(!isFollowing)
     setIsLoading(false);
   };
 
@@ -355,7 +357,7 @@ export const Header = (props) => {
                   <Text
                     style={{ ...Fonts.SemiBold14white, color: theme.color }}
                   >
-                    {props.user.follower_count}
+                    {props.user.following_count}
                   </Text>
                   <Text
                     numberOfLines={1}
@@ -481,17 +483,8 @@ export const Header = (props) => {
                     </>
                   ) : (
                     <TouchableOpacity onPress={followUser}>
-                      {followCountState ? (
                         <Text style={{ ...Fonts.Bold18white }}>
-                          unfollow
-                        </Text>
-
-                      ) : (
-
-                        <Text style={{ ...Fonts.Bold18white }}>
-                          Follow
-                        </Text>
-                      )}
+                      {isFollowing ?  "unfollow" : "Follow" }</Text> 
                     </TouchableOpacity>
                   )}
                 </AwesomeButton>

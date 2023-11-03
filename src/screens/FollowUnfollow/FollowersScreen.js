@@ -55,9 +55,9 @@ const FollowersScreen = (props, { navigation, isHeader }) => {
     return authorization;
   }
 
-  const userToken = useSelector((state) => state.auth.userData.token);
+  const userToken = useSelector((state) => state.auth.userData);
 
-  const auth = extractAuthorization(userToken);
+  const auth = extractAuthorization(userToken.token);
   const userId = useSelector(
     (state) => state.auth.userData.authenticated_user.user_id
   );

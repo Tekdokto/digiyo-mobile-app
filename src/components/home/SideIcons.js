@@ -79,7 +79,7 @@ const SideIconsComp = () => {
           {/* <Iconify icon="mdi:heart" size={24} color="#900" /> */}
           {/* <Image source={require("../../assets/icons/run.png")}  /> */}
           <Text style={[{ color: theme.color }, styles.text]}>
-            Challenge Match
+            Teams
           </Text>
         </Pressable>
       </View>
@@ -123,7 +123,7 @@ const SideIconsComp = () => {
             />
           </View>
           {/* <Image source={require("../../assets/icons/console.png")} size={20} /> */}
-          <Text style={[{ color: theme.color }, styles.text]}>Gaming</Text>
+          <Text style={[{ color: theme.color }, styles.text]}>Challenge Match</Text>
         </Pressable>
       </View>
     </View>

@@ -26,7 +26,7 @@ const Posts = ({}) => {
   const navigation = useNavigation();
 
   const user = useSelector((state) => state.auth.userData.token);
-  const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
+  // const userId = useSelector((state) => state.auth.userData.authenticated_user.user_id);
 
   // console.log(" get id          ",useSelector((state) => state.auth.userData))
   const [isLoading, setLoading] = useState(false);
@@ -337,7 +337,9 @@ const Posts = ({}) => {
                   >
                     <Pressable
                       onPress={() => {
-                        if (item.author.user_id === userId) {  
+                        if (
+                          // item.author.user_id === 
+                          userId) {  
                           navigation.navigate("MyProfileScreen")
                         } else {
                           navigation.navigate("otherUserProfileScreen" , { item: item } )
@@ -481,11 +483,11 @@ const Posts = ({}) => {
           }}
           />
           )}
-          <CommentsBottomSheet
+          {/* <CommentsBottomSheet
             post_id={openedPostId}
             visible={openCommentBottomSheet} 
             closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
-          />
+          /> */}
     </View>
   );
 };

@@ -25,6 +25,7 @@ import { saveUserData } from "../../redux/reducers/auth";
 import store from "../../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../context/AuthContext";
 // import MyStatusBar from "../components/myStatusBar";
 
 const { dispatch } = store
@@ -33,9 +34,11 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
 
   const { profile } = route.params
 
+  const { logout } = useContext(AuthContext)
+
   // console.log("route des",profile)
 
-  const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
+  // const userId = useSelector(state=>state.auth.userData.authenticated_user.user_id)
 
   const navigate = useNavigation()
 
@@ -245,14 +248,16 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
       <LogoutModal
         visible={openLogoutModal}
         logoutModalClose={() => setOpenLogoutModal(false)}
-        logoutClickHandler={() => {
-          setOpenLogoutModal(false);
-          AsyncStorage.removeItem('userData').then((res) => {
-            dispatch(saveUserData())
-          })
-          console.log(userId)
-          navigate.navigate("LoginScreen");
-        }}
+        logoutClickHandler={ () => logout()
+        //   async () => {
+        //   setOpenLogoutModal(false);
+        //   await AsyncStorage.removeItem('userData').then((res) => {
+        //     dispatch(saveUserData())
+        //   })
+        //   console.log(userId)
+        //   navigate.replace("LoginScreen");
+        // }
+      }
       />
 
       <RateModal
