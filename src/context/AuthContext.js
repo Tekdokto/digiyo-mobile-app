@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
     axios
       .post(LOGIN_API, { email, password })
       .then((res) => {
-        console.log("res                ", res.data);
+        console.log("res                ", res.data.data.authenticated_user);
         console.log("res                ", res.data.data.token);
-        setUserInfo(res.data.data);
+        setUserInfo(res.data.data.authenticated_user.user_id);
         setUserTokens(res.data.data.token);
         AsyncStorage.setItem("userInfo", JSON.stringify(res.data.data));
         AsyncStorage.setItem("userTokens", res.data.data.token);
@@ -42,11 +42,12 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setIsLoading(true);
+    setUserInfo(null);
     setUserTokens(null);
-    AsyncStorage.removeItem("userTokens");
-    AsyncStorage.removeItem("userInfo");
+    await AsyncStorage.removeItem("userTokens");
+    await AsyncStorage.removeItem("userInfo");
     setIsLoading(false);
   };
 
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       let token = await AsyncStorage.getItem("userTokens");
       let userInfo = await AsyncStorage.getItem("userInfo");
       userInfo = JSON.parse(userInfo);
-      if (userInfo) {
+      if (token) {
         setUserTokens(token);
         setUserInfo(userInfo);
       }

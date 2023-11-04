@@ -41,7 +41,7 @@ const UserProfilePostScreen = ({ navigation, route }) => {
   // const [saved, setSaves] = useState([]);
   // getPostId(postsArray.map((postId) => postId.post_id))
 
-    const userData = userInfo.authenticated_user.user_id
+    const userData = userInfo.user_id
     // console.log("data- - - - - ", userData)
     const [visibleVideos, setVisibleVideos] = useState(
         postsArray.map(() => true)

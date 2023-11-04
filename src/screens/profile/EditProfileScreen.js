@@ -116,7 +116,7 @@ import { AuthContext } from "../../context/AuthContext";
     const userToken = userTokens;
   
     const auth = userToken
-    const userId = userInfo.authenticated_user.user_id;
+    const userId = userInfo.user_id;
 
 
     // console.log(auth)

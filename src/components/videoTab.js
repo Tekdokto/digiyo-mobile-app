@@ -51,7 +51,7 @@ const VideoTab = (props) => {
  
 
   const auth = userToken
-  const userId = userInfo.authenticated_user.user_id
+  const userId = userInfo
 
   console.log("-------------", post);
 

@@ -91,7 +91,7 @@ export const Header = (props) => {
 
   const auth = userToken
  
-  const userId = userInfo.authenticated_user.user_id;
+  const userId = userInfo.user_id;
 
   // console.log("first", props);
 

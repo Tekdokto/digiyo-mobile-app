@@ -48,7 +48,7 @@ const FollowersScreen = (props, { navigation, isHeader }) => {
   const userToken = userTokens;
 
   const auth = userToken
-  const userId = userInfo.authenticated_user.user_id
+  const userId = userInfo
 
   // console.log(auth)
 

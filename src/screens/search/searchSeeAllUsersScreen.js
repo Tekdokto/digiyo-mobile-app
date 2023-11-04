@@ -49,7 +49,7 @@ const SearchSeeAllUsersScreen = ({ navigation, route }) => {
   
   // console.log(" paaaaaaaaaaaaaaaarrrrrrrrrrrr",post )
 
-  const userId = userInfo.authenticated_user.user_id;
+  const userId = userInfo.user_id;
 
   const renderItem = ({ item, index }) => {
     // const firstItem = index === 0 || index === 1;
