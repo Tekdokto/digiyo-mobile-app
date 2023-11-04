@@ -15,7 +15,7 @@ import axios from 'axios';
 
 export default function FoundersScreen({ route }) {
 
-    const { item } = route.params
+    // const { item } = route.params
     const navigation = useNavigation();
 
     const [ open, setOpen ] = useState(false)

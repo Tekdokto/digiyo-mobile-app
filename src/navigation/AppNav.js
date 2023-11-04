@@ -113,7 +113,7 @@ if (isLoading) {
 function AuthScreens() {
     return (
       <ScreenTabs.Navigator
-        initialRouteName="LoginScreen"
+        initialRouteName="FoundersScreen"
         screenOptions={{ headerShown: false }}
       >
         <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />

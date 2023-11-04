@@ -1,8 +1,9 @@
 // export const API_BASE_URL = "http://localhost:3000"
-export const API_BASE_URL = "https://api.digiyo.com"
-export const TEST_API_BASE_URL = "https://apitest.digiyo.com"
+export const API_BASE_URL = 
+// "https://api.digiyo.com"
+"https://apitest.digiyo.com"
 
-export const getApiURL = (endpoint) => TEST_API_BASE_URL + endpoint
+export const getApiURL = (endpoint) => API_BASE_URL + endpoint
  
 export const SIGNUP_API = getApiURL('/auth/signup');
 export const LOGIN_API = getApiURL('/auth/login');
