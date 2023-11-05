@@ -1,51 +1,43 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { CardField, useConfirmPayment, useStripe } from '@stripe/stripe-react-native';
+import { CardField, useStripe } from '@stripe/stripe-react-native';
 import axios from 'axios';
-import { API_BASE_URL } from '../../config/urls';
+import { JOIN_FOUNDERS } from '../../config/urls';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { PRIMARY_COLOR } from '../../constants/colors';
 
-const PaymentForm = () => {
+const PaymentForm = (props) => {
+  
+  const { userTokens } = useContext(AuthContext)
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
-  const { createPaymentMethod, confirmPayment } = useConfirmPayment();
+  const { createPaymentMethod, confirmPayment } = useStripe();
 
-  // const fetchPaymentIntentClientSecret = async () => {
-  //   const response = await fetch('http://localhost:3200/checkout/payment', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       currency: 'usd',
-  //     }),
-  //   });
-  //   const {clientSecret} = await response.json();
+  const navigate = useNavigation()
 
-  //   return clientSecret;
-  // };
 
   const handlePayment = async () => {
+
+    setError(null)
     setProcessing(true);
+
     const billingDetails = {
-      email: 'jenny.rosen@example.com',
+      // email: "props@email.com"
+      email: props.email
     };
 
     if (!createPaymentMethod) {
       console.error('createPaymentMethod not available');
       return;
     }
-    const clientSecret = { 
-        amount: 1099,
-        currency: 'usd',
-        payment_method_types: ['card'],
-    }
-    // const clientSecret = await fetchPaymentIntentClientSecret();
 
-
-    const { paymentMethod, error } = await createPaymentMethod( clientSecret, {
+    const { paymentMethod, error } = await createPaymentMethod({
       paymentMethodType: 'Card',
       paymentMethodData: {billingDetails}
+      ,
     });
 
     if (error) {
@@ -53,21 +45,35 @@ const PaymentForm = () => {
       setProcessing(false);
       console.log('[error]', error);
     } else {
+      console.log('Success from promise', paymentMethod);
+      console.log('Success from promise', paymentMethod.id);
+      console.log('Success from promise', paymentMethod.billingDetails.email);
       try {
-        const response = await axios.post('http://localhost:3200/checkout/payment', {
-          amount: 1000,
-          paymentMethodId: paymentMethod.id,
-        });
 
-        if (response.data.success) {
-          console.log('Successful payment');
-          setSuccess(true);
+        const config = {
+          method: "post",
+          url: JOIN_FOUNDERS,
+          headers: {
+            "Authorization": userTokens,
+            "Content-Type": "application/json"
+          },
+          data: {
+            "email" : props.email,
+            "intent_id": paymentMethod.id
+          },
         }
+
+        axios(config).then((res) => {
+          console.log("yep    we in", res.data)
+          navigate.replace("HomeScreen")
+        }).catch((error) => {
+          console.log("bopw    we oitr ", error)
+        }) 
       } catch (error) {
         console.log('Error', error);
       } finally {
-        setProcessing(false);
       }
+      setProcessing(false);
     }
   };
 
@@ -98,7 +104,7 @@ const PaymentForm = () => {
             onPress={handlePayment}
             disabled={processing}
             style={{
-              backgroundColor: '#66ff66',
+              backgroundColor: PRIMARY_COLOR,
               alignItems: 'center',
               justifyContent: 'center',
               paddingHorizontal: 15,

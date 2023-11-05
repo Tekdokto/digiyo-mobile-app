@@ -49,6 +49,7 @@ import {
   import BlockListScreen from "../screens/profile/BlockedList";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator } from "react-native";
+import JoinFoundersPaymentScreen from "../screens/foundersclubscreen/JoinFoundersClubPayment/joinFoundersPaymentScreen";
   
   // const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -113,7 +114,7 @@ if (isLoading) {
 function AuthScreens() {
     return (
       <ScreenTabs.Navigator
-        initialRouteName="FoundersScreen"
+        initialRouteName="LoginScreen"
         screenOptions={{ headerShown: false }}
       >
         <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />
@@ -121,6 +122,7 @@ function AuthScreens() {
         <ScreenTabs.Screen name="SignupScreen" component={SignupScreen} />
         <ScreenTabs.Screen name="FoundersScreen" component={FoundersScreen} />
         <ScreenTabs.Screen name="OTPScreen" component={OTPScreen} />
+        <ScreenTabs.Screen name="joinFoundersPaymentScreen" component={JoinFoundersPaymentScreen} />
         <ScreenTabs.Screen
           name="ForgotPasswordScreen"
           component={ForgotPassworScreen}
@@ -146,6 +148,7 @@ function AuthScreens() {
         <ScreenTabs.Screen name="FollowersScreen" component={FollowersScreen} />
         <ScreenTabs.Screen name="FollowingScreen" component={FollowingScreen} />
         <ScreenTabs.Screen name="CameraScreen" component={CameraScreen} />
+        <ScreenTabs.Screen name="joinFoundersPaymentScreen" component={JoinFoundersPaymentScreen} />
         <ScreenTabs.Screen
           name="messageUserScreen"
           component={MessageUserScreen}

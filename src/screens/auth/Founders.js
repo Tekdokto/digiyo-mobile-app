@@ -15,7 +15,7 @@ import axios from 'axios';
 
 export default function FoundersScreen({ route }) {
 
-    // const { item } = route.params
+    const { item } = route.params
     const navigation = useNavigation();
 
     const [ open, setOpen ] = useState(false)
@@ -75,18 +75,20 @@ export default function FoundersScreen({ route }) {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => setOpen(!open)
+                            <TouchableOpacity onPress={() => navigation.push("JoinFoundersPaymentScreen", {item: item})
                             }
                             style={[ ]}
                             >
-                                {open ? (
+                                {/* {open ? (
                                 <Modal height={{}}>
                                     <View style={{height:HEIGHT*0.3, backgroundColor: theme.backgroundColor}}>
-                                        <JoinFoundersPaymentScreen />
+                                        <JoinFoundersPaymentScreen 
+                                        email={item}
+                                         />
                                     </View>
                                 </Modal>
 
-                                ) : (<></>) }
+                                ) : (<></>) } */}
                                 <Text 
                                 style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
                                 >Join</Text>

@@ -109,8 +109,8 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
     },
     {
       key: "5",
-      title: tr("whoPost"),
-      navigateTo: "whoCanSeeYourPostScreen",
+      title: "Join Founders Club",
+      navigateTo: "joinFoundersPaymentScreen",
     },
     {
       key: "6",
@@ -125,7 +125,8 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
 
   const renderItem = ({ item, index }) => {
     const firstItem = index === 0;
-
+    const email = profile.email
+    console.log("i want email", )
     return (
       <View
         style={{
@@ -138,7 +139,12 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
             if (index == 2) {
               // return shareMessage();
               navigation.navigate(item.navigateTo, {profile: profile});
-            } else
+            } 
+            if (index == 3) {
+              // return shareMessage();
+              navigation.navigate(item.navigateTo, {item: email});
+            } 
+            else
              if (index === profileSettingList.length - 2) {
               return setOpenRateModal(true);
             } else {
