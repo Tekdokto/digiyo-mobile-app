@@ -25,6 +25,7 @@ import { saveUserData } from "../../redux/reducers/auth";
 import store from "../../redux/store";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/AuthContext";
+import FoundersClubSuccessModal from "../../components/foundersClubSuccessModal";
 // import MyStatusBar from "../components/myStatusBar";
 
 const { dispatch } = store
@@ -35,7 +36,7 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
 
   const { logout } = useContext(AuthContext)
 
-  // console.log("route des",profile)
+  console.log("route des",profile.is_premium)
 
   const navigate = useNavigation()
 
@@ -86,6 +87,8 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
 
   const [openRateModal, setOpenRateModal] = useState(false);
+
+  const [openFoundersModal, setOpenFoundersModal] = useState(false);
 
   const profileSettingList = [
     {
@@ -142,7 +145,11 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
             } 
             if (index == 3) {
               // return shareMessage();
-              navigation.navigate(item.navigateTo, {item: email});
+              if (profile.is_premium) {
+                setOpenFoundersModal(true)
+              } else {
+                navigation.navigate(item.navigateTo, {item: email});
+              }
             } 
             else
              if (index === profileSettingList.length - 2) {
@@ -266,6 +273,10 @@ const ProfileSettingsScreen = ({ navigation, route }) => {
       <RateModal
         visible={openRateModal}
         rateModalClose={() => setOpenRateModal(false)}
+      />
+      <FoundersClubSuccessModal
+        visible={openFoundersModal}
+        rateModalClose={() => setOpenFoundersModal(false)}
       />
     </View>
   );

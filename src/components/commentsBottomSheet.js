@@ -19,6 +19,7 @@ import axios from "axios";
 import { GET_POSTS_COMMENTS } from "../config/urls";
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native";
+import { AuthContext } from "../context/AuthContext";
 
 const { height } = Dimensions.get("window");
 

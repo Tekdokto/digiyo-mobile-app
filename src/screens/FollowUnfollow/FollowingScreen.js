@@ -25,7 +25,7 @@ const FollowingScreen = (props,{ navigation, isHeader }) => {
   const { userInfo, userTokens } = useContext(AuthContext);
 
   const { t, i18n } = useTranslation();
-
+console.log("first propds gagidn ", props)
   const isRtl = i18n.dir() == "rtl";
 
   const navigate = useNavigation()

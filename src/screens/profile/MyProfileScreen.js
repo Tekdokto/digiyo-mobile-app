@@ -150,30 +150,34 @@ const Header = () => {
             </Text>
           </View>
           <View style={UserFollowers.View}>
-            <View style={UserFollowersText.View}>
-              <Text
-                style={[UserFollowersTextNumber.Text, { color: theme.color }]}
-              >
-                {profile.follower_count}
-              </Text>
-              <Text
-                style={[UserFollowersTextDesc.Text, { color: theme.color }]}
-              >
-                Following
-              </Text>
-            </View>
-            <View style={UserFollowersText.View}>
-              <Text
-                style={[UserFollowersTextNumber.Text, { color: theme.color }]}
-              >
-                {profile.following_count ?? 0}
-              </Text>
-              <Text
-                style={[UserFollowersTextDesc.Text, { color: theme.color }]}
-              >
-                Followers
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.push("Following", {item: profile })}>
+              <View style={UserFollowersText.View}>
+                <Text
+                  style={[UserFollowersTextNumber.Text, { color: theme.color }]}
+                >
+                  {profile.follower_count}
+                </Text>
+                  <Text
+                    style={[UserFollowersTextDesc.Text, { color: theme.color }]}
+                  >
+                    Following
+                  </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.push("Followers", {item: profile })}>
+              <View style={UserFollowersText.View}>
+                <Text
+                  style={[UserFollowersTextNumber.Text, { color: theme.color }]}
+                >
+                  {profile.following_count ?? 0}
+                </Text>
+                <Text
+                  style={[UserFollowersTextDesc.Text, { color: theme.color }]}
+                >
+                  Followers
+                </Text>
+              </View>
+            </TouchableOpacity>
             <View style={UserFollowersText.View}>
               <Text
                 style={[UserFollowersTextNumber.Text, { color: theme.color }]}
@@ -221,13 +225,13 @@ const MyProfileScreen = () => {
   const data = [1, 2, 3, 4, 5]; // Sample data for FlatLists
 
   const renderTabContent = () => {
-    if (selectedTab === "Posts") {
+    // if (selectedTab === "Posts") {
       return <VideoTab  />;
-    } else if (selectedTab === "Followers") {
-      return <FollowersScreen isHeader={false} />;
-    } else if (selectedTab === "Following") {
-      return <FollowingScreen />;
-    }
+    // } else if (selectedTab === "Followers") {
+    //   return <FollowersScreen isHeader={false} />;
+    // } else if (selectedTab === "Following") {
+    //   return <FollowingScreen />;
+    // }
   };
 
   return (
@@ -252,16 +256,17 @@ const MyProfileScreen = () => {
               <Text
                 style={{
                   paddingHorizontal: 20,
-                  color: selectedTab === "Posts" ? "blue" : "black",
-                  backgroundColor:
-                    selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
+                  // color: selectedTab === "Posts" ? "blue" : "black",
+                  // backgroundColor:
+                  //   selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
                   paddingVertical: 10,
+                  fontFamily: "Bold"
                 }}
               >
                 Posts
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
+            {/* <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
               <Text
                 style={{
                   paddingHorizontal: 20,
@@ -273,8 +278,8 @@ const MyProfileScreen = () => {
               >
                 Followers
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedTab("Following")}>
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity onPress={() => setSelectedTab("Following")}>
               <Text
                 style={{
                   paddingHorizontal: 20,
@@ -286,7 +291,7 @@ const MyProfileScreen = () => {
               >
                 Following
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           {/* Render the content of the selected tab */}

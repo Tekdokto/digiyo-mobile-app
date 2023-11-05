@@ -5,10 +5,10 @@ import FollowersScreen from './FollowersScreen'
 const Followers = () => {
   return (
     <>
-        <View>
+        {/* <View> */}
             <FollowersScreen 
             isHeader={true} />
-        </View>
+        {/* </View> */}
     </>
   )
 }

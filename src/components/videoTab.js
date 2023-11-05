@@ -57,7 +57,7 @@ const VideoTab = (props) => {
 
   const userPosts = async () => {
 
-    const id = props.userId ?? userId
+    const id = props.userId ?? userId.authenticated_user.user_id
 
     const config = {
       method: "get",
@@ -68,13 +68,15 @@ const VideoTab = (props) => {
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
       },
     };
+    console.log("congifig           ",config)
+    console.log( "--------------------",userId.authenticated_user.user_id,"-----------", props.userId)
     try {
       setLoading(true);
       // let res = getUserPosts(auth,  userId)
       await axios(config)
         .then((response) => {
           setPost(response.data.data);
-          console.log(response.data);
+          console.log("postssssssssss" ,response.data);
         })
         .catch((error) => {
           console.log("error 1111111111111", error);

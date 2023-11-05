@@ -41,7 +41,7 @@ import {
   import UserProfilePostScreen from "../screens/userProfilePostScreen/UserProfilePostScreen";
   import { myProifile } from "../redux/actions/auth";
   import { showError } from "../utils/helperFunctions";
-  import AltProfile from "../screens/profile/altProfile";
+  // import AltProfile from "../screens/profile/altProfile";
   import { PRIMARY_COLOR } from "../constants/colors";
   import EditProfileBioScreen from "../screens/profile/EditProfileBioScreen";
   import SearchSeeAllUsersScreen from "../screens/search/searchSeeAllUsersScreen";
@@ -50,6 +50,8 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator } from "react-native";
 import JoinFoundersPaymentScreen from "../screens/foundersclubscreen/JoinFoundersClubPayment/joinFoundersPaymentScreen";
+import Followers from "../screens/FollowUnfollow/Followers";
+import Following from "../screens/FollowUnfollow/Following";
   
   // const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -143,10 +145,12 @@ function AuthScreens() {
       >
         <ScreenTabs.Screen name="HomeScreen" component={HomeTabs} />
         <ScreenTabs.Screen name="PostFull" component={FullVideoScreen} />
-        <ScreenTabs.Screen name="altPro" component={AltProfile} />
+        {/* <ScreenTabs.Screen name="altPro" component={AltProfile} /> */}
         <ScreenTabs.Screen name="MyProfileScreen" component={MyProfileScreen} />
         <ScreenTabs.Screen name="FollowersScreen" component={FollowersScreen} />
+        <ScreenTabs.Screen name="Followers" component={Followers} />
         <ScreenTabs.Screen name="FollowingScreen" component={FollowingScreen} />
+        <ScreenTabs.Screen name="Following" component={Following} />
         <ScreenTabs.Screen name="CameraScreen" component={CameraScreen} />
         <ScreenTabs.Screen name="joinFoundersPaymentScreen" component={JoinFoundersPaymentScreen} />
         <ScreenTabs.Screen

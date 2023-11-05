@@ -41,8 +41,8 @@ const UserProfilePostScreen = ({ navigation, route }) => {
   // const [saved, setSaves] = useState([]);
   // getPostId(postsArray.map((postId) => postId.post_id))
 
-    const userData = userInfo.user_id
-    // console.log("data- - - - - ", userData)
+    const userData = userInfo.authenticated_user.user_id
+    console.log("data- - - - - ", userData)
     const [visibleVideos, setVisibleVideos] = useState(
         postsArray.map(() => true)
       );
@@ -108,7 +108,6 @@ const UserProfilePostScreen = ({ navigation, route }) => {
     const config = {
       method: "post",
       url: CREATE_POSTS + "/" + postId[index] + "/like",
-      // data: formdata,
       headers: {
         Authorization: token,
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
@@ -154,7 +153,6 @@ const UserProfilePostScreen = ({ navigation, route }) => {
     const config = { 
       method: "delete", 
       url: CREATE_POSTS + "/" + postId[index] +"/like",
-      // data: formdata,
       headers: {
         Authorization: token,
         "Content-Type": "application/json", // This will set the correct 'Content-Type' header
@@ -196,7 +194,7 @@ const UserProfilePostScreen = ({ navigation, route }) => {
                     viewabilityConfig={{itemVisiblePercentThreshold: 60}}
                     renderItem={({ item, index }) => {
                        let owner = item.author_id === userData ? true : false
-                       console.log('post - - - r - -',item.author_id)
+                       console.log('post - - - r - -',item.author_id, owner)
                       const mediaItems = item.media_items || []; // Ensure media_items is an array
                       const mediaTypes = mediaItems.map((media) => media.type);
                       const mediasUrls = mediaItems.map((media) => media.url.low ); // Ensure a default value for the URL

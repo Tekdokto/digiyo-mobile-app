@@ -46,7 +46,7 @@ const MenuBottomSheet = (props) => {
       const config = {
         method: "delete",
         url: DELETE_POSTS+props.post_id,
-        data: formdata,
+        // data: formdata,
         headers: {
           'Authorization': auth,
           "Content-Type": "application/json", // This will set the correct 'Content-Type' header
