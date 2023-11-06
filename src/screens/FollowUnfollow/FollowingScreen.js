@@ -18,11 +18,13 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/AuthContext";
 
 
-const FollowingScreen = (props,{ navigation, isHeader }) => {
+const FollowingScreen = (props,{ isHeader }) => {
 
   const theme = useContext(ThemeContext);
 
   const { userInfo, userTokens } = useContext(AuthContext);
+
+  const navigation = useNavigation()
 
   const { t, i18n } = useTranslation();
 console.log("first propds gagidn ", props)
@@ -154,7 +156,7 @@ console.log("first propds gagidn ", props)
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-      {isHeader == true ? (
+      {/* {isHeader == true ? ( */}
         <>
         <MyStatusBar />
           <View
@@ -166,9 +168,11 @@ console.log("first propds gagidn ", props)
               paddingHorizontal: Default.fixPadding * 2,
             }}
           >
-            <TouchableOpacity onPress={{
-              // () => navigation.pop()
-              }}>
+            <TouchableOpacity onPress={
+              // {
+              () => navigation.goBack()
+              // }
+              }>
               <Ionicons
                 name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
                 size={25}
@@ -186,9 +190,9 @@ console.log("first propds gagidn ", props)
             </Text>
           </View>
         </>
-      ) : (
-        <></>
-      )}
+      {/* // ) : (
+      //   <></>
+      // )} */}
 
       <FlatList
         data={followingData}

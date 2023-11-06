@@ -29,6 +29,8 @@ const Posts = ({}) => {
   const navigation = useNavigation();
 
   const user = userTokens
+
+  const userId = userInfo.authenticated_user.user_id
  
   const [isLoading, setLoading] = useState(false);
   const [post, setPost] = useState();
@@ -338,8 +340,9 @@ const Posts = ({}) => {
                   >
                     <Pressable
                       onPress={() => {
+                        // console.log(item.author.user_id, userId)
                         if (
-                          // item.author.user_id === 
+                          item.author.user_id ===  
                           userId) {  
                           navigation.navigate("MyProfileScreen")
                         } else {

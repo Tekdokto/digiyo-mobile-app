@@ -15,11 +15,14 @@ import ThemeContext from "../../theme/ThemeContext";
 import { FOLLOW } from "../../config/urls";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 
-const FollowersScreen = (props, { navigation, isHeader }) => {
+const FollowersScreen = (props, { isHeader }) => {
 
   const theme = useContext(ThemeContext);
+
+  const navigation = useNavigation()
 
   const { userInfo, userTokens } = useContext(AuthContext);
 
@@ -50,7 +53,7 @@ const FollowersScreen = (props, { navigation, isHeader }) => {
   const auth = userToken
   const userId = userInfo
 
-  // console.log(auth)
+  console.log('pros',props)
 
   const fetchFollowers = async () => {
     const id = props.userId ?? userId;
@@ -111,8 +114,8 @@ const FollowersScreen = (props, { navigation, isHeader }) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-      {/* <MyStatusBar /> */}
-      {isHeader == true ? (
+      <MyStatusBar />
+      {/* {isHeader == true ? ( */}
         <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -123,29 +126,30 @@ const FollowersScreen = (props, { navigation, isHeader }) => {
         >
           <TouchableOpacity
             onPress={
-              {
-                // () => navigation.pop()
-              }
+              // {
+                () => navigation.pop()
+              // }
             }
           >
             <Ionicons
               name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
               size={25}
-              color={Colors.white}
+              color={theme.color}
             />
           </TouchableOpacity>
           <Text
             style={{
               ...Fonts.SemiBold18white,
+              color: theme.color,
               marginHorizontal: Default.fixPadding * 1.2,
             }}
           >
             {tr("followers")}
           </Text>
         </View>
-      ) : (
+      {/* ) : (
         <></>
-      )}
+      )} */}
 
       <FlatList
         data={followersData}

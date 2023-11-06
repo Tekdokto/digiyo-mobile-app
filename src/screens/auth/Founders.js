@@ -75,20 +75,10 @@ export default function FoundersScreen({ route }) {
                             style={[styles.input, {backgroundColor:PRIMARY_COLOR,}]} 
                             entering={FadeInDown.delay(400).duration(1000).springify()}>
 
-                            <TouchableOpacity onPress={() => navigation.push("JoinFoundersPaymentScreen", {item: item})
+                            <TouchableOpacity onPress={() => navigation.push("joinFoundersPaymentScreen", {item: item})
                             }
                             style={[ ]}
-                            >
-                                {/* {open ? (
-                                <Modal height={{}}>
-                                    <View style={{height:HEIGHT*0.3, backgroundColor: theme.backgroundColor}}>
-                                        <JoinFoundersPaymentScreen 
-                                        email={item}
-                                         />
-                                    </View>
-                                </Modal>
-
-                                ) : (<></>) } */}
+                            > 
                                 <Text 
                                 style={{fontSize: 20, fontWeight:"bold", color:"white", textAlign:"center"}}
                                 >Join</Text>

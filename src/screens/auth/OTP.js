@@ -157,7 +157,8 @@ export default function OTPScreen( route ) {
                                     borderWidth: 2,  
                                     backgroundColor: ACCENT_COLOR,
                                     borderColor: ACCENT_COLOR, 
-                                    borderBlockColor: ACCENT_COLOR}}
+                                    // borderBlockColor: ACCENT_COLOR
+                                }}
                                 handleTextChange={setOtpInput}
                                 handleCellTextChange={handleCellTextChange}
                                 inputCount={6}

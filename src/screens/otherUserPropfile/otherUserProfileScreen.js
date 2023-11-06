@@ -40,12 +40,15 @@ import { FlatList } from "react-native";
 import VideoTab from "../../components/videoTab";
 import { showMessage } from "react-native-flash-message";
 import { AuthContext } from "../../context/AuthContext";
+import { getBlockedUsers } from "../../redux/actions/auth";
 
 export const Header = (props) => {
   // const { item } = route.params;
   const theme = useContext(ThemeContext);
 
   const { userInfo, userTokens } = useContext(AuthContext);
+
+  const profile = props.user
 
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +59,6 @@ export const Header = (props) => {
 
   // const [followCount, setFollowCount] = useState(props.user.follower_count);
   const [followCountState, setFollowCountState] = useState(isFollowing);
-  const [blockState, setBlockState] = useState(isBlocking);
    
   const [theBlocks, setBlocks] = useState([]); 
 
@@ -68,13 +70,20 @@ export const Header = (props) => {
   const isRtl = i18next.dir() == "rtl";
   
     const [followersData, setFollowersData] = useState([]);
-  // Assuming you have followersData (an array) and the_id defined elsewhere
-  
-  const [isFollowing, setisFollowing] = useState(followersData.some((follower) => follower.user_id === props.user.user_id))
-  const isBlocking = theBlocks.some((blocks) => blocks.user_id === props.user.user_id);
+    
+    // Assuming you have followersData (an array) and the_id defined elsewhere
+    const fols = followersData.some((follower) => follower.user_id === props.user.user_id)
+    console.log(fols)
+    const [isFollowing, setisFollowing] = useState(fols)
 
-  console.log("isFollowing", isFollowing)
-  console.log("isblisBlocking",isBlocking)
+    const isBlocking = theBlocks.some((blocks) => blocks.user_id === props.user.user_id);
+    console.log("isblisBlocking",isBlocking)
+    const [blockState, setBlockState] = useState(isBlocking);
+
+  // const [followState, setFollowState ] = useState(isFollowing)
+
+  // console.log("state         ", followState)
+  // console.log("isFollowing", isFollowing)
   function tr(key) {
     return t(`otherUserProfileScreen:${key}`);
   }
@@ -168,6 +177,7 @@ export const Header = (props) => {
     }
     setisFollowing(!isFollowing)
     setIsLoading(false);
+    !fols
   };
 
   // console.log(props);
@@ -187,13 +197,10 @@ export const Header = (props) => {
 
     setIsBlockLoading(true);
 
-    try {
-      // setLoading(true)
-      // let res = getUserPosts(auth,  userId)
+    try { 
       await axios(config)
-        .then((response) => {
-          // setUser(response.data);
-          console.log(" user blockked", response);
+        .then((response) => { 
+          console.log(" user blockked", response.data);
         })
         .catch((error) => {
           console.log("blockkk error 1111111111111", error);
@@ -202,15 +209,16 @@ export const Header = (props) => {
     } catch (error) {
       console.log(error);
     }
-    setBlockState(!isBlocking)
+    setBlockState(!blockState)
     setIsBlockLoading(false);
+    !isBlocking
   };
 
  
   const onFetchBlocked = async () => {
-    let token = user;
+    let token = auth;
     console.log("token ---------- ", token);
-    setLoading(true);
+    // setLoading(true);
     try {
       let res = await getBlockedUsers(token);
       console.log("response -------", res);
@@ -218,10 +226,10 @@ export const Header = (props) => {
       setBlocks(res);
       // setLoading(false);
     } catch (error) {
-      showError(error.message);
+      // showError(error.message);
       console.log("profile error -------", error);
     }
-    setLoading(false);
+    // setLoading(false);
   };
  
   // useEffect(() => {
@@ -330,7 +338,7 @@ export const Header = (props) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.push("userFollowingScreen")}
+                  onPress={() => navigation.push("Followers", {item: profile })}
                   style={{
                     flex: 3.5,
                     justifyContent: "center",
@@ -368,7 +376,7 @@ export const Header = (props) => {
                   }}
                 >
                   <TouchableOpacity
-                    onPress={() => navigation.push("followersScreen")}
+                    onPress={() => navigation.push("Following", {item: profile })}
                     style={{ justifyContent: "center", alignItems: "center" }}
                   >
                     <Text
@@ -471,7 +479,7 @@ export const Header = (props) => {
                   ) : (
                     <TouchableOpacity onPress={followUser}>
                         <Text style={{ ...Fonts.Bold18white }}>
-                      {isFollowing ?  "unfollow" : "Follow" }</Text> 
+                      {fols ?  "unfollow" : "Follow" }</Text> 
                     </TouchableOpacity>
                   )}
                 </AwesomeButton>
@@ -560,28 +568,35 @@ export const Header = (props) => {
                 }}
               >
                 <Ionicons name="ellipse" size={10} color={Colors.white} />
-                <TouchableOpacity onPress={blockUser}>
-                    {blockState ? (
-                  <Text
-                    style={{
-                      ...Fonts.SemiBold16white,
-                      marginHorizontal: Default.fixPadding,
-                    }}
-                  >
-                      Block {props.user.username}
-                      </Text>
-                    ) : (
-                  <Text
-                    style={{
-                      ...Fonts.SemiBold16white,
-                      marginHorizontal: Default.fixPadding,
-                    }}
-                  >
-                      Unblock {props.user.username}
+                {isBlockLoading ? (
+                  <>
+                    <ActivityIndicator />
+                  </>
+                ) : (
 
-                  </Text>
-                    )}
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={blockUser}>
+                      {isBlocking ? (
+                    <Text
+                      style={{
+                        ...Fonts.SemiBold16white,
+                        marginHorizontal: Default.fixPadding,
+                      }}
+                    >
+                        Unblock {props.user.username}
+                        </Text>
+                      ) : (
+                    <Text
+                      style={{
+                        ...Fonts.SemiBold16white,
+                        marginHorizontal: Default.fixPadding,
+                      }}
+                    >
+                        Block {props.user.username}
+  
+                    </Text>
+                      )}
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           </View>
@@ -765,18 +780,18 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
     const [selectedTab, setSelectedTab] = useState("Posts");
 
   const renderTabContent = () => {
-    if (selectedTab === "Posts") {
+    // if (selectedTab === "Posts") {
       console.log("render posts itemmmmmmmmmmm",user.posts)
       return (
         <VideoTab 
           userId={the_id}
         />
       );
-    } else if (selectedTab === "Followers") {
-      return <FollowersScreen isHeader={false} userId={the_id} />;
-    } else if (selectedTab === "Following") {
-      return <FollowingScreen isHeader={false} userId={the_id} />;
-    }
+    // } else if (selectedTab === "Followers") {
+    //   return <FollowersScreen isHeader={false} userId={the_id} />;
+    // } else if (selectedTab === "Following") {
+    //   return <FollowingScreen isHeader={false} userId={the_id} />;
+    // }
   };
 
   return (
@@ -801,16 +816,17 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
               <Text
                 style={{
                   paddingHorizontal: 20,
-                  color: selectedTab === "Posts" ? "blue" : "black",
-                  backgroundColor:
-                    selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
+                  fontFamily: "Bold",
+                  // color: selectedTab === "Posts" ? "blue" : "black",
+                  // backgroundColor:
+                  //   selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
                   paddingVertical: 10,
                 }}
               >
                 Posts
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
+            {/* <TouchableOpacity onPress={() => setSelectedTab("Followers")}>
               <Text
                 style={{
                   paddingHorizontal: 20,
@@ -822,8 +838,8 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
               >
                 Followers
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedTab("Following")}>
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity onPress={() => setSelectedTab("Following")}>
               <Text
                 style={{
                   paddingHorizontal: 20,
@@ -835,7 +851,7 @@ const OtherUserProfileScreen = ({ navigation, route }) => {
               >
                 Following
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           {/* Render the content of the selected tab */}

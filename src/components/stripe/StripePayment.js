@@ -7,8 +7,11 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { PRIMARY_COLOR } from '../../constants/colors';
+import ThemeContext from '../../theme/ThemeContext';
 
 const PaymentForm = (props) => {
+
+  const theme = useContext(ThemeContext)
   
   const { userTokens } = useContext(AuthContext)
   const [success, setSuccess] = useState(false);
@@ -29,12 +32,12 @@ const PaymentForm = (props) => {
       email: props.email
     };
 
-    if (!createPaymentMethod) {
+    if (!confirmPayment) {
       console.error('createPaymentMethod not available');
       return;
     }
 
-    const { paymentMethod, error } = await createPaymentMethod({
+    const { paymentMethod, error } = await confirmPayment({
       paymentMethodType: 'Card',
       paymentMethodData: {billingDetails}
       ,
@@ -81,10 +84,10 @@ const PaymentForm = (props) => {
     <View>
       {!success ? (
         <View>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
+          <Text style={{ fontSize: 24, fontFamily: 'SemiBold', marginBottom: 20 }}>
             {'$29.99'}
           </Text>
-          <Text style={{ color: '#66ff66', fontSize: 18, marginBottom: 20 }}>
+          <Text style={{ color: theme.color,fontFamily: 'Regular', fontSize: 16, marginBottom: 20 }}>
             Pre-order and Join Founders Club
           </Text>
           <CardField
