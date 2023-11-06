@@ -32,12 +32,12 @@ const PaymentForm = (props) => {
       email: props.email
     };
 
-    if (!confirmPayment) {
+    if (!createPaymentMethod) {
       console.error('createPaymentMethod not available');
       return;
     }
 
-    const { paymentMethod, error } = await confirmPayment({
+    const { paymentMethod, error } = await createPaymentMethod({
       paymentMethodType: 'Card',
       paymentMethodData: {billingDetails}
       ,

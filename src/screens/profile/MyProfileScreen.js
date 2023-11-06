@@ -147,7 +147,13 @@ const Header = () => {
           <View>
             <Text style={[UserName.Text, { color: theme.color }]}>
               @{profile.username}
+              {profile.is_premium ? (' verified') : ''}
             </Text>
+            {/* {profile.is_premium ? (
+                <Ionicons name="ellipsis-vertical" size={20} color={theme.color} />
+              ) : (
+                <></>
+              )} */}
           </View>
           <View style={UserFollowers.View}>
             <TouchableOpacity onPress={() => navigation.push("Following", {item: profile })}>

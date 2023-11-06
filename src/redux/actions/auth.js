@@ -1,31 +1,33 @@
 import { ALL_POSTS, CREATE_POSTS, DELETE_POSTS, GET_POSTS_BY_ID, ALL_POST, LOGIN_API, MY_PROFILE, RESEND_CODE, RESET_PASSWORD, SIGNUP_API, VERIFY_ACC, BLOCK_USER, ALL_BLOCKED_LIST } from '../../config/urls';
-import { storeData } from '../../utils/helperFunctions';
+// import { storeData } from '../../utils/helperFunctions';
 import { apiDelete, apiGet, apiPost, apiPut } from '../../utils/utils';
-import { saveUserData } from '../reducers/auth';
-import store from '../store';
-import types from '../types';
-const { dispatch } = store;
+// import { saveUserData } from '../reducers/auth';
+// import store from '../store';
+// import types from '../types';
+// const { dispatch } = store;
 
-export const userLogin = (data) => {
-    return new Promise((resolve, reject)=>{
-      apiPost(LOGIN_API, data).then((res)=>{
-        console.log("first login res ======== ", res.data)
-        if (!!res.data) {
-          storeData('userData', res.data).then((value) => {
-            console.log("see it this ======== ", res)
-            dispatch(saveUserData(res.data))
-          }).catch((error) => {
-            resolve(res)
-          })
-        } else {
-          resolve(res)
-        }
-      }).catch((error)=>{
-        reject(error)
-      })
-    })
-  // dispatch(saveUserData(data));
-};
+// export const userLogin = (data) => {
+//     return new Promise((resolve, reject)=>{
+//       apiPost(LOGIN_API, data).then((res)=>{
+//         console.log("first login res ======== ", res.data)
+//         if (!!res.data) {
+//           // storeData('userData', res.data).then((value) => {
+//           //   console.log("see it this ======== ", res)
+//           //   // dispatch(saveUserData(res.data))
+//           // }).catch((error) => {
+//           //   resolve(res)
+//           // })
+//         // } else {
+//         //   resolve(res)
+//         // }
+//       }
+//       ).catch((error)=>{
+//         reject(error)
+//       }
+//       )
+//     })
+//   // dispatch(saveUserData(data));
+// };
  
 export const fetchUserProfile = (token) => {
   return async (dispatch) => {

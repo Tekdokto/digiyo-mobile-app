@@ -393,17 +393,8 @@ import { AuthContext } from "../../context/AuthContext";
             margin: Default.fixPadding * 2,
           }}
         >
-          <AwesomeButton
-            // progress
-            // height={50}
-            // progressLoadingTime={1000}
-            onPress={ onUpdate
-            //   (next) => {
-            //   setTimeout(() => {
-            //     next();
-            //     navigation.pop();
-            //   }, 1000);
-            // }
+          <AwesomeButton 
+            onPress={ onUpdate 
           }
             raiseLevel={1}
             stretch={true}
@@ -421,34 +412,7 @@ import { AuthContext } from "../../context/AuthContext";
           >
             <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
           </AwesomeButton>
-          {/* <AwesomeButton
-            progress
-            height={50}
-            progressLoadingTime={1000}
-            onPress={ onUpdate
-            //   (next) => {
-            //   setTimeout(() => {
-            //     next();
-            //     navigation.pop();
-            //   }, 1000);
-            // }
-          }
-            raiseLevel={1}
-            stretch={true}
-            borderRadius={10}
-            borderWidth={null}
-            backgroundDarker={Colors.transparent}
-            extra={
-              <LinearGradient
-                start={[0, 1]}
-                end={[1, 1]}
-                colors={[Colors.primary, Colors.extraDarkPrimary]}
-                style={{ ...StyleSheet.absoluteFillObject }}
-              />
-            }
-          >
-            <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
-          </AwesomeButton> */}
+           
         </View>
   
         <BottomSheet

@@ -51,7 +51,7 @@ const SearchScreen = ({ navigation }) => {
 
   const auth = userToken
 
-  const userId = userInfo.user_id;
+  const userId = userInfo.authenticated_user.user_id;
 
   // console.log(auth)
 
@@ -163,7 +163,7 @@ const SearchScreen = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => {
           // console.log(item.avatar)
-          // console.log(item)
+          console.log( "item",item, "user id", userId)
           if (item.user_id === userId) {
             navigation.navigate("MyProfileScreen");
           } else {

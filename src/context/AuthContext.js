@@ -25,13 +25,13 @@ export const AuthProvider = ({ children }) => {
     // console.log("empty =-=-= emsopidosn ", data)
     axios
       .post(LOGIN_API, { email, password })
-      .then((res) => {
+      .then(async (res) => {
         console.log("res                ", res.data.data.authenticated_user);
         console.log("res                ", res.data.data.token);
-        setUserInfo(res.data.data.authenticated_user.user_id);
+        setUserInfo(res.data.data);
         setUserTokens(res.data.data.token);
-        AsyncStorage.setItem("userInfo", JSON.stringify(res.data.data));
-        AsyncStorage.setItem("userTokens", res.data.data.token);
+        await AsyncStorage.setItem("userInfo", JSON.stringify(res.data.data));
+        await AsyncStorage.setItem("userTokens", res.data.data.token);
         setSuccessFul("Logged in");
       })
       .catch((e) => {

@@ -1,17 +1,18 @@
 
-import AppNavigation from './src/navigation/AppNavigation';
+// import AppNavigation from './src/navigation/AppNavigation';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import i18n from "./src/languages/index"; //don't remove this line
-import { Provider } from 'react-redux';
-import FlashMessage from 'react-native-flash-message';
-import store from './src/redux/store';
-import { useEffect } from 'react';
-import { getData } from './src/utils/helperFunctions';
+// import { Provider } from 'react-redux';
+// import FlashMessage from 'react-native-flash-message';
+// import store from './src/redux/store';
+// import { useEffect } from 'react';
+// import { getData } from './src/utils/helperFunctions';
 // import { storeUserData } from './src/redux/actions/appSettings';
-import { saveUserData } from './src/redux/reducers/auth';
+// import { saveUserData } from './src/redux/reducers/auth';
 import { useFonts } from 'expo-font';
 import { AuthProvider } from './src/context/AuthContext';
 import { AppNav } from './src/navigation/AppNav';
+import 'expo-dev-client';
+import i18n from "./src/languages/index"; //don't remove this line
 
 // const { dispatch } = store
 export default function App() {
@@ -63,13 +64,13 @@ export default function App() {
       //       // </View> */}
       //   </GestureHandlerRootView>
       // </Provider>
-      <Provider store={store} >
+      // <Provider store={store} >
         <AuthProvider>
           <GestureHandlerRootView style={{flex:1}} >
           < AppNav />
           </GestureHandlerRootView>
         </AuthProvider>
-      </Provider>
+      // </Provider>
   );
 }
  

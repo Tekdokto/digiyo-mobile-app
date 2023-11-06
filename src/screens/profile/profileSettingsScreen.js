@@ -20,15 +20,13 @@ import MyStatusBar from "../../components/MyStatusBar";
 import ThemeContext from "../../theme/ThemeContext";
 import { EventRegister } from "react-native-event-listeners";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { HEIGHT } from "../../constants/sizes";
-import { saveUserData } from "../../redux/reducers/auth";
-import store from "../../redux/store";
+import { HEIGHT } from "../../constants/sizes";  
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/AuthContext";
 import FoundersClubSuccessModal from "../../components/foundersClubSuccessModal";
 // import MyStatusBar from "../components/myStatusBar";
 
-const { dispatch } = store
+
 const ProfileSettingsScreen = ({ navigation, route }) => {
   const { t, i18n } = useTranslation();
 

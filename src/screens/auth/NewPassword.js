@@ -1,5 +1,5 @@
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React, { useContext, useState } from 'react'
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, ScrollView, Pressable } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
 import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -8,7 +8,7 @@ import { PRIMARY_COLOR } from '../../constants/colors';
 
 import Logo from '../../../assets/icons/logo-black.svg'
 import ThemeContext from '../../theme/ThemeContext';
-import { resetPassword } from '../../redux/actions/auth';
+import { resendOTP, resetPassword } from '../../redux/actions/auth';
 import { showError } from '../../utils/helperFunctions';
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -18,8 +18,8 @@ export default function NewPasswordScreen({ route }) {
 
     const { item } = route.params
 
-    console.log("_______item", item)
-    console.log("route", route)
+    // console.log("_______item", item)
+    // console.log("route", route)
 
     const theme = useContext(ThemeContext)
 
@@ -27,6 +27,7 @@ export default function NewPasswordScreen({ route }) {
     const [otp, setOtp] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [timer, setTimer] = useState(59);
 
     const onForgotpass = async() => {
         // const checkValid = isValidData()
@@ -50,7 +51,9 @@ export default function NewPasswordScreen({ route }) {
                     console.log(" ---------- -========", res.data)
                     // console.log(" ---------- -========", res.data.email)
                     // showMessage(res.status)
-                    navigation.push("NewPasswordScreen", { item: email })
+                    navigation.push("Logincreen", 
+                    // { item: email }
+                    )
                 } catch (error) {
                     showError(error.message)
                     console.log("signup error -------", error )
@@ -64,6 +67,37 @@ export default function NewPasswordScreen({ route }) {
              }
         // }
         // navigation.navigate("OTPScreen", {item: "safyulurzu@gufum.com"})
+    }
+
+    
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (timer > 0) setTimer(timer - 1)
+        }, 1000);
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout)
+            }
+        }
+    }, [timer])
+
+    const resendCode = async() => {
+        setTimer(59)
+        console.log("tap ------ 202")
+        console.log(item)
+        let data = { 
+            email: item,
+        }
+
+        try {
+            let res = await resendOTP(data)
+            console.log(res)
+            showMessage(res)
+            // showError(res)
+            // showMessage(res)
+        } catch (error) {
+            showError(error)
+        }
     }
 
     const onReset = async() => {
@@ -84,7 +118,9 @@ export default function NewPasswordScreen({ route }) {
                     console.log(" ---------- -========", res.data)
                     // console.log(" ---------- -========", res.data.email)
                     // showMessage(res.status)
-                    navigation.push("NewPasswordScreen", { item: email })
+                    navigation.replace("LoginScreen", 
+                    // { item: email }
+                    )
                 } catch (error) {
                     showError(error.message)
                     console.log("signup error -------", error )
@@ -200,7 +236,26 @@ export default function NewPasswordScreen({ route }) {
                                 }
                         </Animated.View>
 
-                        <Animated.View 
+                        <Text style={{ marginHorizontal: 20, marginVertical: 30,}}>
+
+                            {timer > 0 ?
+                                
+                                 <Pressable
+                                    onPress={{}} 
+                                >
+                                    <Text style={{   flexDirection: "row", color: theme.color}}>Resend code in: {timer}</Text>
+                                    
+                                </Pressable>
+                                :
+                                <Pressable
+                                    onPress={resendCode} 
+                                >
+                                    <Text style={{  flexDirection: "row", color: theme.color}}>Resend code</Text>
+                                    
+                                </Pressable>
+                            }
+                        </Text>
+                        {/* <Animated.View 
                             entering={FadeInDown.delay(600).duration(1000).springify()} 
                             style={{ marginTop:20, flexDirection:"row", justifyContent:"center"}}
                             >
@@ -211,7 +266,7 @@ export default function NewPasswordScreen({ route }) {
                                 // style="text-sky-600"
                                 >Sign in</Text>
                             </TouchableOpacity>
-                        </Animated.View>
+                        </Animated.View> */}
                     </View>
                 </View>
             </ScrollView>
