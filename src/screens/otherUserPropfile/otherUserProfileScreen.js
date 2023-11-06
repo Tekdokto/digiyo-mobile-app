@@ -472,16 +472,16 @@ export const Header = (props) => {
                     />
                   }
                 >
-                  {isLoading ? (
+                  {/* {isLoading ? (
                     <>
                       <ActivityIndicator color={"white"} />
                     </>
-                  ) : (
+                  ) : ( */}
                     <TouchableOpacity onPress={followUser}>
                         <Text style={{ ...Fonts.Bold18white }}>
-                      {fols ?  "unfollow" : "Follow" }</Text> 
+                      {fols ?  "following" : "Follow" }</Text> 
                     </TouchableOpacity>
-                  )}
+                  {/* )} */}
                 </AwesomeButton>
               </View>
             </View>

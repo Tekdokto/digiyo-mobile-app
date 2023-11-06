@@ -8,6 +8,8 @@ import {
     TouchableOpacity,
     ScrollView,
     TextInput,
+    ActivityIndicator,
+    ToastAndroid,
   } from "react-native";
   import React, { useState, useEffect, useContext } from "react";
 //   import { } from "../constants/styles";
@@ -120,10 +122,15 @@ import { AuthContext } from "../../context/AuthContext";
 
 
     // console.log(auth)
+    const showToast = (msg) => {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    };
     
     console.log(" mages srewww ========== ",pickedImage)
+
     const onUpdate = async () => {
       const filePath = pickedImage
+      setLoading(true)
   
       if (filePath) {
         const formData = new FormData()
@@ -143,7 +150,6 @@ import { AuthContext } from "../../context/AuthContext";
       formData.append("email", email,)
 
       console.log("form data ========== ",formData)
-    setLoading(true)
       const config = {
         method: "put",
         url: USER,
@@ -160,7 +166,8 @@ import { AuthContext } from "../../context/AuthContext";
           .then((response) => {
             // setUser(response.data);
             console.log(response.data);
-            showMessage(response.data.status)
+            showToast("successful")
+            // showMessage(response.data.status)
           })
           .catch((error) => {
             console.log("error 1111111111111", error);
@@ -170,40 +177,44 @@ import { AuthContext } from "../../context/AuthContext";
       } catch (error) {
         console.log(error);
       }
-    }
-    const formData = new FormData()
+    } else {
 
-        formData.append("username", name,)
-        formData.append("email", email,)
+      const formData = new FormData()
   
-        console.log("form data ========== ",formData)
-      setLoading(true)
-        const config = {
-          method: "put",
-          url: USER,
-          data: 
-            formData,
-          headers: {
-            Authorization: auth,
-            "Content-Type": "multipart/form-data",
-          }, 
-        };
-        try {
-          // let res = getUserPosts(auth,  userId)
-          await axios(config)
-            .then((response) => {
-              // setUser(response.data);
-              console.log(response.data);
-              showMessage(response.data.status)
-            })
-            .catch((error) => {
-              console.log("error 1111111111111", error);
-            });
-    
-          // console.log("---------",res)
-        } catch (error) {
-          console.log(error);
-        }
+      formData.append("username", name,)
+      formData.append("email", email,)
+
+      console.log("form data ========== ",formData)
+    // setLoading(true)
+      const config = {
+        method: "put",
+        url: USER,
+        data: 
+          formData,
+        headers: {
+          Authorization: auth,
+          "Content-Type": "multipart/form-data",
+        }, 
+      };
+      try {
+        // let res = getUserPosts(auth,  userId)
+        await axios(config)
+          .then((response) => {
+            // setUser(response.data);
+            console.log(response.data);
+            // showMessage(response.data.status)
+            showToast("successful")
+          })
+          .catch((error) => {
+            console.log("error 1111111111111", error);
+          });
+  
+        // console.log("---------",res)
+      } catch (error) {
+        console.log(error);
+      }
+      
+    }
     
       setLoading(false)
     };
@@ -231,7 +242,7 @@ import { AuthContext } from "../../context/AuthContext";
             <Ionicons
               name={isRtl ? "chevron-forward-outline" : "chevron-back-outline"}
               size={25}
-              color={Colors.white}
+              color={theme.color}
             />
           </TouchableOpacity>
           <Text
@@ -410,7 +421,14 @@ import { AuthContext } from "../../context/AuthContext";
               />
             }
           >
-            <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
+            {isLoading ? (
+              <>
+                <ActivityIndicator color={"white"} />
+              </>
+            ) : (
+
+              <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
+            )}
           </AwesomeButton>
            
         </View>
@@ -564,7 +582,7 @@ import { AuthContext } from "../../context/AuthContext";
       marginBottom: Default.fixPadding * 2,
       borderRadius: 8,
       backgroundColor: Colors.extraDarkGrey,
-      ...Default.shadow,
+      // ...Default.shadow,
     },
   });
   

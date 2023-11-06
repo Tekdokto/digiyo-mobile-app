@@ -33,6 +33,7 @@ import { Pressable } from "react-native";
 import { myProifile } from "../../redux/actions/auth";
 import { showError } from "../../utils/helperFunctions";
 import { AuthContext } from "../../context/AuthContext";
+import { ToastAndroid } from "react-native";
 //   import MyStatusBar from "../components/myStatusBar";
   
   const { height } = Dimensions.get("window");
@@ -130,27 +131,29 @@ import { AuthContext } from "../../context/AuthContext";
 
     // console.log(item);
   
-    function extractAuthorization(cookieString) {
-      const cookies = cookieString.split(";");
-      let authorization = "";
+    // function extractAuthorization(cookieString) {
+    //   const cookies = cookieString.split(";");
+    //   let authorization = "";
   
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith("Authorization=")) {
-          authorization = cookie.substring("Authorization=".length);
-          break;
-        }
-      }
+    //   for (let i = 0; i < cookies.length; i++) {
+    //     const cookie = cookies[i].trim();
+    //     if (cookie.startsWith("Authorization=")) {
+    //       authorization = cookie.substring("Authorization=".length);
+    //       break;
+    //     }
+    //   }
   
-      return authorization;
-    }
+    //   return authorization;
+    // }
   
     const userToken = userTokens
   
-    const auth = extractAuthorization(userToken);
+    const auth = userToken;
     const userId = userInfo.authenticated_user.user_id;
 
-
+    const showToast = (msg) => {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    };
     // console.log(auth)
     
     const onUpdate = async () => { 
@@ -183,14 +186,14 @@ import { AuthContext } from "../../context/AuthContext";
             .then((response) => {
               // setUser(response.data);
               console.log(response.data);
-              showMessage(response.data.status)
+              showToast("Successful")
             })
             .catch((error) => {
               console.log("error 1111111111111", error);
             });
-    
-          // console.log("---------",res)
-        } catch (error) {
+            // console.log("---------",res)
+          } catch (error) {
+          showToast("Faled")
           console.log(error);
         }
     
@@ -221,7 +224,7 @@ import { AuthContext } from "../../context/AuthContext";
       setDob(res.authenticated_user.profile.dob);
       // setLoading(false);
     } catch (error) {
-      showError(error.message);
+      // showError(error.message);
       console.log("profile error -------", error);
     }
     setLoading(false);
@@ -497,7 +500,14 @@ import { AuthContext } from "../../context/AuthContext";
           ) : (
             <> */}
               {/* <Pressable>  */}
+              {isLoading ? (
+                <>
+                  <ActivityIndicator color="white" />
+                </>
+              ) : (
+
                 <Text style={{ ...Fonts.Bold18white }}>{tr("update")}</Text>
+              )}
               {/* </Pressable> */}
             {/* </>
           )} */}
