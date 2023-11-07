@@ -68,7 +68,7 @@ const PaymentForm = (props) => {
 
         axios(config).then((res) => {
           console.log("yep    we in", res.data)
-          navigate.replace("HomeScreen")
+          navigate.replace("LoginScreen")
         }).catch((error) => {
           console.log("bopw    we oitr ", error)
         }) 

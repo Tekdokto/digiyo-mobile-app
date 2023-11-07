@@ -13,7 +13,7 @@ import { ActivityIndicator } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ACCENT_COLOR } from "../../constants/colors";
 import { RefreshControl } from "react-native";
-import CommentsBottomSheet from "../commentsBottomSheet";
+import CommentsBottomSheet from "../../components/commentbottomsheet/commentsBottomSheet";
 import { ALL_POST, CREATE_POSTS } from "../../config/urls";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
@@ -487,11 +487,11 @@ const Posts = ({}) => {
           }}
           />
           )}
-          {/* <CommentsBottomSheet
+          <CommentsBottomSheet
             post_id={openedPostId}
             visible={openCommentBottomSheet} 
             closeCommentBottomSheet={() => setOpenCommentBottomSheet(false)}
-          /> */}
+          />
     </View>
   );
 };

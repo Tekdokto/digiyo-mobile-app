@@ -89,7 +89,7 @@ const MenuBottomSheet = (props) => {
           ...Default.shadow,
         }}
       >
-        <View
+        {/* <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             alignItems: "center",
@@ -119,9 +119,9 @@ const MenuBottomSheet = (props) => {
           >
             {tr("saveVideo")}
           </Text>
-        </View>
+        </View> */}
 
-        <View
+        {/* <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             alignItems: "center",
@@ -148,7 +148,7 @@ const MenuBottomSheet = (props) => {
           >
             {tr("downloadVideo")}
           </Text>
-        </View>
+        </View> */}
 
         <View
           style={{

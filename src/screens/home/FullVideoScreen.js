@@ -5,7 +5,7 @@ import { FlatList, Image, View, Text, Dimensions, StatusBar, Share} from 'react-
 import styles from '../../constants/styles'
 import FullScreenLikeIcons from '../../components/home/FullScreenLikeIcons'
 import { useIsFocused } from '@react-navigation/native'
-import CommentsBottomSheet from '../../components/commentsBottomSheet'
+import CommentsBottomSheet from '../../components/commentbottomsheet/commentsBottomSheet'
 import MenuBottomSheet from '../../components/menuBottomSheet'
 import { useTranslation } from 'react-i18next'
 
