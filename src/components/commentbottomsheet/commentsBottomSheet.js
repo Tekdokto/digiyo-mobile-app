@@ -656,8 +656,9 @@ const CommentsBottomSheet = (props) => {
                     replyToCommentId
                   );
                 } else {
-                  console.log(commentsData.map((user) => {console.log(user)}))
-                  setCommentUser(item.comment.author.username)
+                  // console.log()
+                  const user = commentsData.map((user) => user.comment.author.username)
+                  setCommentUser(user)
                   onComment(
                     props.post_id,
                     
