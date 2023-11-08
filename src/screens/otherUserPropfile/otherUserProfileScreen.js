@@ -70,6 +70,19 @@ export const Header = (props) => {
   const isRtl = i18next.dir() == "rtl";
   
     const [followersData, setFollowersData] = useState([]);
+
+    const [followers, setFollowers] = useState([]);
+    // const [followings, setFollowings] = useState([]);
+
+    console.log("ajhhhhhhhhhhhhhhhhhhhhhhh       ",followers)
+    
+    useEffect(() => {
+      // Update the 'followers' state when 'props.user.following_count' changes
+      setFollowers(props.user.following_count);
+      // setFollowings(props.user.follower_count);
+    }, [props.user.following_count,
+      // props.user.follower_count
+    ]);
     
     // Assuming you have followersData (an array) and the_id defined elsewhere
     const fols = followersData.some((follower) => follower.user_id === props.user.user_id)
@@ -146,39 +159,39 @@ export const Header = (props) => {
 
 
   const followUser = async () => {
-    
     const config = {
       method: "post",
       url: FOLLOW_TOGGLE + "/" + props.user.user_id,
-      // + item.author_id,
-      // data: formdata,
       headers: {
         Authorization: auth,
-        "Content-Type": "application/json", // This will set the correct 'Content-Type' header
+        "Content-Type": "application/json",
       },
     };
-    // console.log(config);
+  
     setIsLoading(true);
+  
     try {
       await axios(config)
         .then((response) => {
-          // setUser(response.data);
-          console.log("works");
-          showMessage("success")
+          console.log("Toggle follow/unfollow success");
+          setisFollowing(!isFollowing);
+  
+          // Update the 'followers' state based on 'isFollowing'
+          setFollowers((prevFollowers) => {
+            return isFollowing ? prevFollowers - 1 : prevFollowers + 1;
+          });
         })
         .catch((error) => {
-          console.log("error 1111111111111", error);
+          console.log("Toggle follow/unfollow error", error);
         });
-
-      // console.log("---------",res)
-      // setLoading(false)
     } catch (error) {
       console.log(error);
     }
-    setisFollowing(!isFollowing)
+  
     setIsLoading(false);
-    !fols
   };
+  
+  
 
   // console.log(props);
 
@@ -352,7 +365,8 @@ export const Header = (props) => {
                   <Text
                     style={{ ...Fonts.SemiBold14white, color: theme.color }}
                   >
-                    {props.user.following_count}
+                    {followers}
+                    {/* {props.user.following_count} */}
                   </Text>
                   <Text
                     numberOfLines={1}
@@ -363,7 +377,7 @@ export const Header = (props) => {
                       marginTop: Default.fixPadding * 0.5,
                     }}
                   >
-                    {tr("followers")}
+                    Followers
                   </Text>
                 </TouchableOpacity>
                 <View
@@ -393,7 +407,7 @@ export const Header = (props) => {
                         marginTop: Default.fixPadding * 0.5,
                       }}
                     >
-                      {tr("following")}
+                      Following
                     </Text>
                   </TouchableOpacity>
                 </View>

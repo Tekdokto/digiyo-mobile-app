@@ -16,7 +16,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { useContext } from "react"; 
+import { useContext } from "react";
 import { myProifile } from "../../redux/actions/auth";
 import ThemeContext from "../../theme/ThemeContext";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -41,14 +41,14 @@ const Header = () => {
   const navigation = useNavigation();
 
   // console.log("userData", userData)
-  
+
   const theme = useContext(ThemeContext);
-  
+
   const { userInfo, userTokens } = useContext(AuthContext);
 
   const user = userTokens;
-  
-  console.log("userInfo", userInfo)
+
+  console.log("userInfo", userInfo);
 
   const [isLoading, setLoading] = useState(false);
   const [profile, setProfile] = useState(false);
@@ -144,33 +144,44 @@ const Header = () => {
               source={{ uri: profile.avatar }}
             />
           )}
-          <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              // justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
             <Text style={[UserName.Text, { color: theme.color }]}>
               @{profile.username}
-              {profile.is_premium ? (' verified') : ''}
+              {/* {profile.is_premium ? (' verified') : ''} */}
             </Text>
-            {/* {profile.is_premium ? (
-                <Ionicons name="ellipsis-vertical" size={20} color={theme.color} />
-              ) : (
-                <></>
-              )} */}
+            {profile.is_premium ? (
+              <View style={{paddingTop: 20, paddingLeft: 5}}>
+                <Ionicons name="checkmark-circle" size={15} color={PRIMARY_COLOR} />
+              </View>
+            ) : null}
           </View>
           <View style={UserFollowers.View}>
-            <TouchableOpacity onPress={() => navigation.push("Following", {item: profile })}>
+            <TouchableOpacity
+              onPress={() => navigation.push("Following", { item: profile })}
+            >
               <View style={UserFollowersText.View}>
                 <Text
                   style={[UserFollowersTextNumber.Text, { color: theme.color }]}
                 >
                   {profile.follower_count}
                 </Text>
-                  <Text
-                    style={[UserFollowersTextDesc.Text, { color: theme.color }]}
-                  >
-                    Following
-                  </Text>
+                <Text
+                  style={[UserFollowersTextDesc.Text, { color: theme.color }]}
+                >
+                  Following
+                </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.push("Followers", {item: profile })}>
+            <TouchableOpacity
+              onPress={() => navigation.push("Followers", { item: profile })}
+            >
               <View style={UserFollowersText.View}>
                 <Text
                   style={[UserFollowersTextNumber.Text, { color: theme.color }]}
@@ -232,7 +243,7 @@ const MyProfileScreen = () => {
 
   const renderTabContent = () => {
     // if (selectedTab === "Posts") {
-      return <VideoTab  />;
+    return <VideoTab />;
     // } else if (selectedTab === "Followers") {
     //   return <FollowersScreen isHeader={false} />;
     // } else if (selectedTab === "Following") {
@@ -266,7 +277,7 @@ const MyProfileScreen = () => {
                   // backgroundColor:
                   //   selectedTab === "Posts" ? PRIMARY_COLOR : "#ffffff00",
                   paddingVertical: 10,
-                  fontFamily: "Bold"
+                  fontFamily: "Bold",
                 }}
               >
                 Posts
