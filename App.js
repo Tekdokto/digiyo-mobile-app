@@ -10,8 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 // import { saveUserData } from './src/redux/reducers/auth';
 import { useFonts } from 'expo-font';
 import { AuthProvider } from './src/context/AuthContext';
-import { AppNav } from './src/navigation/AppNav';
-import 'expo-dev-client';
+import { AppNav } from './src/navigation/AppNav'; 
 import i18n from "./src/languages/index"; //don't remove this line
 
 // const { dispatch } = store

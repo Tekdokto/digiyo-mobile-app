@@ -181,12 +181,14 @@ const CommentsBottomSheet = (props) => {
 
   // REPLY COMMENT
   const onReplyComment = async (post_id, comment_id) => {
+    console.log("hereeeeeee")
+    console.log(GET_POSTS_COMMENTS + post_id + "/reply/" + comment_id,)
     setReply(false);
 
     const config = {
       method: "post",
       data: {
-        "content": comment,
+        "content": theRep,
       },
       url: GET_POSTS_COMMENTS + post_id + "/reply/" + comment_id,
       headers: {
@@ -196,7 +198,7 @@ const CommentsBottomSheet = (props) => {
     };    
     // setCommentsData([...data, newReply]);
 
-    console.log("config daaaaaaaaaaaaaaaataaaaaaaaaa",...config)
+    console.log("config daaaaaaaaaaaaaaaataaaaaaaaaa", config)
     // console.log("new daaaaaaaaaaaaaaaataaaaaaaaaa",...replysData)
     setLoading(true);
     try {
@@ -391,8 +393,8 @@ const CommentsBottomSheet = (props) => {
               <TouchableOpacity
                 onPress={() => {
                   setReply(true);
-                  console.log(item.comment_id);
-                  setReplyToCommentId(item.comment_id);
+                  console.log(item.comment.comment_id);
+                  setReplyToCommentId(item.comment.comment_id);
                 }}
               >
                 <Text
@@ -592,6 +594,9 @@ const CommentsBottomSheet = (props) => {
             <TouchableOpacity
               onPress={() => {
                 if (reply) {
+                  console.log("replying")
+                  console.log("replying", replyToCommentId)
+                  console.log("replying postid", props.post_id)
                   onReplyComment(
                     props.post_id,
                     // commentsData.map((data) => data.comment_id)
@@ -599,7 +604,7 @@ const CommentsBottomSheet = (props) => {
                   );
                 } else {
                   console.log(commentsData.map((user) => {console.log(user)}))
-                  setCommentUser('item.comment.author.username')
+                  setCommentUser(item.comment.author.username)
                   onComment(
                     props.post_id,
                     

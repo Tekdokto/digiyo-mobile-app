@@ -152,7 +152,7 @@ const FullScreenLikeIcons = (props) => {
             marginRight: isRtl ? Default.fixPadding * 2.5 : 0,
           }}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.profileClickHandler()}
             style={{
               flexDirection: isRtl ? "row-reverse" : "row",
@@ -173,7 +173,7 @@ const FullScreenLikeIcons = (props) => {
               <Text style={{ ...Fonts.SemiBold16white }}>{props.name}</Text>
               <Text style={{ ...Fonts.Bold14primary }}>{tr("follow")}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={{ alignItems: isRtl ? "flex-end" : "flex-start" }}>
             <Text
               numberOfLines={1}
