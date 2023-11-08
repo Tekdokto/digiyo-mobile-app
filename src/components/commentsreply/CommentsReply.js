@@ -8,8 +8,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import ThemeContext from '../../theme/ThemeContext';
-import { Default, Fonts } from '../../constants/styles2';
-import { FlatList } from 'react-native-gesture-handler';
+import { Default, Fonts, Colors } from '../../constants/styles2';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, Image } from 'react-native';
 
 const CommentsReply = (props) => {
 
@@ -45,7 +46,7 @@ const CommentsReply = (props) => {
     try {
       await axios(config)
         .then((response) => {
-          console.log("filteredStatus", response.data.replies);
+          console.log("filteredStatus", response.data);
 
           console.log("gone 1111111111111", response.data.replies);
         //   setComment(null);
@@ -96,7 +97,7 @@ const CommentsReply = (props) => {
   console.log("first", getReplies)
 
   const renderItem = ({ item, index }) => {
-    // console.log("temsssssssssss",item.comment.content)
+    console.log("temsssssssssss",item.content)
     // console.log("temsssssssssss",commentsData.map((replies) => replies))
     return (
       <View
@@ -107,107 +108,9 @@ const CommentsReply = (props) => {
           marginHorizontal: Default.fixPadding * 2,
         }}
       >
-        <View
-          style={{
-            flex: 9,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={item.image}
-            style={{ width: 48, height: 48, borderRadius: 24 }}
-          />
-          <View
-            style={{
-              alignItems:"flex-start",
-              marginHorizontal: Default.fixPadding * 0.8,
-            }}
-          >
-            <Text style={{ ...Fonts.Medium14primary }}>{item.comment.author.username}</Text>
-            <Text
-              numberOfLines={1}
-              style={{
-                ...Fonts.Medium14white,
-                color: theme.color,
-                overflow: "hidden",
-              }}
-            >
-              {item.comment.content}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ ...Fonts.Medium12grey, color: theme.color }}>
-                {/* {item.time} */}
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  setReply(true);
-                  console.log(item.comment.comment_id);
-                  setReplyToCommentId(item.comment.comment_id);
-                }}
-              >
-                <Text
-                  style={{
-                    ...Fonts.Medium12grey,
-                    marginHorizontal: Default.fixPadding * 2.7,
-                  }}
-                >
-                  {tr("reply")}
-                </Text>
-              </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={() => {
-                  setViewReply(!viewReply);
-                  console.log(item.comment.comment_id);
-                  setReplyToCommentId(item.comment.comment_id);
-                }}
-              >
-                <Text
-                  style={{
-                    ...Fonts.Medium12grey,
-                    marginHorizontal: Default.fixPadding * 2.7,
-                  }}
-                >
-                  view replies
-                </Text>
-              </TouchableOpacity> */}
-
-              {/*  */}
-            </View>
-            {viewReply && replyToCommentId === item.comment.comment_id ? (
-              <View style={{ marginLeft: 20 }}>
-                <Text>
-                  <CommentsReply
-                    id={item.comment.comment_id}
-                  />
-                </Text>
-              </View>
-            ) : (
-              <>
-              </>
-            )}
-          </View>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => onSelectItem(item)}
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: isRtl ? "flex-start" : "flex-end",
-          }}
-        >
-          <FontAwesome
-            name="heart"
-            size={16}
-            color={item.like ? Colors.primary : Colors.grey}
-          />
-        </TouchableOpacity>
+        
+          <TextComp text={item.content} />
+        
       </View>
     );
   };

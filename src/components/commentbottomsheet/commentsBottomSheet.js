@@ -433,10 +433,9 @@ const CommentsBottomSheet = (props) => {
                   />
                 </Text>
               </View>
-            ) : (
-              <>
-              </>
-            )}
+            ) : 
+              null
+              }
             {/* <View style={{ marginLeft: 20 }}>
             <Text>
               {item.replies &&
