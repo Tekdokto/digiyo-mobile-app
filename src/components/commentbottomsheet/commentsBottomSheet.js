@@ -278,7 +278,7 @@ const CommentsBottomSheet = (props) => {
     setLoading(false);
 
     // Reset the reply text
-    // setTheRep("");
+    setTheRep("");
  
   };
 
