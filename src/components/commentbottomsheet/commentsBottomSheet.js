@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TextInput,
+  Pressable,
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { BottomSheet } from "react-native-btr";
@@ -341,6 +342,10 @@ const CommentsBottomSheet = (props) => {
     // console.log(onFetchComments())
   }, [props.visible, props.post_id, reply]);
 
+  const setFalse = () => {
+    setViewReply(false)
+  }
+
   const renderItem = ({ item, index }) => {
     // console.log("temsssssssssss",item.comment.content)
     // console.log("temsssssssssss",commentsData.map((replies) => replies))
@@ -425,8 +430,8 @@ const CommentsBottomSheet = (props) => {
 
               {/*  */}
             </View>
-            {viewReply && replyToCommentId === item.comment.comment_id ? (
-              <View style={{ marginLeft: 20 }}>
+            {/* {viewReply && replyToCommentId === item.comment.comment_id ? (
+              <View style={{ marginLeft: 20, height: 300, position: "absolute" }}>
                 <Text>
                   <CommentsReply
                     id={item.comment.comment_id}
@@ -435,7 +440,7 @@ const CommentsBottomSheet = (props) => {
               </View>
             ) : 
               null
-              }
+              } */}
             {/* <View style={{ marginLeft: 20 }}>
             <Text>
               {item.replies &&
@@ -508,6 +513,14 @@ const CommentsBottomSheet = (props) => {
           keyExtractor={(item) => item.comment_id}
           showsVerticalScrollIndicator={false}
         />
+        {viewReply && replyToCommentId ? (
+          <View style={{height: 320}}>
+            
+            <CommentsReply id={replyToCommentId}
+              close={setFalse}
+            />
+          </View>
+    ) : null}
 
         <View
           style={{
