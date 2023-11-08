@@ -22,6 +22,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 import CommentsReply from "../commentsreply/CommentsReply";
+import TextComp from "../TextComp";
 
 const { height } = Dimensions.get("window");
 
@@ -51,12 +52,15 @@ const CommentsBottomSheet = (props) => {
 
   const onSelectItem = (item) => {
     const newItem = commentsData.map((val) => {
-      if (val.comment_id === item.comment_id) {
+      if (val.comment.comment_id === item.comment.comment_id) {
         return { ...val, like: !val.like };
       } else {
         return val;
       }
     });
+
+    console.log("liked comment         ",item.comment.comment_id)
+    onLikeComment(item.comment.comment_id)
     setCommentsData(newItem);
   };
 
@@ -126,6 +130,41 @@ const CommentsBottomSheet = (props) => {
   // const [commentsData, setCommentsData] = useState(commentsList);
   // const data = commentsData.map((data) => data)
   // console.log("repliesssss  ------ 2", data )
+
+  const onLikeComment = async (comment_id) => { 
+    console.log("like comment", comment_id)
+    const config = {
+      method: "post",
+      data: {
+        "content": comment,
+      },
+      url: GET_POSTS_COMMENTS + "comment/" + comment_id + "/togglelike",
+      headers: {
+        Authorization: userToken,
+        "Content-Type": "application/json",
+      },
+    };
+    console.log("commientr like post id ---------- ", config);
+
+    setLoading(true);
+    // setComment(null);
+    try {
+      await axios(config)
+        .then((response) => {
+          console.log("filteredStatus", response.data);
+
+          // console.log("gone 1111111111111", response);
+          // setComment(null);
+            
+        })
+        .catch((error) => {
+          console.log("error  1111111111111", error);
+        });
+    } catch (error) {
+      console.log("second error =====  ", error);
+    }
+    setLoading(false);
+  };
 
   const onComment = async (post_id) => { 
     console.log(comment);
@@ -464,6 +503,8 @@ const CommentsBottomSheet = (props) => {
             name="heart"
             size={16}
             color={item.like ? Colors.primary : Colors.grey}
+          />
+          <TextComp text= {item.total_likes} size={12}
           />
         </TouchableOpacity>
       </View>
