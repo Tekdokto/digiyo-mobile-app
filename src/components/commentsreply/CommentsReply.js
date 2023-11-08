@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import ThemeContext from '../../theme/ThemeContext';
 import { Default, Fonts } from '../../constants/styles2';
+import { FlatList } from 'react-native-gesture-handler';
 
 const CommentsReply = (props) => {
 
@@ -77,7 +78,7 @@ const CommentsReply = (props) => {
         //     ]
         // };
 
-          setGetReplies(commentsData);
+          setGetReplies(response.data.replies);
         })
         .catch((error) => {
           console.log("error  1111111111111", error);
